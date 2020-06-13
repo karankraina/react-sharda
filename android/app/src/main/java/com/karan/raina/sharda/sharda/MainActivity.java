@@ -1,4 +1,4 @@
-package com.awesomeproject;
+package com.karan.raina.sharda.sharda;
 
 import com.facebook.react.ReactActivity;
 
@@ -10,6 +10,6 @@ public class MainActivity extends ReactActivity {
    */
   @Override
   protected String getMainComponentName() {
-    return "AwesomeProject";
+    return "core_sharda_team";
   }
 }

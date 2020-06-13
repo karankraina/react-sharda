@@ -15,6 +15,7 @@ import {
 } from 'native-base';
 
 import {API_ENDPOINT} from '../../config/api';
+import Loading from '../components/Loading';
 
 function wait(timeout) {
   return new Promise(resolve => {
@@ -34,23 +35,25 @@ export default ({navigation}) => {
 
   const onRefresh = React.useCallback(() => {
     setRefreshing(true);
-    fetchImages().then(data => {
-      setImages(data);
-      setRefreshing(false);
-      Toast.show({
-        text: "Data Refreshed",
-        buttonText: "Okay",
-        type: "success",
-        duration: 3000
-      });
-    }).catch(error => {
+    fetchImages()
+      .then(data => {
+        setImages(data);
+        setRefreshing(false);
         Toast.show({
-            text: "Error",
-            buttonText: "Okay",
-            type: "danger",
-            duration: 3000
-          });
-    });
+          text: 'Data Refreshed',
+          buttonText: 'Okay',
+          type: 'success',
+          duration: 3000,
+        });
+      })
+      .catch(error => {
+        Toast.show({
+          text: 'Error',
+          buttonText: 'Okay',
+          type: 'danger',
+          duration: 3000,
+        });
+      });
 
     // wait(2000).then(() => setRefreshing(false));
   }, []);
@@ -60,20 +63,25 @@ export default ({navigation}) => {
       console.log(data);
       setImages(data);
       Toast.show({
-        text: "Swipe down to refresh!",
-        buttonText: "Okay",
-        type: "success",
-        duration: 3000
+        text: 'Swipe down to refresh!',
+        buttonText: 'Okay',
+        type: 'success',
+        duration: 3000,
       });
     });
   if (!images) {
-    return <H1>Please wait while we fetch the latest images from our Sharda Gallery...</H1>;
+    // return <H1>Please wait while we fetch the latest images from our Sharda Gallery...</H1>;
+    return <Loading message='Please wait while we fetch the latest images from our Sharda Gallery...' />;
   }
-  
+
   return (
     <Content
       refreshControl={
-        <RefreshControl refreshing={refreshing} onRefresh={onRefresh} title="Refreshing..." />
+        <RefreshControl
+          refreshing={refreshing}
+          onRefresh={onRefresh}
+          title="Refreshing..."
+        />
       }>
       {images.map(({publicurl: uri, title, contributor, id}, index) => (
         <Card key={index}>

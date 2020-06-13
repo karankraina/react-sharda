@@ -21,9 +21,9 @@ import {
 
 import HomeScreen from './screens/Homescreen';
 import LearnShardaScreen from './screens/LearnSharda';
-import GalleryScreen from './screens/Gallery';
+import NotificationScreen from './screens/NotificationScreen';
 import TranslatorScreen from './screens/Translator';
-import AboutScreen from './screens/About';
+import AboutScreen from './screens/AboutScreen';
 
 const Tab = createMaterialBottomTabNavigator();
 
@@ -31,12 +31,12 @@ export default function App() {
   return (
     <Root>
       <Container>
-        <Header>
+        {/* <Header>
           <Body>
             <Title style={{ fontFamily: 'Noto Sans Sharada' }}>𑆑𑆾𑆫 𑆯𑆳𑆫𑆢𑆳 𑆛𑆵𑆩</Title>
           </Body>
           <Right />
-        </Header>
+        </Header> */}
         <NavigationContainer>
           <Tab.Navigator
             initialRouteName="Home"
@@ -56,7 +56,7 @@ export default function App() {
                 ),
               }}
             />
-            <Tab.Screen
+            {/* <Tab.Screen
               name="Learn Sharda"
               component={LearnShardaScreen}
               options={{
@@ -65,15 +65,15 @@ export default function App() {
                   <MaterialCommunityIcons name="library-books" color={color} size={26} />
                 ),
               }}
-            />
+            /> */}
             <Tab.Screen
               name="Gallery"
-              component={GalleryScreen}
+              component={AboutScreen}
               options={{
-                tabBarLabel: 'Gallery',
+                tabBarLabel: 'About us',
                 tabBarIcon: ({ color }) => (
                   <MaterialCommunityIcons
-                    name="image-album"
+                    name="information-outline"
                     color={color}
                     size={26}
                   />
@@ -82,11 +82,11 @@ export default function App() {
             />
             <Tab.Screen
               name="Sharda Translator"
-              component={TranslatorScreen}
+              component={NotificationScreen}
               options={{
-                tabBarLabel: 'Translator',
+                tabBarLabel: 'Notifications',
                 tabBarIcon: ({ color }) => (
-                  <MaterialCommunityIcons name="tooltip-edit" color={color} size={26} />
+                  <MaterialCommunityIcons name="bell-alert" color={color} size={26} />
                 ),
               }}
             />
