@@ -5,10 +5,18 @@ import {createStackNavigator} from '@react-navigation/stack';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import LessonScreen from './LessonScreen';
+import {
+  PRIMARY_DARK_COLOR,
+  PRIMARY_TEXT_COLOR,
+  SECONDARY_MEDIUM_COLOR,
+  SECONDARY_TEXT_COLOR,
+  PRIMARY_MEDIUM_COLOR,
+} from '../../config/colors';
 
 const Stack = createStackNavigator();
 
 import {API_ENDPOINT} from '../../config/api';
+import {LESSON_LIST} from '../../config/offline-data';
 import Loading from '../components/Loading';
 
 export default () => {
@@ -19,6 +27,9 @@ export default () => {
         component={LessonList}
         options={{
           title: 'Sharda Lessons',
+          headerStyle: {backgroundColor: PRIMARY_DARK_COLOR},
+          headerTintColor: PRIMARY_TEXT_COLOR,
+          headerTitleStyle: {fontWeight: 'bold'},
         }}
       />
       <Stack.Screen
@@ -26,6 +37,9 @@ export default () => {
         component={LessonScreen}
         options={{
           title: '𑆑𑆾𑆫 𑆯𑆳𑆫𑆢𑆳 𑆛𑆵𑆩',
+          headerStyle: {backgroundColor: PRIMARY_DARK_COLOR},
+          headerTintColor: PRIMARY_TEXT_COLOR,
+          headerTitleStyle: {fontWeight: 'bold'},
         }}
       />
     </Stack.Navigator>
@@ -58,16 +72,10 @@ const LessonList = ({navigation}) => {
       })
       .catch(error => {
         console.log(error);
-        setLessons([
-          {
-            id: 1,
-            lessonTitle: 'Sharda Vowels',
-          },
-        ]);
+        setLessons(LESSON_LIST);
         setRefreshing(false);
       });
 
-    // wait(2000).then(() => setRefreshing(false));
   }, []);
 
   !lessonList &&
@@ -84,12 +92,7 @@ const LessonList = ({navigation}) => {
       })
       .catch(error => {
         console.log(error);
-        setLessons([
-          {
-            id: 1,
-            lessonTitle: 'Sharda Vowels',
-          },
-        ]);
+        setLessons(LESSON_LIST);
         Toast.show({
           text: 'Swipe down to refresh!',
           buttonText: 'Okay',
@@ -98,7 +101,6 @@ const LessonList = ({navigation}) => {
         });
       });
   if (!lessonList) {
-    // return <H1>Please wait while we fetch the latest images from our Sharda Gallery...</H1>;
     return (
       <Loading message="Please wait while we retrieve the lessons from our server..." />
     );
@@ -112,11 +114,11 @@ const LessonList = ({navigation}) => {
           title="Refreshing..."
         />
       }>
-      {lessonList.map(({id, lessonTitle}) => (
-        <View style={styles.listItem} key={id}>
+      {lessonList.map(({id, lessonTitle}, index) => (
+        <View style={styles.listItem} key={index}>
           <MaterialCommunityIcons
             name="library-books"
-            color="#000051"
+            color={PRIMARY_MEDIUM_COLOR}
             size={50}
           />
           <TouchableOpacity
@@ -157,7 +159,7 @@ const styles = StyleSheet.create({
   },
   cellText: {
     fontSize: 18,
-    color: '#000051',
+    color: SECONDARY_TEXT_COLOR,
     fontWeight: 'bold',
     marginRight: 25,
     flex: 1,

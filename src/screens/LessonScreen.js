@@ -1,10 +1,12 @@
 import React from 'react';
-import {StyleSheet, Image, RefreshControl, Dimensions} from 'react-native';
-import {Text, View, Content, Toast} from 'native-base';
+import {StyleSheet, RefreshControl, Dimensions} from 'react-native';
+import {View, Content, Toast} from 'native-base';
+import HTML from 'react-native-render-html';
 
 var {width: screenWidth} = Dimensions.get('window');
 
 import {API_ENDPOINT} from '../../config/api';
+import {fetchLessonOffline} from '../../config/offline-data';
 import Loading from '../components/Loading';
 
 const fetchLessonData = async lessonId => {
@@ -16,36 +18,7 @@ const fetchLessonData = async lessonId => {
 export default ({navigation, route}) => {
   console.log(API_ENDPOINT);
   const {lessonId} = route.params;
-  const [lessonData, setLessonData] = React.useState([
-    {
-      text:
-        'Hello thius sjsi hsd ahdf ahafhdgfhagh ahdahgah ghdgah hajhga hhfhah ghabahga a ajg agjkg jbgj sgfhsdg shbg shdfgbhsh sdhgsdhkgbhsdgh fdgshf bshff 𑆓𑆛𑆘 𑆛𑆓 𑆚𑆘𑆗𑆠 𑆪𑆫𑆬𑆭 𑆮𑆯 𑆓𑆛𑆘 𑆛𑆓 𑆚𑆘𑆗𑆠 𑆪𑆫𑆬𑆭 𑆮𑆯 𑆓𑆛𑆘 𑆛𑆓 𑆚𑆘𑆗𑆠 𑆪𑆫𑆬𑆭 𑆮𑆯 𑆓𑆛𑆘 𑆛𑆓 𑆚𑆘𑆗𑆠 𑆪𑆫𑆬𑆭 𑆮𑆯 𑆓𑆛𑆘 𑆛𑆓 𑆚𑆘𑆗𑆠 𑆪𑆫𑆬𑆭 𑆮𑆯 𑆓𑆛𑆘 𑆛𑆓 𑆚𑆘𑆗𑆠 𑆪𑆫𑆬𑆭 𑆮𑆯 𑆓𑆛𑆘 𑆛𑆓 𑆚𑆘𑆗𑆠 𑆪𑆫𑆬𑆭 𑆮𑆯 𑆓𑆛𑆘 𑆛𑆓 𑆚𑆘𑆗𑆠 𑆪𑆫𑆬𑆭 𑆮𑆯 𑆓𑆛𑆘 𑆛𑆓 𑆚𑆘𑆗𑆠 𑆪𑆫𑆬𑆭 𑆮𑆯 𑆓𑆛𑆘 𑆛𑆓 𑆚𑆘𑆗𑆠 𑆪𑆫𑆬𑆭 𑆮𑆯 𑆓𑆛𑆘 𑆛𑆓 𑆚𑆘𑆗𑆠 𑆪𑆫𑆬𑆭 𑆮𑆯 𑆓𑆛𑆘 𑆛𑆓 𑆚𑆘𑆗𑆠 𑆪𑆫𑆬𑆭 𑆮𑆯 𑆓𑆛𑆘 𑆛𑆓 𑆚𑆘𑆗𑆠 𑆪𑆫𑆬𑆭 𑆮𑆯 𑆓𑆛𑆘 𑆛𑆓 𑆚𑆘𑆗𑆠 𑆪𑆫𑆬𑆭 𑆮𑆯 𑆓𑆛𑆘 𑆛𑆓 𑆚𑆘𑆗𑆠 𑆪𑆫𑆬𑆭 𑆮𑆯 𑆓𑆛𑆘 𑆛𑆓 𑆚𑆘𑆗𑆠 𑆪𑆫𑆬𑆭 𑆮𑆯 𑆓𑆛𑆘 𑆛𑆓 𑆚𑆘𑆗𑆠 𑆪𑆫𑆬𑆭 𑆮𑆯 𑆓𑆛𑆘 𑆛𑆓 𑆚𑆘𑆗𑆠 𑆪𑆫𑆬𑆭 𑆮𑆯 𑆓𑆛𑆘 𑆛𑆓 𑆚𑆘𑆗𑆠 𑆪𑆫𑆬𑆭 𑆮𑆯 𑆓𑆛𑆘 𑆛𑆓 𑆚𑆘𑆗𑆠 𑆪𑆫𑆬𑆭 𑆮𑆯 𑆓𑆛𑆘 𑆛𑆓 𑆚𑆘𑆗𑆠 𑆪𑆫𑆬𑆭 𑆮𑆯 ',
-      image:
-        '//images.ctfassets.net/1nrffoq757p2/7ApzROHdrubFaUGMlp0ip1/724c969c1431d1d1ec4c2e62cf87b263/C__Users_KARANR_1_AppData_Local_Temp_upload_12cdb41b1c57d1494dda530594ee880c',
-      imageHeight: '1',
-    },
-    {
-      text:
-        'Hello thius sjsi hsd ahdf ahafhdgfhagh ahdahgah ghdgah hajhga hhfhah ghabahga a ajg agjkg jbgj sgfhsdg shbg shdfgbhsh sdhgsdhkgbhsdgh fdgshf bshff 𑆓𑆛𑆘 𑆛𑆓 𑆚𑆘𑆗𑆠 𑆪𑆫𑆬𑆭 𑆮𑆯 𑆓𑆛𑆘 𑆛𑆓 𑆚𑆘𑆗𑆠 𑆪𑆫𑆬𑆭 𑆮𑆯 𑆓𑆛𑆘 𑆛𑆓 𑆚𑆘𑆗𑆠 𑆪𑆫𑆬𑆭 𑆮𑆯 𑆓𑆛𑆘 𑆛𑆓 𑆚𑆘𑆗𑆠 𑆪𑆫𑆬𑆭 𑆮𑆯 𑆓𑆛𑆘 𑆛𑆓 𑆚𑆘𑆗𑆠 𑆪𑆫𑆬𑆭 𑆮𑆯 𑆓𑆛𑆘 𑆛𑆓 𑆚𑆘𑆗𑆠 𑆪𑆫𑆬𑆭 𑆮𑆯 𑆓𑆛𑆘 𑆛𑆓 𑆚𑆘𑆗𑆠 𑆪𑆫𑆬𑆭 𑆮𑆯 𑆓𑆛𑆘 𑆛𑆓 𑆚𑆘𑆗𑆠 𑆪𑆫𑆬𑆭 𑆮𑆯 𑆓𑆛𑆘 𑆛𑆓 𑆚𑆘𑆗𑆠 𑆪𑆫𑆬𑆭 𑆮𑆯 𑆓𑆛𑆘 𑆛𑆓 𑆚𑆘𑆗𑆠 𑆪𑆫𑆬𑆭 𑆮𑆯 𑆓𑆛𑆘 𑆛𑆓 𑆚𑆘𑆗𑆠 𑆪𑆫𑆬𑆭 𑆮𑆯 𑆓𑆛𑆘 𑆛𑆓 𑆚𑆘𑆗𑆠 𑆪𑆫𑆬𑆭 𑆮𑆯 𑆓𑆛𑆘 𑆛𑆓 𑆚𑆘𑆗𑆠 𑆪𑆫𑆬𑆭 𑆮𑆯 𑆓𑆛𑆘 𑆛𑆓 𑆚𑆘𑆗𑆠 𑆪𑆫𑆬𑆭 𑆮𑆯 𑆓𑆛𑆘 𑆛𑆓 𑆚𑆘𑆗𑆠 𑆪𑆫𑆬𑆭 𑆮𑆯 𑆓𑆛𑆘 𑆛𑆓 𑆚𑆘𑆗𑆠 𑆪𑆫𑆬𑆭 𑆮𑆯 𑆓𑆛𑆘 𑆛𑆓 𑆚𑆘𑆗𑆠 𑆪𑆫𑆬𑆭 𑆮𑆯 𑆓𑆛𑆘 𑆛𑆓 𑆚𑆘𑆗𑆠 𑆪𑆫𑆬𑆭 𑆮𑆯 𑆓𑆛𑆘 𑆛𑆓 𑆚𑆘𑆗𑆠 𑆪𑆫𑆬𑆭 𑆮𑆯 𑆓𑆛𑆘 𑆛𑆓 𑆚𑆘𑆗𑆠 𑆪𑆫𑆬𑆭 𑆮𑆯 𑆓𑆛𑆘 𑆛𑆓 𑆚𑆘𑆗𑆠 𑆪𑆫𑆬𑆭 𑆮𑆯 ',
-      image:
-        '//images.ctfassets.net/1nrffoq757p2/7ApzROHdrubFaUGMlp0ip1/724c969c1431d1d1ec4c2e62cf87b263/C__Users_KARANR_1_AppData_Local_Temp_upload_12cdb41b1c57d1494dda530594ee880c',
-      imageHeight: '1',
-    },
-    {
-      text:
-        'Hello thius sjsi hsd ahdf ahafhdgfhagh ahdahgah ghdgah hajhga hhfhah ghabahga a ajg agjkg jbgj sgfhsdg shbg shdfgbhsh sdhgsdhkgbhsdgh fdgshf bshff 𑆓𑆛𑆘 𑆛𑆓 𑆚𑆘𑆗𑆠 𑆪𑆫𑆬𑆭 𑆮𑆯 𑆓𑆛𑆘 𑆛𑆓 𑆚𑆘𑆗𑆠 𑆪𑆫𑆬𑆭 𑆮𑆯 𑆓𑆛𑆘 𑆛𑆓 𑆚𑆘𑆗𑆠 𑆪𑆫𑆬𑆭 𑆮𑆯 𑆓𑆛𑆘 𑆛𑆓 𑆚𑆘𑆗𑆠 𑆪𑆫𑆬𑆭 𑆮𑆯 𑆓𑆛𑆘 𑆛𑆓 𑆚𑆘𑆗𑆠 𑆪𑆫𑆬𑆭 𑆮𑆯 𑆓𑆛𑆘 𑆛𑆓 𑆚𑆘𑆗𑆠 𑆪𑆫𑆬𑆭 𑆮𑆯 𑆓𑆛𑆘 𑆛𑆓 𑆚𑆘𑆗𑆠 𑆪𑆫𑆬𑆭 𑆮𑆯 𑆓𑆛𑆘 𑆛𑆓 𑆚𑆘𑆗𑆠 𑆪𑆫𑆬𑆭 𑆮𑆯 𑆓𑆛𑆘 𑆛𑆓 𑆚𑆘𑆗𑆠 𑆪𑆫𑆬𑆭 𑆮𑆯 𑆓𑆛𑆘 𑆛𑆓 𑆚𑆘𑆗𑆠 𑆪𑆫𑆬𑆭 𑆮𑆯 𑆓𑆛𑆘 𑆛𑆓 𑆚𑆘𑆗𑆠 𑆪𑆫𑆬𑆭 𑆮𑆯 𑆓𑆛𑆘 𑆛𑆓 𑆚𑆘𑆗𑆠 𑆪𑆫𑆬𑆭 𑆮𑆯 𑆓𑆛𑆘 𑆛𑆓 𑆚𑆘𑆗𑆠 𑆪𑆫𑆬𑆭 𑆮𑆯 𑆓𑆛𑆘 𑆛𑆓 𑆚𑆘𑆗𑆠 𑆪𑆫𑆬𑆭 𑆮𑆯 𑆓𑆛𑆘 𑆛𑆓 𑆚𑆘𑆗𑆠 𑆪𑆫𑆬𑆭 𑆮𑆯 𑆓𑆛𑆘 𑆛𑆓 𑆚𑆘𑆗𑆠 𑆪𑆫𑆬𑆭 𑆮𑆯 𑆓𑆛𑆘 𑆛𑆓 𑆚𑆘𑆗𑆠 𑆪𑆫𑆬𑆭 𑆮𑆯 𑆓𑆛𑆘 𑆛𑆓 𑆚𑆘𑆗𑆠 𑆪𑆫𑆬𑆭 𑆮𑆯 𑆓𑆛𑆘 𑆛𑆓 𑆚𑆘𑆗𑆠 𑆪𑆫𑆬𑆭 𑆮𑆯 𑆓𑆛𑆘 𑆛𑆓 𑆚𑆘𑆗𑆠 𑆪𑆫𑆬𑆭 𑆮𑆯 𑆓𑆛𑆘 𑆛𑆓 𑆚𑆘𑆗𑆠 𑆪𑆫𑆬𑆭 𑆮𑆯 ',
-      image:
-        '//images.ctfassets.net/1nrffoq757p2/7ApzROHdrubFaUGMlp0ip1/724c969c1431d1d1ec4c2e62cf87b263/C__Users_KARANR_1_AppData_Local_Temp_upload_12cdb41b1c57d1494dda530594ee880c',
-      imageHeight: '1',
-    },
-    {
-      text:
-        'Hello thius sjsi hsd ahdf ahafhdgfhagh ahdahgah ghdgah hajhga hhfhah ghabahga a ajg agjkg jbgj sgfhsdg shbg shdfgbhsh sdhgsdhkgbhsdgh fdgshf bshff 𑆓𑆛𑆘 𑆛𑆓 𑆚𑆘𑆗𑆠 𑆪𑆫𑆬𑆭 𑆮𑆯 𑆓𑆛𑆘 𑆛𑆓 𑆚𑆘𑆗𑆠 𑆪𑆫𑆬𑆭 𑆮𑆯 𑆓𑆛𑆘 𑆛𑆓 𑆚𑆘𑆗𑆠 𑆪𑆫𑆬𑆭 𑆮𑆯 𑆓𑆛𑆘 𑆛𑆓 𑆚𑆘𑆗𑆠 𑆪𑆫𑆬𑆭 𑆮𑆯 𑆓𑆛𑆘 𑆛𑆓 𑆚𑆘𑆗𑆠 𑆪𑆫𑆬𑆭 𑆮𑆯 𑆓𑆛𑆘 𑆛𑆓 𑆚𑆘𑆗𑆠 𑆪𑆫𑆬𑆭 𑆮𑆯 𑆓𑆛𑆘 𑆛𑆓 𑆚𑆘𑆗𑆠 𑆪𑆫𑆬𑆭 𑆮𑆯 𑆓𑆛𑆘 𑆛𑆓 𑆚𑆘𑆗𑆠 𑆪𑆫𑆬𑆭 𑆮𑆯 𑆓𑆛𑆘 𑆛𑆓 𑆚𑆘𑆗𑆠 𑆪𑆫𑆬𑆭 𑆮𑆯 𑆓𑆛𑆘 𑆛𑆓 𑆚𑆘𑆗𑆠 𑆪𑆫𑆬𑆭 𑆮𑆯 𑆓𑆛𑆘 𑆛𑆓 𑆚𑆘𑆗𑆠 𑆪𑆫𑆬𑆭 𑆮𑆯 𑆓𑆛𑆘 𑆛𑆓 𑆚𑆘𑆗𑆠 𑆪𑆫𑆬𑆭 𑆮𑆯 𑆓𑆛𑆘 𑆛𑆓 𑆚𑆘𑆗𑆠 𑆪𑆫𑆬𑆭 𑆮𑆯 𑆓𑆛𑆘 𑆛𑆓 𑆚𑆘𑆗𑆠 𑆪𑆫𑆬𑆭 𑆮𑆯 𑆓𑆛𑆘 𑆛𑆓 𑆚𑆘𑆗𑆠 𑆪𑆫𑆬𑆭 𑆮𑆯 𑆓𑆛𑆘 𑆛𑆓 𑆚𑆘𑆗𑆠 𑆪𑆫𑆬𑆭 𑆮𑆯 𑆓𑆛𑆘 𑆛𑆓 𑆚𑆘𑆗𑆠 𑆪𑆫𑆬𑆭 𑆮𑆯 𑆓𑆛𑆘 𑆛𑆓 𑆚𑆘𑆗𑆠 𑆪𑆫𑆬𑆭 𑆮𑆯 𑆓𑆛𑆘 𑆛𑆓 𑆚𑆘𑆗𑆠 𑆪𑆫𑆬𑆭 𑆮𑆯 𑆓𑆛𑆘 𑆛𑆓 𑆚𑆘𑆗𑆠 𑆪𑆫𑆬𑆭 𑆮𑆯 𑆓𑆛𑆘 𑆛𑆓 𑆚𑆘𑆗𑆠 𑆪𑆫𑆬𑆭 𑆮𑆯 ',
-      image:
-        '//images.ctfassets.net/1nrffoq757p2/7ApzROHdrubFaUGMlp0ip1/724c969c1431d1d1ec4c2e62cf87b263/C__Users_KARANR_1_AppData_Local_Temp_upload_12cdb41b1c57d1494dda530594ee880c',
-      imageHeight: '1',
-    },
-  ]);
+  const [lessonData, setLessonData] = React.useState(null);
   const [refreshing, setRefreshing] = React.useState(false);
 
   const onRefresh = React.useCallback(() => {
@@ -63,13 +36,8 @@ export default ({navigation, route}) => {
       })
       .catch(error => {
         console.log(error);
-        setLessonData([
-          {
-            text: 1,
-            image: '//source.unsplash.com/random',
-            imageHeight: '1',
-          },
-        ]);
+        const {lessonOfflineData} = fetchLessonOffline(lessonId);
+        setLessonData(lessonOfflineData);
         setRefreshing(false);
       });
 
@@ -90,13 +58,8 @@ export default ({navigation, route}) => {
       })
       .catch(error => {
         console.log(error);
-        setLessonData([
-          {
-            text: 1,
-            image: '//source.unsplash.com/random',
-            imageHeight: '1',
-          },
-        ]);
+        const {lessonOfflineData} = fetchLessonOffline(lessonId);
+        setLessonData(lessonOfflineData);
         Toast.show({
           text: 'Swipe down to refresh!',
           buttonText: 'Okay',
@@ -119,48 +82,16 @@ export default ({navigation, route}) => {
           title="Refreshing..."
         />
       }>
-      {lessonData.map(({text, image, imageHeight}, index) => (
-        <View style={styles.rowItem} key={index}>
-          <View style={styles.cellTextBox}>
-            <Text style={styles.cellText}>{text}</Text>
-          </View>
-          {image && (
-            <View style={styles.cellImageBox}>
-              <Image
-                source={{uri: `https:${image}`}}
-                style={[styles.cellImage, {height: screenWidth * +imageHeight}]}
-              />
-            </View>
-          )}
-        </View>
-      ))}
+      <View style={styles.wrapper}>
+        <HTML html={lessonData} imagesMaxWidth={screenWidth} />
+      </View>
     </Content>
   );
 };
 
 const styles = StyleSheet.create({
-  rowItem: {
+  wrapper: {
     flexDirection: 'column',
-    margin: 5,
-  },
-  cellTextBox: {
-    marginRight: 10,
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'flex-start',
-  },
-  cellText: {
-    fontSize: 16,
-    color: '#000051',
-    marginRight: 5,
-    flex: 1,
-  },
-  cellImageBox: {
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  cellImage: {
-    width: screenWidth * 0.95,
-    marginTop: 10,
+    margin: 10,
   },
 });
