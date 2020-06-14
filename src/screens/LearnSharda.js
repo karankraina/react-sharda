@@ -1,17 +1,6 @@
 import React from 'react';
 import {BackHandler, Platform} from 'react-native';
-import {
-  Container,
-  Header,
-  Title,
-  Content,
-  Button,
-  Right,
-  Body,
-  Icon,
-  Text,
-  H1,
-} from 'native-base';
+
 import {WebView} from 'react-native-webview';
 import {HeaderBackButton} from '@react-navigation/stack';
 

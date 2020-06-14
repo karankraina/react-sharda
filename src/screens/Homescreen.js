@@ -1,12 +1,12 @@
 import React from 'react';
-import {ActivityIndicator, StyleSheet, TouchableOpacity} from 'react-native';
+import {StyleSheet, TouchableOpacity} from 'react-native';
 import {Container, Text, View, Thumbnail, H1} from 'native-base';
 import {Col, Row, Grid} from 'react-native-easy-grid';
 import {createStackNavigator} from '@react-navigation/stack';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import FabComponent from '../components/Fab';
-import LearnSharda from './LearnSharda';
+import LearnSharda from './LearnSharda2';
 import LalVaakhScreen from './LalVaakhScreen';
 import GalleryScreen from './Gallery';
 import TranslatorScreen from './Translator';
@@ -29,7 +29,10 @@ export default () => {
       <Stack.Screen
         name="LearnSharda"
         component={LearnSharda}
-        
+        options={{
+          title: '𑆑𑆾𑆫 𑆯𑆳𑆫𑆢𑆳 𑆛𑆵𑆩',
+          headerShown: false,
+        }}
       />
       <Stack.Screen name="LalVaakh" component={LalVaakhScreen} />
       <Stack.Screen name="Gallery" component={GalleryScreen} />

@@ -120,7 +120,8 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     paddingLeft: 20,
-    marginTop: 15,
+    paddingTop: 15,
+    borderTopWidth: 0.5,
   },
   listData: {
     flex: 1,
