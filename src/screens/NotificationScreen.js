@@ -1,10 +1,10 @@
 import React from 'react';
-import {View, RefreshControl, StyleSheet} from 'react-native';
+import { View, RefreshControl, StyleSheet } from 'react-native';
 import {
-  Container,
+  Header,
   Toast,
   Content,
-  Button,
+  Title,
   ListItem,
   Text,
   Icon,
@@ -14,7 +14,8 @@ import {
   Switch,
 } from 'native-base';
 
-import {API_ENDPOINT} from '../../config/api';
+import { API_ENDPOINT } from '../../config/api';
+import { PRIMARY_DARK_COLOR } from '../../config/colors';
 import Loading from '../components/Loading';
 
 const fetchNotifications = async () => {
@@ -23,7 +24,7 @@ const fetchNotifications = async () => {
   );
 };
 
-export default ({navigation}) => {
+export default ({ navigation }) => {
   console.log(API_ENDPOINT);
   const [messages, setMessages] = React.useState(false);
   const [refreshing, setRefreshing] = React.useState(false);
@@ -98,7 +99,12 @@ export default ({navigation}) => {
           title="Refreshing..."
         />
       }>
-      {messages.map(({message, date}, index) => (
+      <Header backgroundColor={PRIMARY_DARK_COLOR}>
+        <Body>
+          <Title>Notifications</Title>
+        </Body>
+      </Header>
+      {messages.map(({ message, date }, index) => (
         <View style={styles.listView} key={index}>
           <View style={styles.listDate}>
             <Text>{date}</Text>

@@ -1,10 +1,11 @@
 import React from 'react';
 import {StyleSheet, Image, RefreshControl, Dimensions} from 'react-native';
-import {Text, View, Content, Toast} from 'native-base';
+import {Text, View, Content, Toast, Header, Title, Body} from 'native-base';
 
 var {width: screenWidth} = Dimensions.get('window');
 
 import {API_ENDPOINT} from '../../config/api';
+import {PRIMARY_DARK_COLOR} from '../../config/colors';
 import Loading from '../components/Loading';
 
 const fetchAboutData = async () => {
@@ -101,6 +102,11 @@ export default ({navigation}) => {
           title="Refreshing..."
         />
       }>
+      <Header backgroundColor={PRIMARY_DARK_COLOR}>
+        <Body>
+          <Title>About Us</Title>
+        </Body>
+      </Header>
       {aboutData.map(({text, image, imageHeight}, index) => (
         <View style={styles.rowItem} key={index}>
           <View style={styles.cellTextBox}>

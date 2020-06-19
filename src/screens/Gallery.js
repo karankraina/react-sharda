@@ -1,11 +1,11 @@
 import React from 'react';
-import {Image, RefreshControl} from 'react-native';
+import {Image, RefreshControl, Linking, TouchableOpacity} from 'react-native';
 import {
   H1,
   Content,
   Card,
   CardItem,
-  Thumbnail,
+  Icon,
   Text,
   Button,
   Toast,
@@ -16,6 +16,20 @@ import {
 
 import {API_ENDPOINT} from '../../config/api';
 import Loading from '../components/Loading';
+const handleClick = url => {
+  Linking.canOpenURL(url).then(supported => {
+    if (supported) {
+      Linking.openURL(url);
+    } else {
+      Toast.show({
+        text: "Don't know how to open URI: " + url,
+        buttonText: 'Okay',
+        type: 'danger',
+        duration: 3000,
+      });
+    }
+  });
+};
 
 function wait(timeout) {
   return new Promise(resolve => {
@@ -71,7 +85,9 @@ export default ({navigation}) => {
     });
   if (!images) {
     // return <H1>Please wait while we fetch the latest images from our Sharda Gallery...</H1>;
-    return <Loading message='Please wait while we fetch the latest images from our Sharda Gallery...' />;
+    return (
+      <Loading message="Please wait while we fetch the latest images from our Sharda Gallery..." />
+    );
   }
 
   return (
@@ -83,13 +99,13 @@ export default ({navigation}) => {
           title="Refreshing..."
         />
       }>
-      {images.map(({publicurl: uri, title, contributor, id}, index) => (
+      {images.map(({publicurl: uri, title, contributor, subtitle}, index) => (
         <Card key={index}>
           <CardItem>
             <Left>
               <Body>
                 <Text>{title}</Text>
-                <Text note>Core Sharda Team</Text>
+                <Text note>{subtitle || 'Core Sharda Team'}</Text>
               </Body>
             </Left>
           </CardItem>
@@ -101,20 +117,26 @@ export default ({navigation}) => {
           </CardItem>
           <CardItem>
             <Left>
-              {/* <Button transparent>
-                <Icon active name="thumbs-up" />
-                <Text>12 Likes</Text>
-              </Button> */}
+              <Button transparent>
+                <Icon active name="download" />
+                <TouchableOpacity
+                  onPress={() => {
+                    handleClick(`https:${uri}`);
+                  }}>
+                  <Text>Download</Text>
+                </TouchableOpacity>
+              </Button>
             </Left>
-            <Body>
-              {/* <Button transparent>
-                <Icon active name="chatbubbles" />
-                <Text>4 Comments</Text>
-              </Button> */}
+
+            <Body style={{marginRight: -20}}>
+              <Button transparent>
+                <Icon active name="md-person" />
+                <Text>By: {contributor}</Text>
+              </Button>
             </Body>
-            <Right>
+            {/* <Right>
               <Text>By: {contributor}</Text>
-            </Right>
+            </Right> */}
           </CardItem>
         </Card>
       ))}

@@ -10,9 +10,11 @@ import {fetchLessonOffline} from '../../config/offline-data';
 import Loading from '../components/Loading';
 
 const fetchLessonData = async lessonId => {
-  return fetch(`${API_ENDPOINT}get-lesson-data?id=${lessonId}`).then(response =>
-    response.json(),
-  );
+  return fetch(`${API_ENDPOINT}get-lesson-data?id=${lessonId}`)
+    .then(response => {
+      return response.json();
+    })
+    .then(response => response.data);
 };
 
 export default ({navigation, route}) => {
@@ -37,7 +39,7 @@ export default ({navigation, route}) => {
       .catch(error => {
         console.log(error);
         const {lessonOfflineData} = fetchLessonOffline(lessonId);
-        setLessonData(lessonOfflineData);
+        setLessonData('lessonOfflineData');
         setRefreshing(false);
       });
 
@@ -59,11 +61,11 @@ export default ({navigation, route}) => {
       .catch(error => {
         console.log(error);
         const {lessonOfflineData} = fetchLessonOffline(lessonId);
-        setLessonData(lessonOfflineData);
+        setLessonData('lessonOfflineData');
         Toast.show({
-          text: 'Swipe down to refresh!',
+          text: 'There was some error. Please Try again',
           buttonText: 'Okay',
-          type: 'success',
+          type: 'danger',
           duration: 3000,
         });
       });
@@ -83,7 +85,7 @@ export default ({navigation, route}) => {
         />
       }>
       <View style={styles.wrapper}>
-        <HTML html={lessonData} imagesMaxWidth={screenWidth} />
+        <HTML html={lessonData} imagesMaxWidth={screenWidth * 0.95} />
       </View>
     </Content>
   );
@@ -93,5 +95,6 @@ const styles = StyleSheet.create({
   wrapper: {
     flexDirection: 'column',
     margin: 10,
+    marginRight: 15,
   },
 });

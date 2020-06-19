@@ -1,9 +1,17 @@
 import React from 'react';
-import {View, RefreshControl, StyleSheet} from 'react-native';
-import {Toast, Content, Text, Icon} from 'native-base';
+import {
+  View,
+  RefreshControl,
+  StyleSheet,
+  TouchableOpacity,
+  Linking,
+} from 'react-native';
+import {Header, Body, Title, Toast, Content, Text, Icon} from 'native-base';
 
 import {API_ENDPOINT} from '../../config/api';
 import Loading from '../components/Loading';
+import {PRIMARY_DARK_COLOR} from '../../config/colors';
+import {LINKS_DATA} from '../../config/offline-data';
 
 const fetchNotifications = async () => {
   return fetch(`${API_ENDPOINT}get-notification-messages`).then(response =>
@@ -11,6 +19,15 @@ const fetchNotifications = async () => {
   );
 };
 
+const handleClick = url => {
+  Linking.canOpenURL(url).then(supported => {
+    if (supported) {
+      Linking.openURL(url);
+    } else {
+      console.log("Don't know how to open URI: " + url);
+    }
+  });
+};
 export default ({navigation}) => {
   console.log(API_ENDPOINT);
   const [messages, setMessages] = React.useState(false);
@@ -31,12 +48,7 @@ export default ({navigation}) => {
       })
       .catch(error => {
         console.log(error);
-        setMessages([
-          {
-            message: 'This a sample message from the team',
-            date: '16 June 2020',
-          },
-        ]);
+        setMessages(LINKS_DATA);
         setRefreshing(false);
       });
 
@@ -57,12 +69,7 @@ export default ({navigation}) => {
       })
       .catch(error => {
         console.log(error);
-        setMessages([
-          {
-            message: 'This a sample message from the team',
-            date: '16 June 2020',
-          },
-        ]);
+        setMessages(LINKS_DATA);
         Toast.show({
           text: 'Swipe down to refresh!',
           buttonText: 'Okay',
@@ -86,13 +93,24 @@ export default ({navigation}) => {
           title="Refreshing..."
         />
       }>
-      {messages.map(({message, date}, index) => (
-        <View style={styles.listView} key={index}>
-          <View style={styles.listData}>
-            <Icon active name="link" />
-            <Text style={styles.listText}>{message}</Text>
+      <Header backgroundColor={PRIMARY_DARK_COLOR}>
+        <Body>
+          <Title>Useful Links</Title>
+        </Body>
+      </Header>
+      {messages.map(({linkText, linkUrl}, index) => (
+        <TouchableOpacity
+          key={index}
+          onPress={() => {
+            handleClick(linkUrl);
+          }}>
+          <View style={styles.listView}>
+            <View style={styles.listData}>
+              <Icon active name="link" />
+              <Text style={styles.listText}>{linkText}</Text>
+            </View>
           </View>
-        </View>
+        </TouchableOpacity>
       ))}
     </Content>
   );
@@ -101,22 +119,26 @@ export default ({navigation}) => {
 const styles = StyleSheet.create({
   listView: {
     flex: 1,
-    flexDirection: 'column',
+    flexDirection: 'row',
     justifyContent: 'flex-start',
     alignItems: 'center',
     paddingLeft: 10,
+    marginRight: 10,
     paddingTop: 15,
-    borderTopWidth: 0.5,
+    paddingRight: 25,
+    borderTopWidth: 1,
   },
   listData: {
-    // flex: 1,
     flexDirection: 'row',
     justifyContent: 'flex-start',
-    borderWidth: 1,
     alignItems: 'center',
   },
   listText: {
-    // paddingRight: 10,
+    paddingRight: 20,
     padding: 10,
+    fontWeight: 'bold',
+    fontSize: 15,
+    fontStyle: 'italic',
+    color: PRIMARY_DARK_COLOR,
   },
 });
