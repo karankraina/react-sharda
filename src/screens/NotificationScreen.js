@@ -21,7 +21,7 @@ import Loading from '../components/Loading';
 const fetchNotifications = async () => {
   return fetch(`${API_ENDPOINT}get-notification-messages`).then(response =>
     response.json(),
-  );
+  ).then(({data}) => data);
 };
 
 export default ({ navigation }) => {
@@ -124,7 +124,7 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'column',
     justifyContent: 'space-between',
-    alignItems: 'center',
+    alignItems: 'flex-start',
     paddingLeft: 20,
     paddingTop: 15,
     borderTopWidth: 0.5,

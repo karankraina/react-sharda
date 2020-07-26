@@ -13,10 +13,10 @@ import Loading from '../components/Loading';
 import {PRIMARY_DARK_COLOR} from '../../config/colors';
 import {LINKS_DATA} from '../../config/offline-data';
 
-const fetchNotifications = async () => {
-  return fetch(`${API_ENDPOINT}get-notification-messages`).then(response =>
+const fetchLinks = async () => {
+  return fetch(`${API_ENDPOINT}get-android-links`).then(response =>
     response.json(),
-  );
+  ).then(({data}) => data);
 };
 
 const handleClick = url => {
@@ -35,7 +35,7 @@ export default ({navigation}) => {
 
   const onRefresh = React.useCallback(() => {
     setRefreshing(true);
-    fetchNotifications()
+    fetchLinks()
       .then(data => {
         setMessages(data);
         setRefreshing(false);
@@ -56,7 +56,7 @@ export default ({navigation}) => {
   }, []);
 
   !messages &&
-    fetchNotifications()
+    fetchLinks()
       .then(data => {
         console.log(data);
         setMessages(data);

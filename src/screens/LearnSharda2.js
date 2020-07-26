@@ -74,6 +74,12 @@ const LessonList = ({ navigation }) => {
         console.log(error);
         setLessons(LESSON_LIST);
         setRefreshing(false);
+        Toast.show({
+          text: 'Swipe down to refresh!',
+          buttonText: 'Okay',
+          type: 'danger',
+          duration: 3000,
+        });
       });
   }, []);
 
@@ -95,7 +101,7 @@ const LessonList = ({ navigation }) => {
         Toast.show({
           text: 'Swipe down to refresh!',
           buttonText: 'Okay',
-          type: 'success',
+          type: 'danger',
           duration: 3000,
         });
       });
