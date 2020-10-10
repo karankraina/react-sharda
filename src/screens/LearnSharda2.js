@@ -47,7 +47,7 @@ export default () => {
 };
 
 const fetchLessons = async () => {
-  return fetch(`${API_ENDPOINT}get-lesson-list`).then(response =>
+  return fetch(`${API_ENDPOINT}lessons?listOnly=true`).then(response =>
     response.json(),
   );
 };
@@ -72,7 +72,7 @@ const LessonList = ({ navigation }) => {
       })
       .catch(error => {
         console.log(error);
-        setLessons(LESSON_LIST);
+        // setLessons(LESSON_LIST);
         setRefreshing(false);
         Toast.show({
           text: 'Swipe down to refresh!',
@@ -97,7 +97,7 @@ const LessonList = ({ navigation }) => {
       })
       .catch(error => {
         console.log(error);
-        setLessons(LESSON_LIST);
+        // setLessons(LESSON_LIST);
         Toast.show({
           text: 'Swipe down to refresh!',
           buttonText: 'Okay',

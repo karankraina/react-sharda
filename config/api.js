@@ -1,1 +1,1 @@
-export const API_ENDPOINT = 'https://learnsharda-dev.herokuapp.com/api/'
+export const API_ENDPOINT = 'https://sharda.vercel.app/api/mobile/'

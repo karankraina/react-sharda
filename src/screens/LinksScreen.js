@@ -5,21 +5,96 @@ import {
   StyleSheet,
   TouchableOpacity,
   Linking,
+  Platform, PermissionsAndroid
 } from 'react-native';
-import {Header, Body, Title, Toast, Content, Text, Icon} from 'native-base';
+//Import RNFetchBlob for the file download
+import RNFetchBlob from 'rn-fetch-blob';
+import { Header, Body, Title, Toast, Content, Text, Icon } from 'native-base';
 
-import {API_ENDPOINT} from '../../config/api';
+import { API_ENDPOINT } from '../../config/api';
 import Loading from '../components/Loading';
-import {PRIMARY_DARK_COLOR} from '../../config/colors';
-import {LINKS_DATA} from '../../config/offline-data';
+import { PRIMARY_DARK_COLOR } from '../../config/colors';
 
-const fetchLinks = async () => {
-  return fetch(`${API_ENDPOINT}get-android-links`).then(response =>
-    response.json(),
-  ).then(({data}) => data);
+const checkPermission = async (url, fileType) => {
+
+  //Function to check the platform
+  //If iOS the start downloading
+  //If Android then ask for runtime permission
+
+  if (Platform.OS === 'ios') {
+    downloadImage(url, fileType);
+  } else {
+    try {
+      const granted = await PermissionsAndroid.request(
+        PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
+        {
+          title: 'Storage Permission Required',
+          message: 'This app needs access to your storage to download Files',
+        }
+      );
+      if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+        //Once user grant the permission start downloading
+        console.log('Storage Permission Granted.');
+        downloadImage(url, fileType);
+      } else {
+        //If permission denied then show alert 'Storage Permission Not Granted'
+        alert('Storage Permission Not Granted');
+      }
+    } catch (err) {
+      //To handle permission related issue
+      console.warn(err);
+    }
+  }
 };
 
-const handleClick = url => {
+const downloadImage = (url, fileType) => {
+  //Main function to download the image
+  let date = new Date(); //To add the time suffix in filename
+
+  //Getting the extention of the file
+  let ext = `.${fileType}`
+  //Get config and fs from RNFetchBlob
+  //config: To pass the downloading related options
+  //fs: To get the directory path in which we want our image to download
+  const { config, fs } = RNFetchBlob;
+  let PictureDir = fs.dirs.PictureDir;
+  let options = {
+    fileCache: true,
+    addAndroidDownloads: {
+      //Related to the Android only
+      useDownloadManager: true,
+      notification: true,
+      path:
+        PictureDir +
+        '/image_' + Math.floor(date.getTime() + date.getSeconds() / 2) + ext,
+      description: 'Image',
+    },
+  };
+  config(options)
+    .fetch('GET', url)
+    .then(res => {
+      //Showing alert after successful downloading
+      Toast.show({
+        text: "File downloaded!",
+        buttonText: 'Okay',
+        type: 'success',
+        duration: 3000,
+      });
+    });
+};
+
+const getExtention = filename => {
+  //To get the file extension
+  return /[.]/.exec(filename) ? /[^.]+$/.exec(filename) : undefined;
+};
+
+const fetchLinks = async () => {
+  return fetch(`${API_ENDPOINT}links`).then(response =>
+    response.json(),
+  )
+};
+
+const openUrl = (url) => {
   Linking.canOpenURL(url).then(supported => {
     if (supported) {
       Linking.openURL(url);
@@ -28,7 +103,17 @@ const handleClick = url => {
     }
   });
 };
-export default ({navigation}) => {
+
+const handleClick = (url, downloadable, fileType) => {
+  if (!downloadable) {
+    checkPermission(url, fileType)
+  } else {
+    openUrl(url)
+  }
+
+
+};
+export default ({ navigation }) => {
   console.log(API_ENDPOINT);
   const [messages, setMessages] = React.useState(false);
   const [refreshing, setRefreshing] = React.useState(false);
@@ -43,12 +128,17 @@ export default ({navigation}) => {
           text: 'Messages Retrieved',
           buttonText: 'Okay',
           type: 'success',
-          duration: 3000,
+          duration: 1000,
         });
       })
       .catch(error => {
         console.log(error);
-        setMessages(LINKS_DATA);
+        Toast.show({
+          text: 'Some Error occured!',
+          buttonText: 'Close',
+          type: 'danger',
+          duration: 1000,
+        });
         setRefreshing(false);
       });
 
@@ -61,20 +151,19 @@ export default ({navigation}) => {
         console.log(data);
         setMessages(data);
         Toast.show({
-          text: 'Swipe down to refresh!',
+          text: 'Messages Retrieved',
           buttonText: 'Okay',
           type: 'success',
-          duration: 3000,
+          duration: 1000,
         });
       })
       .catch(error => {
         console.log(error);
-        setMessages(LINKS_DATA);
         Toast.show({
-          text: 'Swipe down to refresh!',
-          buttonText: 'Okay',
-          type: 'success',
-          duration: 3000,
+          text: 'Some Error occured!',
+          buttonText: 'Close',
+          type: 'danger',
+          duration: 1000,
         });
       });
   if (!messages) {
@@ -98,11 +187,11 @@ export default ({navigation}) => {
           <Title>Useful Links</Title>
         </Body>
       </Header>
-      {messages.map(({linkText, linkUrl}, index) => (
+      {messages.map(({ linkText, linkUrl, downloadable = false, fileType }, index) => (
         <TouchableOpacity
           key={index}
           onPress={() => {
-            handleClick(linkUrl);
+            handleClick(linkUrl, downloadable, fileType);
           }}>
           <View style={styles.listView}>
             <View style={styles.listData}>

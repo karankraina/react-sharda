@@ -1,21 +1,86 @@
 import React from 'react';
-import {Image, RefreshControl, Linking, TouchableOpacity} from 'react-native';
-import {
-  H1,
-  Content,
-  Card,
-  CardItem,
-  Icon,
-  Text,
-  Button,
-  Toast,
-  Left,
-  Body,
-  Right,
-} from 'native-base';
+import { Image, RefreshControl, Linking, TouchableOpacity, Platform, PermissionsAndroid } from 'react-native';
+//Import RNFetchBlob for the file download
+import RNFetchBlob from 'rn-fetch-blob';
+import { H1, Content, Card, CardItem, Icon, Text, Button, Toast, Left, Body, Right } from 'native-base';
 
-import {API_ENDPOINT} from '../../config/api';
+import { API_ENDPOINT } from '../../config/api';
 import Loading from '../components/Loading';
+
+const checkPermission = async (url) => {
+
+  //Function to check the platform
+  //If iOS the start downloading
+  //If Android then ask for runtime permission
+
+  if (Platform.OS === 'ios') {
+    downloadImage(url);
+  } else {
+    try {
+      const granted = await PermissionsAndroid.request(
+        PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
+        {
+          title: 'Storage Permission Required',
+          message: 'This app needs access to your storage to download Files',
+        }
+      );
+      if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+        //Once user grant the permission start downloading
+        console.log('Storage Permission Granted.');
+        downloadImage(url);
+      } else {
+        //If permission denied then show alert 'Storage Permission Not Granted'
+        alert('Storage Permission Not Granted');
+      }
+    } catch (err) {
+      //To handle permission related issue
+      console.warn(err);
+    }
+  }
+};
+
+const downloadImage = (url) => {
+  //Main function to download the image
+  let date = new Date(); //To add the time suffix in filename
+
+  //Getting the extention of the file
+  let ext = getExtention(url);
+  ext = '.' + ext[0];
+  //Get config and fs from RNFetchBlob
+  //config: To pass the downloading related options
+  //fs: To get the directory path in which we want our image to download
+  const { config, fs } = RNFetchBlob;
+  let PictureDir = fs.dirs.PictureDir;
+  let options = {
+    fileCache: true,
+    addAndroidDownloads: {
+      //Related to the Android only
+      useDownloadManager: true,
+      notification: true,
+      path:
+        PictureDir +
+        '/image_' + Math.floor(date.getTime() + date.getSeconds() / 2) + ext,
+      description: 'Image',
+    },
+  };
+  config(options)
+    .fetch('GET', url)
+    .then(res => {
+      //Showing alert after successful downloading
+      Toast.show({
+        text: "File downloaded!",
+        buttonText: 'Okay',
+        type: 'success',
+        duration: 3000,
+      });
+    });
+};
+
+const getExtention = filename => {
+  //To get the file extension
+  return /[.]/.exec(filename) ? /[^.]+$/.exec(filename) : undefined;
+};
+
 const handleClick = url => {
   Linking.canOpenURL(url).then(supported => {
     if (supported) {
@@ -37,12 +102,12 @@ function wait(timeout) {
   });
 }
 const fetchImages = async () => {
-  return fetch(`${API_ENDPOINT}get-gallery-posts`).then(response =>
+  return fetch(`${API_ENDPOINT}gallery`).then(response =>
     response.json(),
   );
 };
 
-export default ({navigation}) => {
+export default ({ navigation }) => {
   console.log(API_ENDPOINT);
   const [images, setImages] = React.useState(false);
   const [refreshing, setRefreshing] = React.useState(false);
@@ -54,18 +119,18 @@ export default ({navigation}) => {
         setImages(data);
         setRefreshing(false);
         Toast.show({
-          text: 'Data Refreshed',
+          text: 'Messages Retrieved',
           buttonText: 'Okay',
           type: 'success',
-          duration: 3000,
+          duration: 1000,
         });
       })
       .catch(error => {
         Toast.show({
-          text: 'Error',
-          buttonText: 'Okay',
+          text: 'Some Error occured!',
+          buttonText: 'Close',
           type: 'danger',
-          duration: 3000,
+          duration: 1000,
         });
       });
 
@@ -77,10 +142,10 @@ export default ({navigation}) => {
       console.log(data);
       setImages(data);
       Toast.show({
-        text: 'Swipe down to refresh!',
+        text: 'Messages Retrieved',
         buttonText: 'Okay',
         type: 'success',
-        duration: 3000,
+        duration: 1000,
       });
     });
   if (!images) {
@@ -99,7 +164,7 @@ export default ({navigation}) => {
           title="Refreshing..."
         />
       }>
-      {images.map(({publicurl: uri, title, contributor, subtitle}, index) => (
+      {images.map(({ publicurl: uri, title, contributor, subtitle }, index) => (
         <Card key={index}>
           <CardItem>
             <Left>
@@ -111,8 +176,8 @@ export default ({navigation}) => {
           </CardItem>
           <CardItem cardBody>
             <Image
-              source={{uri: `https:${uri}`}}
-              style={{height: 400, width: null, flex: 1}}
+              source={{ uri }}
+              style={{ height: 400, width: null, flex: 1 }}
             />
           </CardItem>
           <CardItem>
@@ -121,14 +186,14 @@ export default ({navigation}) => {
                 <Icon active name="download" />
                 <TouchableOpacity
                   onPress={() => {
-                    handleClick(`https:${uri}`);
+                    checkPermission(uri);
                   }}>
                   <Text>Download</Text>
                 </TouchableOpacity>
               </Button>
             </Left>
 
-            <Body style={{marginRight: -20}}>
+            <Body style={{ marginRight: -20 }}>
               <Button transparent>
                 <Icon active name="md-person" />
                 <Text>By: {contributor}</Text>

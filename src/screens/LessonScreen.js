@@ -10,11 +10,10 @@ import {fetchLessonOffline} from '../../config/offline-data';
 import Loading from '../components/Loading';
 
 const fetchLessonData = async lessonId => {
-  return fetch(`${API_ENDPOINT}get-lesson-data?id=${lessonId}`)
+  return fetch(`${API_ENDPOINT}lessons?lessonId=${lessonId}`)
     .then(response => {
       return response.json();
-    })
-    .then(response => response.data);
+    }).then(({lessonOfflineData}) => lessonOfflineData)
 };
 
 export default ({navigation, route}) => {
@@ -33,13 +32,17 @@ export default ({navigation, route}) => {
           text: 'Messages Retrieved',
           buttonText: 'Okay',
           type: 'success',
-          duration: 3000,
+          duration: 1000,
         });
       })
       .catch(error => {
         console.log(error);
-        const {lessonOfflineData} = fetchLessonOffline(lessonId);
-        setLessonData('lessonOfflineData');
+        Toast.show({
+          text: 'Some Error occured!',
+          buttonText: 'Close',
+          type: 'danger',
+          duration: 1000,
+        });
         setRefreshing(false);
       });
 
@@ -52,21 +55,21 @@ export default ({navigation, route}) => {
         console.log(data);
         setLessonData(data);
         Toast.show({
-          text: 'Swipe down to refresh!',
+          text: 'Messages Retrieved',
           buttonText: 'Okay',
           type: 'success',
-          duration: 3000,
+          duration: 1000,
         });
       })
       .catch(error => {
         console.log(error);
-        const {lessonOfflineData} = fetchLessonOffline(lessonId);
+        // const {lessonOfflineData} = fetchLessonOffline(lessonId);
         setLessonData('lessonOfflineData');
         Toast.show({
-          text: 'There was some error. Please Try again',
-          buttonText: 'Okay',
+          text: 'Some Error occured!',
+          buttonText: 'Close',
           type: 'danger',
-          duration: 3000,
+          duration: 1000,
         });
       });
   if (!lessonData) {

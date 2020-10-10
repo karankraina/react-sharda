@@ -19,9 +19,9 @@ import { PRIMARY_DARK_COLOR } from '../../config/colors';
 import Loading from '../components/Loading';
 
 const fetchNotifications = async () => {
-  return fetch(`${API_ENDPOINT}get-notification-messages`).then(response =>
+  return fetch(`${API_ENDPOINT}notifications`).then(response =>
     response.json(),
-  ).then(({data}) => data);
+  )
 };
 
 export default ({ navigation }) => {
@@ -39,17 +39,17 @@ export default ({ navigation }) => {
           text: 'Messages Retrieved',
           buttonText: 'Okay',
           type: 'success',
-          duration: 3000,
+          duration: 1000,
         });
       })
       .catch(error => {
         console.log(error);
-        setMessages([
-          {
-            message: 'This a sample message from the team',
-            date: '16 June 2020',
-          },
-        ]);
+        Toast.show({
+          text: 'Some Error occured!',
+          buttonText: 'Close',
+          type: 'danger',
+          duration: 1000,
+        });
         setRefreshing(false);
       });
 
@@ -62,25 +62,19 @@ export default ({ navigation }) => {
         console.log(data);
         setMessages(data);
         Toast.show({
-          text: 'Swipe down to refresh!',
+          text: 'Messages Retrieved',
           buttonText: 'Okay',
           type: 'success',
-          duration: 3000,
+          duration: 1000,
         });
       })
       .catch(error => {
         console.log(error);
-        setMessages([
-          {
-            message: 'This a sample message from the team',
-            date: '16 June 2020',
-          },
-        ]);
         Toast.show({
-          text: 'Swipe down to refresh!',
-          buttonText: 'Okay',
-          type: 'success',
-          duration: 3000,
+          text: 'Some Error occured!',
+          buttonText: 'Close',
+          type: 'danger',
+          duration: 1000,
         });
       });
   if (!messages) {

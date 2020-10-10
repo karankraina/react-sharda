@@ -9,7 +9,7 @@ import {PRIMARY_DARK_COLOR} from '../../config/colors';
 import Loading from '../components/Loading';
 
 const fetchAboutData = async () => {
-  return fetch(`${API_ENDPOINT}get-about-data`).then(response =>
+  return fetch(`${API_ENDPOINT}aboutus`).then(response =>
     response.json(),
   );
 };
@@ -29,24 +29,16 @@ export default ({navigation}) => {
           text: 'Messages Retrieved',
           buttonText: 'Okay',
           type: 'success',
-          duration: 3000,
+          duration: 1000,
         });
       })
       .catch(error => {
-        console.log(error);
-        setaboutData([
-          {
-            text:
-              'The team “ CORE Sharda team” who has been working hard from last 4 years have been propagating the Sharda through various sources. Today the team have been conducting online classes and workshops to promote the Sharda within and outside community.',
-            image:
-              '//images.ctfassets.net/1nrffoq757p2/7ApzROHdrubFaUGMlp0ip1/724c969c1431d1d1ec4c2e62cf87b263/C__Users_KARANR_1_AppData_Local_Temp_upload_12cdb41b1c57d1494dda530594ee880c',
-            imageHeight: '1',
-          },
-          {
-            text:
-              'Few contributions of the team so far are \n1. Introduced Sharda Lipi  to 2000 Students so far \n2. 400+ students are part of Core team now who have gained an expertise as Sharda teachers. \n3. Online training materials in form of YouTube videos. \n4. Developed Android Keyboard \n5. Developed Android app for Sharda learning \n6. Conducted various Workshops,webinars and seminars related to Sharda script. \n7. Core Sharda team publishes the quarterly Journal “Maatrika” exclusively written in Sharda Script. \n8. Team is working daily on transcription of  various important  manuscripts with more than 150 sanskrit scholars',
-          },
-        ]);
+        Toast.show({
+          text: 'Some Error occured!',
+          buttonText: 'Close',
+          type: 'danger',
+          duration: 1000,
+        });
         setRefreshing(false);
       });
 
@@ -59,32 +51,19 @@ export default ({navigation}) => {
         console.log(data);
         setaboutData(data);
         Toast.show({
-          text: 'Swipe down to refresh!',
+          text: 'Messages Retrieved',
           buttonText: 'Okay',
           type: 'success',
-          duration: 3000,
+          duration: 1000,
         });
       })
       .catch(error => {
         console.log(error);
-        setaboutData([
-          {
-            text:
-              'The team “ CORE Sharda team” who has been working hard from last 4 years have been propagating the Sharda through various sources. Today the team have been conducting online classes and workshops to promote the Sharda within and outside community.',
-            image:
-              '//images.ctfassets.net/1nrffoq757p2/7ApzROHdrubFaUGMlp0ip1/724c969c1431d1d1ec4c2e62cf87b263/C__Users_KARANR_1_AppData_Local_Temp_upload_12cdb41b1c57d1494dda530594ee880c',
-            imageHeight: '1',
-          },
-          {
-            text:
-              'Few contributions of the team so far are \n1. Introduced Sharda Lipi  to 2000 Students so far \n2. 400+ students are part of Core team now who have gained an expertise as Sharda teachers. \n3. Online training materials in form of YouTube videos. \n4. Developed Android Keyboard \n5. Developed Android app for Sharda learning \n6. Conducted various Workshops,webinars and seminars related to Sharda script. \n7. Core Sharda team publishes the quarterly Journal “Maatrika” exclusively written in Sharda Script. \n8. Team is working daily on transcription of  various important  manuscripts with more than 150 sanskrit scholars',
-          },
-        ]);
         Toast.show({
-          text: 'Swipe down to refresh!',
-          buttonText: 'Okay',
-          type: 'success',
-          duration: 3000,
+          text: 'Some Error occured!',
+          buttonText: 'Close',
+          type: 'danger',
+          duration: 1000,
         });
       });
   if (!aboutData) {
