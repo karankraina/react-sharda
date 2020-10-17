@@ -15,14 +15,14 @@ import { API_ENDPOINT } from '../../config/api';
 import Loading from '../components/Loading';
 import { PRIMARY_DARK_COLOR } from '../../config/colors';
 
-const checkPermission = async (url, fileType) => {
+const checkPermission = async (url, fileName) => {
 
   //Function to check the platform
   //If iOS the start downloading
   //If Android then ask for runtime permission
 
   if (Platform.OS === 'ios') {
-    downloadImage(url, fileType);
+    downloadImage(url, fileName);
   } else {
     try {
       const granted = await PermissionsAndroid.request(
@@ -35,7 +35,7 @@ const checkPermission = async (url, fileType) => {
       if (granted === PermissionsAndroid.RESULTS.GRANTED) {
         //Once user grant the permission start downloading
         console.log('Storage Permission Granted.');
-        downloadImage(url, fileType);
+        downloadImage(url, fileName);
       } else {
         //If permission denied then show alert 'Storage Permission Not Granted'
         alert('Storage Permission Not Granted');
@@ -47,27 +47,26 @@ const checkPermission = async (url, fileType) => {
   }
 };
 
-const downloadImage = (url, fileType) => {
+const downloadImage = (url, fileName) => {
   //Main function to download the image
   let date = new Date(); //To add the time suffix in filename
 
   //Getting the extention of the file
-  let ext = `.${fileType}`
+  let ext = `.${fileName}`
   //Get config and fs from RNFetchBlob
   //config: To pass the downloading related options
   //fs: To get the directory path in which we want our image to download
   const { config, fs } = RNFetchBlob;
-  let PictureDir = fs.dirs.PictureDir;
+  let DownloadDir = fs.dirs.DownloadDir;
   let options = {
     fileCache: true,
     addAndroidDownloads: {
       //Related to the Android only
       useDownloadManager: true,
       notification: true,
-      path:
-        PictureDir +
-        '/image_' + Math.floor(date.getTime() + date.getSeconds() / 2) + ext,
-      description: 'Image',
+      title : fileName,
+      path: DownloadDir + fileName,
+      description: 'Downloading File',
     },
   };
   config(options)
@@ -104,15 +103,16 @@ const openUrl = (url) => {
   });
 };
 
-const handleClick = (url, downloadable, fileType) => {
-  if (!downloadable) {
-    checkPermission(url, fileType)
+const handleClick = (url, downloadable, fileName) => {
+  if (downloadable) {
+    checkPermission(url, fileName)
   } else {
     openUrl(url)
   }
 
 
 };
+
 export default ({ navigation }) => {
   console.log(API_ENDPOINT);
   const [messages, setMessages] = React.useState(false);
@@ -187,11 +187,11 @@ export default ({ navigation }) => {
           <Title>Useful Links</Title>
         </Body>
       </Header>
-      {messages.map(({ linkText, linkUrl, downloadable = false, fileType }, index) => (
+      {messages.map(({ linkText, linkUrl, downloadable = false, fileName = 'TestDoc.docx' }, index) => (
         <TouchableOpacity
           key={index}
           onPress={() => {
-            handleClick(linkUrl, downloadable, fileType);
+            handleClick(linkUrl, downloadable, fileName);
           }}>
           <View style={styles.listView}>
             <View style={styles.listData}>

@@ -69,7 +69,7 @@ export default function App() {
               name="Links"
               component={LinksScreen}
               options={{
-                tabBarLabel: 'Links',
+                tabBarLabel: 'More',
                 tabBarIcon: ({color}) => (
                   <MaterialCommunityIcons name="link" color={color} size={26} />
                 ),

@@ -1,5 +1,18 @@
 import React from 'react';
-import {Content, Textarea, Form, H1} from 'native-base';
+import {Content,Text, Textarea, Form, H1} from 'native-base';
+import {TouchableOpacity} from 'react-native';
+
+
+
+const openUrl = (url) => {
+  Linking.canOpenURL(url).then(supported => {
+    if (supported) {
+      Linking.openURL(url);
+    } else {
+      console.log("Don't know how to open URI: " + url);
+    }
+  });
+};
 
 const map = {
   '\u{111D1}': '\u0967',
@@ -120,7 +133,6 @@ export default () => {
   };
   const handleShardaTextChange = text => {
     setShardaText(text);
-    console.log({text, dev: unicodeToChar('\u{111B2}')});
     setHindiText(shardaToDevnagri(text));
   };
 
@@ -146,6 +158,22 @@ export default () => {
           placeholder="Sharda Text"
         />
       </Form>
+      <H1></H1>
+      <H1></H1>
+      <H1>Credits: </H1>
+      <H1></H1>
+      <TouchableOpacity
+          onPress={() => {
+            openUrl(linkUrl);
+          }}>
+          <Text style={{color: 'blue', fontWeight: 'bold'}}>* Online Sharda keyboard developed by Vikas Veshishth Gargay *</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => {
+            openUrl('https://github.com/googlei18n/noto-fonts-alpha');
+          }}>
+        </TouchableOpacity>
+        <Text style={{color: 'blue', fontWeight: 'bold'}}>* The Sharada font is from : [https://github.com/googlei18n/noto-fonts-alpha] *</Text>
     </Content>
   );
 };

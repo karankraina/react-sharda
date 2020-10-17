@@ -14,6 +14,7 @@ const fetchLessonData = async lessonId => {
     .then(response => {
       return response.json();
     }).then(({lessonOfflineData}) => lessonOfflineData)
+    .catch(error => console.log(error))
 };
 
 export default ({navigation, route}) => {

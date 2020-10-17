@@ -44,7 +44,7 @@ export default () => {
         name="LalVaakh"
         component={LalVaakhScreen}
         options={{
-          title: 'Our Literature',
+          title: 'Team\'s Work',
           headerStyle: {backgroundColor: PRIMARY_DARK_COLOR},
           headerTintColor: PRIMARY_TEXT_COLOR,
           headerTitleStyle: {fontWeight: 'bold'},
@@ -115,7 +115,7 @@ const Homescreen = ({navigation}) => {
                     color={PRIMARY_MEDIUM_COLOR}
                     size={75}
                   />
-                  <Text style={styles.cellText}>Our Literature</Text>
+                  <Text style={styles.cellText}>Team's Work</Text>
                 </View>
               </TouchableOpacity>
             </Col>

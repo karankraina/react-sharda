@@ -7,14 +7,14 @@ import { H1, Content, Card, CardItem, Icon, Text, Button, Toast, Left, Body, Rig
 import { API_ENDPOINT } from '../../config/api';
 import Loading from '../components/Loading';
 
-const checkPermission = async (url) => {
+const checkPermission = async (url, fileName) => {
 
   //Function to check the platform
   //If iOS the start downloading
   //If Android then ask for runtime permission
 
   if (Platform.OS === 'ios') {
-    downloadImage(url);
+    downloadImage(url, fileName);
   } else {
     try {
       const granted = await PermissionsAndroid.request(
@@ -27,7 +27,7 @@ const checkPermission = async (url) => {
       if (granted === PermissionsAndroid.RESULTS.GRANTED) {
         //Once user grant the permission start downloading
         console.log('Storage Permission Granted.');
-        downloadImage(url);
+        downloadImage(url, fileName);
       } else {
         //If permission denied then show alert 'Storage Permission Not Granted'
         alert('Storage Permission Not Granted');
@@ -39,28 +39,27 @@ const checkPermission = async (url) => {
   }
 };
 
-const downloadImage = (url) => {
+const downloadImage = (url, fileName) => {
   //Main function to download the image
   let date = new Date(); //To add the time suffix in filename
 
   //Getting the extention of the file
-  let ext = getExtention(url);
-  ext = '.' + ext[0];
+  // let ext = getExtention(url);
+  // ext = '.' + ext[0];
   //Get config and fs from RNFetchBlob
   //config: To pass the downloading related options
   //fs: To get the directory path in which we want our image to download
   const { config, fs } = RNFetchBlob;
-  let PictureDir = fs.dirs.PictureDir;
+  let DownloadDir = fs.dirs.DownloadDir;
   let options = {
     fileCache: true,
     addAndroidDownloads: {
       //Related to the Android only
       useDownloadManager: true,
       notification: true,
-      path:
-        PictureDir +
-        '/image_' + Math.floor(date.getTime() + date.getSeconds() / 2) + ext,
-      description: 'Image',
+      title : fileName,
+      path: DownloadDir + fileName,
+      description: 'Downloading Image',
     },
   };
   config(options)
@@ -164,7 +163,7 @@ export default ({ navigation }) => {
           title="Refreshing..."
         />
       }>
-      {images.map(({ publicurl: uri, title, contributor, subtitle }, index) => (
+      {images.map(({ publicurl: uri, title, contributor, subtitle, fileName = 'image.jpeg' }, index) => (
         <Card key={index}>
           <CardItem>
             <Left>
@@ -186,7 +185,7 @@ export default ({ navigation }) => {
                 <Icon active name="download" />
                 <TouchableOpacity
                   onPress={() => {
-                    checkPermission(uri);
+                    checkPermission(uri, fileName);
                   }}>
                   <Text>Download</Text>
                 </TouchableOpacity>
