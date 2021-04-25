@@ -1,5 +1,5 @@
 {
-  "name": "AwesomeProject",
+  "name": "core_sharda_team",
   "version": "0.0.1",
   "private": true,
   "scripts": {
@@ -15,16 +15,20 @@
     "@react-navigation/drawer": "^5.8.2",
     "@react-navigation/material-bottom-tabs": "^5.2.10",
     "@react-navigation/native": "^5.5.1",
+    "@react-navigation/stack": "^5.5.1",
     "native-base": "^2.13.12",
     "react": "16.11.0",
     "react-native": "0.62.2",
     "react-native-gesture-handler": "^1.6.1",
     "react-native-paper": "^3.10.1",
     "react-native-reanimated": "^1.9.0",
+    "react-native-render-html": "^4.2.0",
     "react-native-safe-area-context": "^3.0.2",
     "react-native-screens": "^2.8.0",
     "react-native-vector-icons": "^6.6.0",
-    "react-navigation": "^4.3.9"
+    "react-native-webview": "^10.3.1",
+    "react-navigation": "^4.3.9",
+    "rn-fetch-blob": "^0.12.0"
   },
   "devDependencies": {
     "@babel/core": "^7.6.2",
