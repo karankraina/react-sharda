@@ -97,6 +97,7 @@ const LessonList = ({ navigation }) => {
       })
       .catch(error => {
         console.log(error);
+        setRefreshing(false);
         // setLessons(LESSON_LIST);
         Toast.show({
           text: 'Swipe down to refresh!',
@@ -119,13 +120,13 @@ const LessonList = ({ navigation }) => {
           title="Refreshing..."
         />
       }>
-      {lessonList.map(({ id, lessonTitle }, index) => (
+      {lessonList.map(({ lessonId, lessonTitle }, index) => (
         <TouchableOpacity
           style={styles.listBox}
           key={index}
           onPress={() => {
             navigation.navigate('Lesson', {
-              lessonId: id,
+              lessonId,
             });
           }}>
           <View style={styles.listItem}>

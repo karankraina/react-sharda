@@ -187,7 +187,7 @@ export default ({ navigation }) => {
           <Title>Useful Links</Title>
         </Body>
       </Header>
-      {messages.map(({ linkText, linkUrl, downloadable = false, fileName = 'TestDoc.docx' }, index) => (
+      {messages.map(({ title, linkUrl, downloadable = false, fileName = 'TestDoc.docx' }, index) => (
         <TouchableOpacity
           key={index}
           onPress={() => {
@@ -196,7 +196,7 @@ export default ({ navigation }) => {
           <View style={styles.listView}>
             <View style={styles.listData}>
               <Icon active name="link" />
-              <Text style={styles.listText}>{linkText}</Text>
+              <Text style={styles.listText}>{title}</Text>
             </View>
           </View>
         </TouchableOpacity>

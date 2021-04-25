@@ -36,6 +36,8 @@
 		B7367BDA734145EDB3075F7C /* SimpleLineIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 27C808E7A573473390156D01 /* SimpleLineIcons.ttf */; };
 		4CD327FFC5FA4F59AA48F3FB /* Zocial.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3648CCE20F0342E69465F264 /* Zocial.ttf */; };
 		C6BDD2B1060C46D9A815AE1A /* Noto Sans Sharada.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2F9E1D08A5374E7FB9CEB95D /* Noto Sans Sharada.ttf */; };
+		882D15C5434847C291C2B9DA /* APUni Kashmiri Sharada.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C15D409D064E406E921C0899 /* APUni Kashmiri Sharada.ttf */; };
+		DB71110E32A84073948840A3 /* Sharada.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1AE44E0776144ED6AA02642C /* Sharada.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -91,6 +93,8 @@
 		27C808E7A573473390156D01 /* SimpleLineIcons.ttf */ = {isa = PBXFileReference; name = "SimpleLineIcons.ttf"; path = "../node_modules/native-base/Fonts/SimpleLineIcons.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 		3648CCE20F0342E69465F264 /* Zocial.ttf */ = {isa = PBXFileReference; name = "Zocial.ttf"; path = "../node_modules/native-base/Fonts/Zocial.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 		2F9E1D08A5374E7FB9CEB95D /* Noto Sans Sharada.ttf */ = {isa = PBXFileReference; name = "Noto Sans Sharada.ttf"; path = "../assets/fonts/Noto Sans Sharada.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		C15D409D064E406E921C0899 /* APUni Kashmiri Sharada.ttf */ = {isa = PBXFileReference; name = "APUni Kashmiri Sharada.ttf"; path = "../assets/fonts/APUni Kashmiri Sharada.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		1AE44E0776144ED6AA02642C /* Sharada.ttf */ = {isa = PBXFileReference; name = "Sharada.ttf"; path = "../assets/fonts/Sharada.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -221,6 +225,8 @@
 				27C808E7A573473390156D01 /* SimpleLineIcons.ttf */,
 				3648CCE20F0342E69465F264 /* Zocial.ttf */,
 				2F9E1D08A5374E7FB9CEB95D /* Noto Sans Sharada.ttf */,
+				C15D409D064E406E921C0899 /* APUni Kashmiri Sharada.ttf */,
+				1AE44E0776144ED6AA02642C /* Sharada.ttf */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -384,6 +390,8 @@
 				B7367BDA734145EDB3075F7C /* SimpleLineIcons.ttf in Resources */,
 				4CD327FFC5FA4F59AA48F3FB /* Zocial.ttf in Resources */,
 				C6BDD2B1060C46D9A815AE1A /* Noto Sans Sharada.ttf in Resources */,
+				882D15C5434847C291C2B9DA /* APUni Kashmiri Sharada.ttf in Resources */,
+				DB71110E32A84073948840A3 /* Sharada.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

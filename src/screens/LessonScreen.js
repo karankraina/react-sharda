@@ -11,9 +11,8 @@ import Loading from '../components/Loading';
 
 const fetchLessonData = async lessonId => {
   return fetch(`${API_ENDPOINT}lessons?lessonId=${lessonId}`)
-    .then(response => {
-      return response.json();
-    }).then(({lessonOfflineData}) => lessonOfflineData)
+    .then(response => response.json())
+    .then(({lessonData}) => lessonData.replace(/&nbsp;/gm, ' ').replace(/\\"/gm, '"'))
     .catch(error => console.log(error))
 };
 

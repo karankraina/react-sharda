@@ -57,7 +57,7 @@ const downloadImage = (url, fileName) => {
       //Related to the Android only
       useDownloadManager: true,
       notification: true,
-      title : fileName,
+      title: fileName,
       path: DownloadDir + fileName,
       description: 'Downloading Image',
     },
@@ -163,7 +163,7 @@ export default ({ navigation }) => {
           title="Refreshing..."
         />
       }>
-      {images.map(({ publicurl: uri, title, contributor, subtitle, fileName = 'image.jpeg' }, index) => (
+      {images.map(({ image: uri, title, description, contributor, subtitle, fileName = 'image.jpeg' }, index) => (
         <Card key={index}>
           <CardItem>
             <Left>
@@ -178,6 +178,9 @@ export default ({ navigation }) => {
               source={{ uri }}
               style={{ height: 400, width: null, flex: 1 }}
             />
+          </CardItem>
+          <CardItem cardBody>
+            <Text>{description}</Text>
           </CardItem>
           <CardItem>
             <Left>

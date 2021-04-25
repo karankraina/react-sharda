@@ -1,8 +1,84 @@
 import React from 'react';
-import {Content,Text, Textarea, Form, H1} from 'native-base';
-import {TouchableOpacity} from 'react-native';
+import { Content, Button, Text, Textarea, Form, H1, Toast } from 'native-base';
+import { TouchableOpacity, PermissionsAndroid, Platform } from 'react-native';
+//Import RNFetchBlob for the file download
+import RNFetchBlob from 'rn-fetch-blob';
 
+import { API_ENDPOINT, APP_ENDPOINT } from '../../config/api';
+import Loading from '../components/Loading';
 
+const checkPermission = async (url, setLoading, hindiText, shardaText) => {
+
+  // Set loading tru
+  setLoading(true);
+  //Function to check the platform
+  //If iOS the start downloading
+  //If Android then ask for runtime permission
+
+  if (Platform.OS === 'ios') {
+    downloadImage(url, setLoading, hindiText, shardaText);
+  } else {
+    try {
+      const granted = await PermissionsAndroid.request(
+        PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
+        {
+          title: 'Storage Permission Required',
+          message: 'This app needs access to your storage to download Files',
+        }
+      );
+      if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+        //Once user grant the permission start downloading
+        console.log('Storage Permission Granted.');
+        downloadImage(url, setLoading, hindiText, shardaText);
+      } else {
+        //If permission denied then show alert 'Storage Permission Not Granted'
+        alert('Storage Permission Not Granted');
+      }
+    } catch (err) {
+      //To handle permission related issue
+      console.warn(err);
+    }
+  }
+};
+
+const downloadImage = (url, setLoading, hindiText = '', shardaText = '') => {
+  //Main function to download the image
+  let date = new Date(); //To add the time suffix in filename
+
+  //Getting the extention of the file
+  //Get config and fs from RNFetchBlob
+  //config: To pass the downloading related options
+  //fs: To get the directory path in which we want our image to download
+  const { config, fs } = RNFetchBlob;
+  let DownloadDir = fs.dirs.DownloadDir;
+  let options = {
+    fileCache: true,
+    addAndroidDownloads: {
+      //Related to the Android only
+      useDownloadManager: true,
+      notification: true,
+      title: 'CoreShardaText' + date,
+      path: DownloadDir + 'Sharda/CoreShardaText.pdf',
+      description: 'Downloading File',
+    },
+  };
+  config(options)
+    .fetch('GET', `${url}?text=${hindiText}`)
+    .then(res => {
+      //Showing alert after successful downloading
+      setLoading(false);
+      Toast.show({
+        text: "File downloaded!",
+        buttonText: 'Okay',
+        type: 'success',
+        duration: 3000,
+      });
+    })
+    .catch(error => {
+      console.log('Error', error)
+      setLoading(false);
+    })
+};
 
 const openUrl = (url) => {
   Linking.canOpenURL(url).then(supported => {
@@ -97,7 +173,7 @@ const map = {
   '\u{111B2}': '\u0939',
 };
 function unicodeToChar(text) {
-  return text.replace(/\\u[\dA-F]{4}/gi, function(match) {
+  return text.replace(/\\u[\dA-F]{4}/gi, function (match) {
     return String.fromCharCode(parseInt(match.replace(/\\u/g, ''), 16));
   });
 }
@@ -118,15 +194,16 @@ const shardaToDevnagri = shardaText =>
         (Object.entries(map)
           .map(([key, val]) => [unicodeToChar(key), val])
           .find(([sharda, devnagri]) => sharda === shardaGlyph) || [
-          '',
-          shardaGlyph,
-        ])[1],
+            '',
+            shardaGlyph,
+          ])[1],
     )
     .join('');
 
 export default () => {
   const [hindiText, setHindiText] = React.useState('');
   const [shardaText, setShardaText] = React.useState('');
+  const [loading, setLoading] = React.useState(false);
   const handleHindiTextChange = text => {
     setHindiText(text);
     setShardaText(devnagriToSharda(text));
@@ -135,6 +212,12 @@ export default () => {
     setShardaText(text);
     setHindiText(shardaToDevnagri(text));
   };
+  if (loading) {
+    // return <H1>Please wait while we fetch the latest images from our Sharda Gallery...</H1>;
+    return (
+      <Loading message="Generating PDF. It will we downloaded automatically..." />
+    );
+  }
 
   return (
     <Content padder>
@@ -151,29 +234,34 @@ export default () => {
       <H1>Sharda Text</H1>
       <Form>
         <Textarea
+          style={{ fontFamily: 'Sharada' }}
           rowSpan={8}
           onChangeText={text => handleShardaTextChange(text)}
           value={shardaText}
           bordered
           placeholder="Sharda Text"
         />
+        {/* <Button block disabled={true} success onPress={() => { checkPermission(`${API_ENDPOINT}generatepdf`, setLoading, 'hindiText', shardaText); }} style={{ marginTop: 40 }}>
+          <Text>Generate PDF</Text>
+        </Button> */}
       </Form>
       <H1></H1>
       <H1></H1>
       <H1>Credits: </H1>
       <H1></H1>
       <TouchableOpacity
-          onPress={() => {
-            openUrl(linkUrl);
-          }}>
-          <Text style={{color: 'blue', fontWeight: 'bold'}}>* Online Sharda keyboard developed by Vikas Veshishth Gargay *</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() => {
-            openUrl('https://github.com/googlei18n/noto-fonts-alpha');
-          }}>
-        </TouchableOpacity>
-        <Text style={{color: 'blue', fontWeight: 'bold'}}>* The Sharada font is from : [https://github.com/googlei18n/noto-fonts-alpha] *</Text>
+        onPress={() => {
+          openUrl(linkUrl);
+        }}>
+        <Text style={{ color: 'blue', fontWeight: 'bold' }}>* Online Sharda keyboard developed by Vikas Veshishth Gargay *</Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+        onPress={() => {
+          openUrl('https://www.aprantsoftware.com/sharada/');
+        }}>
+          <Text style={{ color: 'blue', fontWeight: 'bold' }}>* Sharada font developed by AprantSoftware : [AprantSoftware.com] *</Text>
+      </TouchableOpacity>
+      
     </Content>
   );
 };
