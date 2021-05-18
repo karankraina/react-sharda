@@ -4,14 +4,15 @@ import { API_HOST } from '../../config/api';
 export const httpRequest = async (urlAsKey, expireInMinutes = 60) => {
     try {
         let data = null;
-        
+
         // Fetch cached data from async storage
-        const value = await AsyncStorage.getItem(urlAsKey);
-        data = JSON.parse(value);
+        let value = await AsyncStorage.getItem(urlAsKey);
+        value = JSON.parse(value);
+        data = value.apiRes
 
         // there is data in cache && cache is expired
-        if (data !== null && data['expireAt'] &&
-            new Date(data.expireAt) < (new Date())) {
+        if (data !== null && value !== null &&value['expireAt'] &&
+            new Date(value.expireAt) < (new Date())) {
 
             // clear cache
             await AsyncStorage.removeItem(urlAsKey);
@@ -27,25 +28,26 @@ export const httpRequest = async (urlAsKey, expireInMinutes = 60) => {
         if (data === null) {
             console.log('NO DATA IN CACHE....TAKING NEW DATA');
             //fetch data
-            let apiRes = await fetch(`${API_HOST}${urlAsKey}`) //.then((response) => response.json());
-            apiRes = apiRes.json();
+            let apiRes = await fetch(`${API_HOST}${urlAsKey}`).then((response) => response.json());
+            console.log('FRESH DATA FROM API : ', typeof apiRes, apiRes);
 
             //set expire at
-            apiRes.expireAt = getExpireDate(expireInMinutes);
+            const expireAt = getExpireDate(expireInMinutes);
 
             //stringify object
-            const objectToStore = JSON.stringify(apiRes);
-
+            const objectToStore = JSON.stringify({ apiRes, expireAt });
+            console.log('STORING IN CACHE : ', objectToStore)
             //store object
             await AsyncStorage.setItem(urlAsKey, objectToStore)
 
-            data = JSON.parse(apiRes)
+            data = apiRes
 
         }
         console.log('FINAL DATA SENT ===================================: ', typeof data, data);
         return data;
     } catch (e) {
         // error reading value
+        console.log(e);
         throw new Error('No Internet !')
     }
 
