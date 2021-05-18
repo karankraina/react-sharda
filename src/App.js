@@ -51,7 +51,7 @@ export default function App() {
                 ),
               }}
             />
-            <Tab.Screen
+            {/* <Tab.Screen
               name="Sharda Translator"
               component={NotificationScreen}
               options={{
@@ -74,7 +74,7 @@ export default function App() {
                   <MaterialCommunityIcons name="link" color={color} size={26} />
                 ),
               }}
-            />
+            /> */}
           </Tab.Navigator>
         </NavigationContainer>
       </Container>
