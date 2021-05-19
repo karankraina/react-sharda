@@ -18,6 +18,7 @@ const Stack = createStackNavigator();
 import { API_ENDPOINT } from '../../config/api';
 import { LESSON_LIST } from '../../config/offline-data';
 import Loading from '../components/Loading';
+import { httpRequest } from '../services';
 
 export default () => {
   return (
@@ -47,6 +48,7 @@ export default () => {
 };
 
 const fetchLessons = async () => {
+  return httpRequest('lessons?listOnly=true&new=true')
   return fetch(`${API_ENDPOINT}lessons?listOnly=true`).then(response =>
     response.json(),
   );
