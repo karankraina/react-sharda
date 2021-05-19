@@ -1,6 +1,6 @@
 import React from 'react';
-import {StyleSheet, TouchableOpacity} from 'react-native';
-import {Container, Text, View, Thumbnail, H1} from 'native-base';
+import {StyleSheet, Text, TouchableOpacity} from 'react-native';
+import {Container, View, Thumbnail, H1} from 'native-base';
 import {Col, Row, Grid} from 'react-native-easy-grid';
 import {createStackNavigator} from '@react-navigation/stack';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -27,7 +27,7 @@ export default () => {
         name="Home"
         component={Homescreen}
         options={{
-          title: '𑆑𑆾𑆫 𑆯𑆳𑆫𑆢𑆳 𑆛𑆵𑆩',
+          title: '𑆯𑆳𑆫𑆢𑆳𑆥𑆵𑆜𑆁',
           headerStyle: {backgroundColor: PRIMARY_DARK_COLOR},
           headerTintColor: PRIMARY_TEXT_COLOR,
           headerTitleStyle: {fontWeight: 'bold'},
@@ -83,8 +83,7 @@ const Homescreen = ({navigation}) => {
             <Col style={styles.firstCol}>
               <Text style={styles.headText}>𑇄</Text>
               <Text style={styles.subHeadText}>
-                Core Sharda Team works to revive people's interest in the
-                ancient and sacred Sharda Script of Kashmir.
+              𑆯𑆳𑆫𑆢𑆳 𑆱𑆵𑆒𑆼𑆁 𑆯𑆳𑆫𑆢𑆳 𑆱𑆵𑆒𑆳𑆍𑆀
               </Text>
             </Col>
           </Row>
@@ -201,6 +200,8 @@ const styles = StyleSheet.create({
   subHeadText: {
     marginLeft: 15,
     marginRight: 15,
+    fontSize: 30,
+    fontFamily: 'Sharada',
     textAlign: 'center',
     fontWeight: 'bold',
     color: SECONDARY_TEXT_COLOR,
