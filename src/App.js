@@ -11,9 +11,13 @@ import NotificationScreen from './screens/NotificationScreen';
 import AboutScreen from './screens/AboutScreen';
 import LinksScreen from './screens/LinksScreen';
 
+import {setUpPushNotification} from './services/PushNotification';
+
 import {PRIMARY_LIGHT_COLOR, PRIMARY_TEXT_COLOR} from '../config/colors';
 
 const Tab = createMaterialBottomTabNavigator();
+
+setUpPushNotification();
 
 export default function App() {
   return (

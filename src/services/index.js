@@ -8,7 +8,7 @@ export const httpRequest = async (urlAsKey, expireInMinutes = 60) => {
         // Fetch cached data from async storage
         let value = await AsyncStorage.getItem(urlAsKey);
         value = JSON.parse(value);
-        data = value.apiRes
+        data = value ? value.apiRes : null;
 
         // there is data in cache && cache is expired
         if (data !== null && value !== null &&value['expireAt'] &&
@@ -47,7 +47,7 @@ export const httpRequest = async (urlAsKey, expireInMinutes = 60) => {
         return data;
     } catch (e) {
         // error reading value
-        console.log(e);
+        console.log('', e);
         throw new Error('No Internet !')
     }
 
