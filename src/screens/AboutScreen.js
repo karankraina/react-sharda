@@ -100,7 +100,7 @@ export default ({ navigation }) => {
           {image && !image.includes('undefined') && (
             <View style={styles.cellImageBox}>
               <Image
-                source={{ uri: `https:${image}` }}
+                source={{ uri: `${image}` }}
                 style={[styles.cellImage, { height: screenWidth * +imageHeight }]}
               />
             </View>

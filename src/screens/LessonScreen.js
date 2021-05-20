@@ -21,7 +21,7 @@ export default ({navigation, route}) => {
   const {lessonId} = route.params;
   const [lessonData, setLessonData] = React.useState(null);
   const [refreshing, setRefreshing] = React.useState(false);
-
+ 
   const onRefresh = React.useCallback(() => {
     setRefreshing(true);
     fetchLessonData(lessonId)
@@ -62,7 +62,7 @@ export default ({navigation, route}) => {
         });
       })
       .catch(error => {
-        console.log(error);
+        console.log(error); 
         // const {lessonOfflineData} = fetchLessonOffline(lessonId);
         setLessonData('lessonOfflineData');
         Toast.show({
@@ -88,7 +88,7 @@ export default ({navigation, route}) => {
         />
       }>
       <View style={styles.wrapper}>
-        <HTML html={lessonData} imagesMaxWidth={screenWidth * 0.95} />
+        <HTML source={{html: lessonData}} />
       </View>
     </Content>
   );
