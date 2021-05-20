@@ -36,7 +36,7 @@ export default ({children}) => {
         style={{backgroundColor: '#5067FF'}}
         position="bottomRight"
         onPress={onShare}>
-        <Icon name="share" />
+        <Icon type="FontAwesome" name="share" />
       </Fab>
     </View>
   );

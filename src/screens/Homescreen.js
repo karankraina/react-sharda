@@ -5,6 +5,8 @@ import {Col, Row, Grid} from 'react-native-easy-grid';
 import {createStackNavigator} from '@react-navigation/stack';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
+import Carousel from '../components/Carousel';
+
 import FabComponent from '../components/Fab';
 import LearnSharda from './LearnSharda2';
 import LalVaakhScreen from './LalVaakhScreen';
@@ -16,6 +18,7 @@ import {
   SECONDARY_MEDIUM_COLOR,
   SECONDARY_TEXT_COLOR,
   PRIMARY_MEDIUM_COLOR,
+  SECONDARY_LIGHT_COLOR
 } from '../../config/colors';
 
 const Stack = createStackNavigator();
@@ -82,14 +85,16 @@ const Homescreen = ({navigation}) => {
     <FabComponent>
       <Container style={styles.container}>
         <Grid>
-          <Row>
+        
+          {/* <Row>
             <Col style={styles.firstCol}>
               <Text style={styles.headText}>𑇄</Text>
               <Text style={styles.subHeadText}>
               𑆯𑆳𑆫𑆢𑆳 𑆱𑆵𑆒𑆼𑆁 𑆯𑆳𑆫𑆢𑆳 𑆱𑆵𑆒𑆳𑆍𑆀
               </Text>
             </Col>
-          </Row>
+           
+          </Row> */}
           <Row>
             <Col style={styles.col}>
               <TouchableOpacity
@@ -157,6 +162,7 @@ const Homescreen = ({navigation}) => {
           </Row>
           {/* <Row /> */}
         </Grid>
+        <Carousel />
       </Container>
     </FabComponent>
   );
@@ -165,14 +171,14 @@ const Homescreen = ({navigation}) => {
 const styles = StyleSheet.create({
   container: {
     margin: 5,
-    backgroundColor: SECONDARY_MEDIUM_COLOR,
+    backgroundColor: SECONDARY_LIGHT_COLOR,
   },
   image: {
     height: 'auto',
     width: '100%',
   },
   col: {
-    backgroundColor: SECONDARY_MEDIUM_COLOR,
+    backgroundColor: SECONDARY_LIGHT_COLOR,
     height: 200,
     margin: 5,
     justifyContent: 'center',
@@ -180,7 +186,7 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   firstCol: {
-    backgroundColor: SECONDARY_MEDIUM_COLOR,
+    backgroundColor: SECONDARY_LIGHT_COLOR,
     height: 200,
     justifyContent: 'center',
     alignItems: 'center',
