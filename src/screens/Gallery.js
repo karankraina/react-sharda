@@ -169,7 +169,7 @@ export default ({ navigation }) => {
             <Left>
               <Body>
                 <Text>{title}</Text>
-                <Text note>{subtitle || 'Core Sharda Team'}</Text>
+                <Text note>{subtitle || 'Shardapeetham'}</Text>
               </Body>
             </Left>
           </CardItem>
@@ -179,9 +179,7 @@ export default ({ navigation }) => {
               style={{ height: 400, width: null, flex: 1 }}
             />
           </CardItem>
-          <CardItem cardBody>
-            <Text>{description}</Text>
-          </CardItem>
+          
           <CardItem>
             <Left>
               <Button transparent>
@@ -204,6 +202,22 @@ export default ({ navigation }) => {
             {/* <Right>
               <Text>By: {contributor}</Text>
             </Right> */}
+          </CardItem>
+          <CardItem cardBody>
+            <Text>
+              {description} SOme very long 
+            text that spans multiple lines very long 
+            text that spans multiple lines very long 
+            text that spans multiple lines very long 
+            text that spans multiple lines very long 
+            text that spans multiple lines very long 
+            text that spans multiple lines very long 
+            text that spans multiple lines very long 
+            text that spans multiple lines very long 
+            text that spans multiple lines very long 
+            text that spans multiple lines very long 
+            text that spans multiple lines 
+            </Text>
           </CardItem>
         </Card>
       ))}

@@ -24,63 +24,8 @@ export default function App() {
     <Root>
       <Container>
         <NavigationContainer>
-          <Tab.Navigator
-            initialRouteName="Home"
-            activeColor={PRIMARY_TEXT_COLOR}
-            inactiveColor="#9e9e9e"
-            shifting={false}
-            labelStyle={{ fontSize: 10 }}
-            barStyle={{ backgroundColor: PRIMARY_LIGHT_COLOR }}>
-            <Tab.Screen
-              name="Home"
-              component={HomeScreen}
-              options={{
-                tabBarLabel: 'Home',
-                tabBarIcon: ({ color }) => (
-                  <MaterialCommunityIcons name="home" color={color} size={26} />
-                ),
-              }}
-            />
-            <Tab.Screen
-              name="Gallery"
-              component={AboutScreen}
-              options={{
-                tabBarLabel: 'About us',
-                tabBarIcon: ({ color }) => (
-                  <MaterialCommunityIcons
-                    name="information-outline"
-                    color={color}
-                    size={26}
-                  />
-                ),
-              }}
-            />
-            {/* <Tab.Screen
-              name="Sharda Translator"
-              component={NotificationScreen}
-              options={{
-                tabBarLabel: 'Notifications',
-                tabBarIcon: ({color}) => (
-                  <MaterialCommunityIcons
-                    name="bell-alert"
-                    color={color}
-                    size={26}
-                  />
-                ),
-              }}
-            />
-            <Tab.Screen
-              name="Links"
-              component={LinksScreen}
-              options={{
-                tabBarLabel: 'More',
-                tabBarIcon: ({color}) => (
-                  <MaterialCommunityIcons name="link" color={color} size={26} />
-                ),
-              }}
-            /> */}
-          </Tab.Navigator>
-        </NavigationContainer>
+          <HomeScreen />
+          </NavigationContainer>
       </Container>
     </Root>
   );

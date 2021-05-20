@@ -27,7 +27,7 @@ export default () => {
         name="Home"
         component={Homescreen}
         options={{
-          title: '𑆯𑆳𑆫𑆢𑆳𑆥𑆵𑆜𑆁',
+          title: 'Shardapeetham 𑆯𑆳𑆫𑆢𑆳𑆥𑆵𑆜𑆁' ,
           headerStyle: {backgroundColor: PRIMARY_DARK_COLOR},
           headerTintColor: PRIMARY_TEXT_COLOR,
           headerTitleStyle: {fontWeight: 'bold'},
@@ -37,7 +37,10 @@ export default () => {
         name="LearnSharda"
         component={LearnSharda}
         options={{
-          headerShown: false,
+          title: 'Learn Sharda',
+          headerStyle: {backgroundColor: PRIMARY_DARK_COLOR},
+          headerTintColor: PRIMARY_TEXT_COLOR,
+          headerTitleStyle: {fontWeight: 'bold'},
         }}
       />
       <Stack.Screen
