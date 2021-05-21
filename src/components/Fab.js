@@ -1,6 +1,8 @@
 import React from 'react';
 import {View, Fab, Button, Icon, Text} from 'native-base';
-import {Share} from 'react-native'
+import {Share} from 'react-native';
+
+import {PRIMARY_LIGHT_COLOR} from '../../config/colors'
 
 export default ({children}) => {
   const onShare = async () => {
@@ -33,8 +35,8 @@ export default ({children}) => {
         active={active}
         direction="up"
         containerStyle={{}}
-        style={{backgroundColor: '#5067FF'}}
-        position="bottomRight"
+        style={{backgroundColor: PRIMARY_LIGHT_COLOR}}
+        position="topRight"
         onPress={onShare}>
         <Icon type="FontAwesome" name="share" />
       </Fab>
@@ -52,7 +54,7 @@ const oldFab = ({children}) => {
         active={active}
         direction="up"
         containerStyle={{}}
-        style={{backgroundColor: '#5067FF'}}
+        style={{backgroundColor: PRIMARY_LIGHT_COLOR}}
         position="bottomRight"
         onPress={() => setActive(!active)}>
         <Icon name="share" />

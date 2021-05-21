@@ -1,8 +1,8 @@
 import React from 'react';
-import {StyleSheet, Text, TouchableOpacity} from 'react-native';
-import {Container, View, Thumbnail, H1} from 'native-base';
-import {Col, Row, Grid} from 'react-native-easy-grid';
-import {createStackNavigator} from '@react-navigation/stack';
+import { StyleSheet, Text, TouchableOpacity } from 'react-native';
+import { Container, View, Thumbnail, H1 } from 'native-base';
+import { Col, Row, Grid } from 'react-native-easy-grid';
+import { createStackNavigator } from '@react-navigation/stack';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import Carousel from '../components/Carousel';
@@ -30,10 +30,10 @@ export default () => {
         name="Home"
         component={Homescreen}
         options={{
-          title: 'Shardapeetham 𑆯𑆳𑆫𑆢𑆳𑆥𑆵𑆜𑆁' ,
-          headerStyle: {backgroundColor: PRIMARY_DARK_COLOR},
+          title: 'Shardapeetham 𑆯𑆳𑆫𑆢𑆳𑆥𑆵𑆜𑆁',
+          headerStyle: { backgroundColor: PRIMARY_DARK_COLOR },
           headerTintColor: PRIMARY_TEXT_COLOR,
-          headerTitleStyle: {fontWeight: 'bold'},
+          headerTitleStyle: { fontWeight: 'bold' },
         }}
       />
       <Stack.Screen
@@ -41,9 +41,9 @@ export default () => {
         component={LearnSharda}
         options={{
           title: 'Learn Sharda',
-          headerStyle: {backgroundColor: PRIMARY_DARK_COLOR},
+          headerStyle: { backgroundColor: PRIMARY_DARK_COLOR },
           headerTintColor: PRIMARY_TEXT_COLOR,
-          headerTitleStyle: {fontWeight: 'bold'},
+          headerTitleStyle: { fontWeight: 'bold' },
         }}
       />
       <Stack.Screen
@@ -51,9 +51,9 @@ export default () => {
         component={LalVaakhScreen}
         options={{
           title: 'Team\'s Work',
-          headerStyle: {backgroundColor: PRIMARY_DARK_COLOR},
+          headerStyle: { backgroundColor: PRIMARY_DARK_COLOR },
           headerTintColor: PRIMARY_TEXT_COLOR,
-          headerTitleStyle: {fontWeight: 'bold'},
+          headerTitleStyle: { fontWeight: 'bold' },
         }}
       />
       <Stack.Screen
@@ -61,9 +61,9 @@ export default () => {
         component={GalleryScreen}
         options={{
           title: 'Gallery',
-          headerStyle: {backgroundColor: PRIMARY_DARK_COLOR},
+          headerStyle: { backgroundColor: PRIMARY_DARK_COLOR },
           headerTintColor: PRIMARY_TEXT_COLOR,
-          headerTitleStyle: {fontWeight: 'bold'},
+          headerTitleStyle: { fontWeight: 'bold' },
         }}
       />
       <Stack.Screen
@@ -71,21 +71,92 @@ export default () => {
         component={TranslatorScreen}
         options={{
           title: 'Translator',
-          headerStyle: {backgroundColor: PRIMARY_DARK_COLOR},
+          headerStyle: { backgroundColor: PRIMARY_DARK_COLOR },
           headerTintColor: PRIMARY_TEXT_COLOR,
-          headerTitleStyle: {fontWeight: 'bold'},
+          headerTitleStyle: { fontWeight: 'bold' },
         }}
       />
     </Stack.Navigator>
   );
 };
 
-const Homescreen = ({navigation}) => {
+const Homescreen = ({ navigation }) => {
+  return (
+    <Container style={styles.container}>
+      <Grid>
+        <Row>
+          <Col style={styles.col}>
+            <TouchableOpacity
+              onPress={() => {
+                navigation.navigate('LearnSharda');
+              }}>
+              <View style={styles.cell}>
+                <MaterialCommunityIcons
+                  name="library-books"
+                  color={PRIMARY_MEDIUM_COLOR}
+                  size={75}
+                />
+                <Text style={styles.cellText}>Learn Sharda</Text>
+              </View>
+            </TouchableOpacity>
+          </Col>
+          <Col style={styles.col}>
+            <TouchableOpacity
+              onPress={() => {
+                navigation.navigate('LalVaakh');
+              }}>
+              <View style={styles.cell}>
+                <MaterialCommunityIcons
+                  name="comment-text"
+                  color={PRIMARY_MEDIUM_COLOR}
+                  size={75}
+                />
+                <Text style={styles.cellText}>Team's Work</Text>
+              </View>
+            </TouchableOpacity>
+          </Col>
+        </Row>
+        <Row>
+          <Col style={styles.col}>
+            <TouchableOpacity
+              onPress={() => {
+                navigation.navigate('Gallery');
+              }}>
+              <View style={styles.cell}>
+                <MaterialCommunityIcons
+                  name="image-multiple"
+                  color={PRIMARY_MEDIUM_COLOR}
+                  size={75}
+                />
+                <Text style={styles.cellText}>Gallery</Text>
+              </View>
+            </TouchableOpacity>
+          </Col>
+          <Col style={styles.col}>
+            <TouchableOpacity
+              onPress={() => {
+                navigation.navigate('Translator');
+              }}>
+              <View style={styles.cell}>
+                <MaterialCommunityIcons
+                  name="tooltip-edit"
+                  color={PRIMARY_MEDIUM_COLOR}
+                  size={75}
+                />
+                <Text style={styles.cellText}>Translator</Text>
+              </View>
+            </TouchableOpacity>
+          </Col>
+        </Row>
+      </Grid>
+      <Carousel navigation={navigation} />
+    </Container>
+  );
   return (
     <FabComponent>
       <Container style={styles.container}>
         <Grid>
-        
+
           {/* <Row>
             <Col style={styles.firstCol}>
               <Text style={styles.headText}>𑇄</Text>
@@ -162,7 +233,7 @@ const Homescreen = ({navigation}) => {
           </Row>
           {/* <Row /> */}
         </Grid>
-        <Carousel />
+        <Carousel navigation={navigation} />
       </Container>
     </FabComponent>
   );

@@ -2,7 +2,7 @@ import { Dimensions } from 'react-native';
 import { getInputRangeFromIndexes } from 'react-native-snap-carousel'; // 3.7.2
 
 const SLIDER_WIDTH = Dimensions.get('window').width;
-const TRANSLATE_VALUE = Math.round(SLIDER_WIDTH * 0.3 / 4);
+const TRANSLATE_VALUE = Math.round(SLIDER_WIDTH * 0 / 4);
 
 export function scrollInterpolator (index, carouselProps) {
     const range = [1, 0, -1];

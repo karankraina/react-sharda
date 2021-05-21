@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {  View, Dimensions, StyleSheet, Image } from 'react-native';
+import { View, Dimensions, StyleSheet, Image, TouchableOpacity, Share } from 'react-native';
 import { Container, Header, Content, Card, CardItem, Thumbnail, Text, Button, Icon, Left, Body, Right } from 'native-base';
 
 
@@ -8,38 +8,96 @@ import Carousel from 'react-native-snap-carousel';
 import { scrollInterpolator, animatedStyles } from '../services/animations';
 
 import { PRIMARY_DARK_COLOR } from '../../config/colors';
+import { randomShardaChar } from '../services/utils';
 
 const SLIDER_WIDTH = Dimensions.get('window').width;
-const ITEM_WIDTH = Math.round(SLIDER_WIDTH * 0.7);
+const ITEM_WIDTH = Math.round(SLIDER_WIDTH * 0.5);
 const ITEM_HEIGHT = Math.round(ITEM_WIDTH * 4 / 4);
 
-const DATA = [];
-for (let i = 0; i < 13; i++) {
-    DATA.push({
-        uri: 'https://source.unsplash.com/random/500x300',
-        text: 'Some Text'
-    })
-}
+const DATA = [
+    {
+        text: 'Learn Sharda',
+        screenName: 'LearnSharda',
+        props: 'test',
+    },
+    {
+        text: 'Some Work',
+        screenName: 'LalVaakh',
+        props: 'test',
+    },
+    {
+        text: 'Transliterator',
+        screenName: 'Translator',
+        props: 'test',
+    },
+    {
+        text: 'Gallery',
+        screenName: 'Gallery',
+        props: 'test',
+    },
+    {
+        text: 'Share',
+    }
+
+];
+
 
 export default class App extends Component {
-
+    
     state = {
         index: 0,
-        data: this.props.data || DATA
+        data: [...(this.props.data || []),  ...DATA]
     }
 
     constructor(props) {
         super(props);
         this._renderItem = this._renderItem.bind(this)
     }
+    onShare = async () => {
+        try {
+          const result = await Share.share({
+            message:
+              'Namaskar! Help us revive the ancient and sacred Sharda Script of Kashmir. Download the free app from Playstore. Learn Sharda and also share it with your friends and family. \n https://play.google.com/store/apps/details?id=com.karan.raina.sharda.sharda',
+          });
+          if (result.action === Share.sharedAction) {
+            if (result.activityType) {
+              // shared with activity type of result.activityType
+              console.log('shared', result.activityType)
+            } else {
+              // shared
+              console.log('shared', result)
+            }
+          } else if (result.action === Share.dismissedAction) {
+            // dismissed
+            console.log('dismissed')
+          }
+        } catch (error) {
+          console.log(error.message);
+        }
+      };
 
-    _renderItem({item}) {
-        console.log(item.uri)
+    _renderItem({ item }) {
         return (
-            <View style={styles.itemContainer}>
-                <Image source={{uri: item.uri}} style={{width: ITEM_WIDTH, height: ITEM_HEIGHT * 0.8}}/>
-                <Text style={styles.itemLabel}>{`Item ${item.text}`}</Text>
-            </View>
+
+            <TouchableOpacity
+                onPress={() => {
+                    if(item.screenName) {
+                        // screenName prop is provided means this should navigate to a a screen
+                        this.props.navigation.navigate(item.screenName, { props: item.props });
+                    }
+                    else {
+                        // screenName is falsy => this is some actionable/Share button
+                        this.onShare();
+                    }
+                    
+                }}>
+                <View style={styles.itemContainer}>
+                    {/* <Image source={{uri: item.uri}} style={{width: ITEM_WIDTH * 0.6, height: ITEM_HEIGHT * 0.5}}/> */}
+                    <Text style={styles.itemIcon}>{randomShardaChar()}</Text>
+                    <Text style={styles.itemLabel}>{`${item.text}`}</Text>
+                </View>
+            </TouchableOpacity>
+
         );
     }
 
@@ -70,7 +128,7 @@ export default class App extends Component {
 
 const styles = StyleSheet.create({
     carouselContainer: {
-        marginTop: 10
+        marginTop: 10,
     },
     itemContainer: {
         width: ITEM_WIDTH,
@@ -78,10 +136,16 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'space-around',
         backgroundColor: PRIMARY_DARK_COLOR,
+        borderRadius: 10
     },
     itemLabel: {
         color: 'white',
         fontSize: 24
+    },
+    itemIcon: {
+        color: 'white',
+        fontSize: 100,
+        fontFamily: 'Sharada'
     },
     counter: {
         marginTop: 25,
