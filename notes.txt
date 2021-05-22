@@ -1,0 +1,2 @@
+
+For admob, change node_modules/react-native-admob/android/build.gradle google ad service from + to 16.0.0
