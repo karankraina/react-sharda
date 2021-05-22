@@ -43,10 +43,10 @@ const DATA = [
 
 
 export default class App extends Component {
-    
+
     state = {
         index: 0,
-        data: [...(this.props.data || []),  ...DATA]
+        data: [...(this.props.data || []), ...DATA]
     }
 
     constructor(props) {
@@ -55,33 +55,33 @@ export default class App extends Component {
     }
     onShare = async () => {
         try {
-          const result = await Share.share({
-            message:
-              'Namaskar! Help us revive the ancient and sacred Sharda Script of Kashmir. Download the free app from Playstore. Learn Sharda and also share it with your friends and family. \n https://play.google.com/store/apps/details?id=com.karan.raina.sharda.sharda',
-          });
-          if (result.action === Share.sharedAction) {
-            if (result.activityType) {
-              // shared with activity type of result.activityType
-              console.log('shared', result.activityType)
-            } else {
-              // shared
-              console.log('shared', result)
+            const result = await Share.share({
+                message:
+                    'Namaskar! Help us revive the ancient and sacred Sharda Script of Kashmir. Download the free app from Playstore. Learn Sharda and also share it with your friends and family. \n https://play.google.com/store/apps/details?id=com.karan.raina.sharda.sharda',
+            });
+            if (result.action === Share.sharedAction) {
+                if (result.activityType) {
+                    // shared with activity type of result.activityType
+                    console.log('shared', result.activityType)
+                } else {
+                    // shared
+                    console.log('shared', result)
+                }
+            } else if (result.action === Share.dismissedAction) {
+                // dismissed
+                console.log('dismissed')
             }
-          } else if (result.action === Share.dismissedAction) {
-            // dismissed
-            console.log('dismissed')
-          }
         } catch (error) {
-          console.log(error.message);
+            console.log(error.message);
         }
-      };
+    };
 
     _renderItem({ item }) {
         return (
 
             <TouchableOpacity
                 onPress={() => {
-                    if(item.screenName) {
+                    if (item.screenName) {
                         // screenName prop is provided means this should navigate to a a screen
                         this.props.navigation.navigate(item.screenName, { props: item.props });
                     }
@@ -89,7 +89,7 @@ export default class App extends Component {
                         // screenName is falsy => this is some actionable/Share button
                         this.onShare();
                     }
-                    
+
                 }}>
                 <View style={styles.itemContainer}>
                     {/* <Image source={{uri: item.uri}} style={{width: ITEM_WIDTH * 0.6, height: ITEM_HEIGHT * 0.5}}/> */}
@@ -103,7 +103,7 @@ export default class App extends Component {
 
     render() {
         return (
-            <View>
+            <View style={{ marginBottom: 10 }}>
                 <Carousel
                     ref={(c) => this.carousel = c}
                     data={this.state.data}
