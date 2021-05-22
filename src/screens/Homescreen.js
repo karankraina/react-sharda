@@ -19,9 +19,10 @@ import LearnSharda from './LearnSharda2';
 import LalVaakhScreen from './LalVaakhScreen';
 import GalleryScreen from './Gallery';
 import TranslatorScreen from './Translator';
-import PostListScreen from './Posts';
+import PostListScreen from './PostListScreen';
 import PostScreen from './PostScreen';
 import AboutScreen from './AboutScreen';
+import LessonScreen from './LessonScreen';
 import {
   PRIMARY_DARK_COLOR,
   PRIMARY_TEXT_COLOR,
@@ -57,7 +58,17 @@ export default () => {
         }}
       />
       <Stack.Screen
-        name="Posts"
+        name="Lesson"
+        component={LessonScreen}
+        options={{
+          title: '𑆑𑆾𑆫 𑆯𑆳𑆫𑆢𑆳 𑆛𑆵𑆩',
+          headerStyle: { backgroundColor: PRIMARY_DARK_COLOR },
+          headerTintColor: PRIMARY_TEXT_COLOR,
+          headerTitleStyle: { fontWeight: 'bold' },
+        }}
+      />
+      <Stack.Screen
+        name="PostList"
         component={PostListScreen}
         options={{
           title: 'Posts',

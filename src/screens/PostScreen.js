@@ -18,7 +18,7 @@ import { httpRequest } from '../services';
 
 const fetchLessonData = async lessonId => {
   throw new Error('error')
-  return httpRequest(`post?lessonId=${lessonId}`)
+  return httpRequest(`post?postId=${lessonId}`)
   // return fetch(`${API_ENDPOINT}lessons?lessonId=${lessonId}`).then(response => response.json())
     .then(({ lessonData }) => lessonData.replace(/&nbsp;/gm, ' ').replace(/\\"/gm, '"'))
     .catch(error => console.log(error))
@@ -75,6 +75,7 @@ export default ({ navigation, route }) => {
     );
   }
   return (
+    <View style={{ display: 'flex', flex: 1 }}>
     <Content
       refreshControl={
         <RefreshControl
@@ -83,17 +84,18 @@ export default ({ navigation, route }) => {
           title="Refreshing..."
         />
       }>
-        <AdMobBanner
+        
+      <View style={styles.wrapper}>
+        <HTML source={{ html: lessonData }} />
+      </View>
+    </Content>
+    <AdMobBanner
         adSize="fullBanner"
         adUnitID="ca-app-pub-5808042066618613/5270286510"
         testDevices={[AdMobBanner.simulatorId]}
         onAdFailedToLoad={error => console.error(error)}
       />
-      <View style={styles.wrapper}>
-        <HTML source={{ html: `<a href="https://google.com">Test Link</a><p style="font-family: Sharada;font-size: 18px">Test 𑆯𑆳𑆫𑆢𑆳𑆥𑆵 Text</p>` }} />
-        <HTML source={{ html: lessonData }} />
-      </View>
-    </Content>
+    </View>
   );
 };
 

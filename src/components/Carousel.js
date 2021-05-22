@@ -46,8 +46,8 @@ const DATA = [
         description: 'Learn Sharda Online Learn Sharda Online Learn Sharda Online Learn Sharda Online Learn Sharda Online Learn Sharda Online '
     },
     {
-        text: 'Posts',
-        screenName: 'Posts',
+        text: 'Post',
+        screenName: 'PostList',
         props: 'test',
         description: 'Learn Sharda Online Learn Sharda Online Learn Sharda Online Learn Sharda Online Learn Sharda Online Learn Sharda Online '
     },

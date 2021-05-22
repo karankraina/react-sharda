@@ -6,6 +6,7 @@ import { H1, Content, Card, CardItem, Icon, Text, Button, Toast, Left, Body, Rig
 
 import { API_ENDPOINT } from '../../config/api';
 import Loading from '../components/Loading';
+import { httpRequest } from '../services';
 
 const checkPermission = async (url, fileName) => {
 
@@ -101,9 +102,7 @@ function wait(timeout) {
   });
 }
 const fetchImages = async () => {
-  return fetch(`${API_ENDPOINT}gallery`).then(response =>
-    response.json(),
-  );
+  return httpRequest(`gallery`)
 };
 
 export default ({ navigation }) => {

@@ -10,7 +10,7 @@ import {
   AdMobRewarded,
 } from 'react-native-admob';
 
-import LessonScreen from './LessonScreen';
+import PostScreen from './PostScreen';
 import {
   PRIMARY_DARK_COLOR,
   PRIMARY_TEXT_COLOR,
@@ -26,41 +26,15 @@ import { LESSON_LIST } from '../../config/offline-data';
 import Loading from '../components/Loading';
 import { httpRequest } from '../services';
 
-export default () => {
-  return (
-    <Stack.Navigator initialRouteName="LessonList" headerMode="screen">
-      <Stack.Screen
-        name="LessonList"
-        component={LessonList}
-        options={{
-          title: 'Sharda Lessons',
-          headerStyle: { backgroundColor: PRIMARY_DARK_COLOR },
-          headerTintColor: PRIMARY_TEXT_COLOR,
-          headerTitleStyle: { fontWeight: 'bold' },
-        }}
-      />
-      <Stack.Screen
-        name="Lesson"
-        component={LessonScreen}
-        options={{
-          title: '𑆑𑆾𑆫 𑆯𑆳𑆫𑆢𑆳 𑆛𑆵𑆩',
-          headerStyle: { backgroundColor: PRIMARY_DARK_COLOR },
-          headerTintColor: PRIMARY_TEXT_COLOR,
-          headerTitleStyle: { fontWeight: 'bold' },
-        }}
-      />
-    </Stack.Navigator>
-  );
+
+
+const fetchLessons = async () => {
+  return [{ title: 'Some title', id: 1, markupContent: '<h1>SOme COntent</h1>' }];
+  return httpRequest('posts');
+  
 };
 
-const fetchLessons = async (expiryTimeout = 60) => {
-  return httpRequest('posts', expiryTimeout)
-  return fetch(`${API_ENDPOINT}lessons?listOnly=true`).then(response =>
-    response.json(),
-  );
-};
-
-const LessonList = ({ navigation }) => {
+const PostList = ({ navigation }) => {
   console.log(API_ENDPOINT);
   const [lessonList, setLessons] = React.useState(false);
   const [refreshing, setRefreshing] = React.useState(false);
@@ -104,7 +78,7 @@ const LessonList = ({ navigation }) => {
       });
   if (!lessonList) {
     return (
-      <Loading message="Please wait while we retrieve the lessons from our server..." />
+      <Loading message="Please wait while we retrieve the posts from our server..." />
     );
   }
   return (
@@ -155,6 +129,7 @@ const LessonList = ({ navigation }) => {
  </View>
  );
 };
+export default PostList;
 
 const styles = StyleSheet.create({
   image: {

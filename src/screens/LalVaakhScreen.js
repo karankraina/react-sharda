@@ -21,6 +21,7 @@ import {
 import { API_ENDPOINT, APP_ENDPOINT } from '../../config/api';
 import Loading from '../components/Loading';
 import { PRIMARY_DARK_COLOR } from '../../config/colors';
+import { httpRequest } from '../services';
 
 const checkPermission = async (url, fileName) => {
 
@@ -91,9 +92,7 @@ const downloadImage = (url, fileName) => {
 
 
 const fetchLinks = async () => {
-  return fetch(`${API_ENDPOINT}literature`).then(response =>
-    response.json(),
-  )
+  return httpRequest(`literature?`);
 };
 
 const openUrl = (url) => {

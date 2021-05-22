@@ -88,7 +88,6 @@ export default ({ navigation, route }) => {
         onAdFailedToLoad={error => console.error(error)}
       />
       <View style={styles.wrapper}>
-        <HTML source={{ html: `<a href="https://google.com">Test Link</a><p style="font-family: Sharada;font-size: 18px">Test 𑆯𑆳𑆫𑆢𑆳𑆥𑆵 Text</p>` }} />
         <HTML source={{ html: lessonData }} />
       </View>
     </Content>
