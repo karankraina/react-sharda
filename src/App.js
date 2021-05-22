@@ -10,6 +10,7 @@ import HomeScreen from './screens/Homescreen';
 import NotificationScreen from './screens/NotificationScreen';
 import AboutScreen from './screens/AboutScreen';
 import LinksScreen from './screens/LinksScreen';
+import { navigationRef } from './RootNavigation';
 
 import { setUpPushNotification } from './services/PushNotification';
 
@@ -23,7 +24,7 @@ export default function App() {
   return (
     <Root>
       <Container>
-        <NavigationContainer>
+        <NavigationContainer ref={navigationRef}>
           <HomeScreen />
           </NavigationContainer>
       </Container>

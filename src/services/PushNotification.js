@@ -1,5 +1,7 @@
 import PushNotification from "react-native-push-notification";
-import { Platform } from 'react-native'
+import { Platform } from 'react-native';
+
+import {navigate} from '../RootNavigation';
 // var PushNotification = require("react-native-push-notification");
 
 export const setUpPushNotification = () => {
@@ -11,6 +13,7 @@ export const setUpPushNotification = () => {
         // (optional) Called when Token is generated (iOS and Android)
         onRegister: function (token) {
             console.log("TOKEN:", token);
+            // navigate('Posts')
         },
 
         // (required) Called when a remote is received or opened, or local notification is opened
