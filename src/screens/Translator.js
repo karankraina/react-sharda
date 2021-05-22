@@ -6,6 +6,14 @@ import RNFetchBlob from 'rn-fetch-blob';
 
 import { API_ENDPOINT, APP_ENDPOINT } from '../../config/api';
 import Loading from '../components/Loading';
+import {
+  AdMobBanner,
+  AdMobInterstitial,
+  PublisherBanner,
+  AdMobRewarded,
+} from 'react-native-admob'
+
+
 
 const checkPermission = async (url, setLoading, hindiText, shardaText) => {
 
@@ -221,6 +229,12 @@ export default () => {
 
   return (
     <Content padder>
+      <AdMobBanner
+        adSize="fullBanner"
+        adUnitID="ca-app-pub-5808042066618613/1061424678"
+        testDevices={[AdMobBanner.simulatorId]}
+        onAdFailedToLoad={error => console.error(error)}
+      />
       <H1>Devnagri Text</H1>
       <Form>
         <Textarea
@@ -259,9 +273,9 @@ export default () => {
         onPress={() => {
           openUrl('https://www.aprantsoftware.com/sharada/');
         }}>
-          <Text style={{ color: 'blue', fontWeight: 'bold' }}>* Sharada font developed by AprantSoftware : [AprantSoftware.com] *</Text>
+        <Text style={{ color: 'blue', fontWeight: 'bold' }}>* Sharada font developed by AprantSoftware : [AprantSoftware.com] *</Text>
       </TouchableOpacity>
-      
+
     </Content>
   );
 };
