@@ -9,7 +9,8 @@ import {
   AdMobInterstitial,
   PublisherBanner,
   AdMobRewarded,
-} from 'react-native-admob'
+} from 'react-native-admob';
+import { Avatar, Headline, Card, Title, Paragraph } from 'react-native-paper';
 
 import Carousel from '../components/Carousel';
 
@@ -89,72 +90,11 @@ export default () => {
 const Homescreen = ({ navigation }) => {
   return (
     <Container style={styles.container}>
-      <Grid>
-        <Row>
-          <Col style={styles.col}>
-            <TouchableOpacity
-              onPress={() => {
-                navigation.navigate('LearnSharda');
-              }}>
-              <View style={styles.cell}>
-                <MaterialCommunityIcons
-                  name="library-books"
-                  color={PRIMARY_MEDIUM_COLOR}
-                  size={75}
-                />
-                <Text style={styles.cellText}>Learn Sharda</Text>
-              </View>
-            </TouchableOpacity>
-          </Col>
-          <Col style={styles.col}>
-            <TouchableOpacity
-              onPress={() => {
-                navigation.navigate('LalVaakh');
-              }}>
-              <View style={styles.cell}>
-                <MaterialCommunityIcons
-                  name="comment-text"
-                  color={PRIMARY_MEDIUM_COLOR}
-                  size={75}
-                />
-                <Text style={styles.cellText}>Team's Work</Text>
-              </View>
-            </TouchableOpacity>
-          </Col>
-        </Row>
-        <Row>
-          <Col style={styles.col}>
-            <TouchableOpacity
-              onPress={() => {
-                navigation.navigate('Gallery');
-              }}>
-              <View style={styles.cell}>
-                <MaterialCommunityIcons
-                  name="image-multiple"
-                  color={PRIMARY_MEDIUM_COLOR}
-                  size={75}
-                />
-                <Text style={styles.cellText}>Gallery</Text>
-              </View>
-            </TouchableOpacity>
-          </Col>
-          <Col style={styles.col}>
-            <TouchableOpacity
-              onPress={() => {
-                navigation.navigate('Translator');
-              }}>
-              <View style={styles.cell}>
-                <MaterialCommunityIcons
-                  name="tooltip-edit"
-                  color={PRIMARY_MEDIUM_COLOR}
-                  size={75}
-                />
-                <Text style={styles.cellText}>Translator</Text>
-              </View>
-            </TouchableOpacity>
-          </Col>
-        </Row>
-      </Grid>
+      <Headline style={{alignSelf: 'center'}}>Shardapeetham</Headline>
+      <Card>
+        <Card.Cover source={{ uri: 'https://www.jammukashmirnow.com/Encyc/2020/8/27/2_05_12_22_sharda-peeth_1_H@@IGHT_600_W@@IDTH_802.jpg' }} />
+      </Card>
+     
       <Carousel navigation={navigation} />
       <AdMobBanner
         adSize="fullBanner"
@@ -162,7 +102,7 @@ const Homescreen = ({ navigation }) => {
         testDevices={[AdMobBanner.simulatorId]}
         onAdFailedToLoad={error => console.error(error)}
       />
-    </Container>
+    </Container >
   );
   return (
     <FabComponent>
@@ -253,7 +193,7 @@ const Homescreen = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   container: {
-    margin: 5,
+    // margin: 5,
     backgroundColor: SECONDARY_LIGHT_COLOR,
   },
   image: {

@@ -7,36 +7,41 @@ import Carousel from 'react-native-snap-carousel';
 
 import { scrollInterpolator, animatedStyles } from '../services/animations';
 
-import { PRIMARY_DARK_COLOR } from '../../config/colors';
+import { PRIMARY_DARK_COLOR, PRIMARY_TEXT_COLOR, SECONDARY_MEDIUM_COLOR } from '../../config/colors';
 import { randomShardaChar } from '../services/utils';
 
 const SLIDER_WIDTH = Dimensions.get('window').width;
-const ITEM_WIDTH = Math.round(SLIDER_WIDTH * 0.5);
-const ITEM_HEIGHT = Math.round(ITEM_WIDTH * 4 / 4);
+const ITEM_WIDTH = Math.round(SLIDER_WIDTH * 0.7);
+const ITEM_HEIGHT = Math.round(ITEM_WIDTH * 4 / 3.1);
 
 const DATA = [
     {
         text: 'Learn Sharda',
         screenName: 'LearnSharda',
         props: 'test',
+        description: 'Learn Sharda Online Learn Sharda Online Learn Sharda Online Learn Sharda Online Learn Sharda Online Learn Sharda Online '
     },
     {
-        text: 'Some Work',
+        text: 'Documents',
         screenName: 'LalVaakh',
         props: 'test',
+        description: 'Learn Sharda Online Learn Sharda Online Learn Sharda Online Learn Sharda Online Learn Sharda Online Learn Sharda Online '
     },
     {
         text: 'Transliterator',
         screenName: 'Translator',
         props: 'test',
+        description: 'Learn Sharda Online Learn Sharda Online Learn Sharda Online Learn Sharda Online Learn Sharda Online Learn Sharda Online '
     },
     {
         text: 'Gallery',
         screenName: 'Gallery',
         props: 'test',
+        description: 'Learn Sharda Online Learn Sharda Online Learn Sharda Online Learn Sharda Online Learn Sharda Online Learn Sharda Online '
     },
     {
         text: 'Share',
+        description: 'Learn Sharda Online Learn Sharda Online Learn Sharda Online Learn Sharda Online Learn Sharda Online Learn Sharda Online '
     }
 
 ];
@@ -93,8 +98,10 @@ export default class App extends Component {
                 }}>
                 <View style={styles.itemContainer}>
                     {/* <Image source={{uri: item.uri}} style={{width: ITEM_WIDTH * 0.6, height: ITEM_HEIGHT * 0.5}}/> */}
+                    
+                    <Text style={styles.itemLabelHead}>{`${item.text}`}</Text>
                     <Text style={styles.itemIcon}>{randomShardaChar()}</Text>
-                    <Text style={styles.itemLabel}>{`${item.text}`}</Text>
+                    <Text style={styles.itemLabel}>{`${item.description}`}</Text>
                 </View>
             </TouchableOpacity>
 
@@ -136,16 +143,22 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'space-around',
         backgroundColor: PRIMARY_DARK_COLOR,
-        borderRadius: 10
+        borderRadius: 30,
+        padding: 5
     },
     itemLabel: {
-        color: 'white',
-        fontSize: 24
+        color: SECONDARY_MEDIUM_COLOR,
+        fontSize: 18,
+    },
+    itemLabelHead: {
+        color: PRIMARY_TEXT_COLOR,
+        fontSize: 30,
+        fontWeight: 'bold',
     },
     itemIcon: {
-        color: 'white',
-        fontSize: 100,
-        fontFamily: 'Sharada'
+        color: PRIMARY_TEXT_COLOR,
+        fontSize: 80,
+        fontFamily: 'Sharada',
     },
     counter: {
         marginTop: 25,
