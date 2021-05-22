@@ -7,6 +7,7 @@ import {
   PublisherBanner,
   AdMobRewarded,
 } from 'react-native-admob';
+import { WebView } from 'react-native-webview';
 
 var { width: screenWidth } = Dimensions.get('window');
 
@@ -32,7 +33,7 @@ export default ({ navigation }) => {
     setRefreshing(true);
     fetchAboutData()
       .then(data => {
-        
+
         setaboutData(data);
         setRefreshing(false);
         Toast.show({
@@ -78,44 +79,14 @@ export default ({ navigation }) => {
           duration: 1000,
         });
       });
-  if (!aboutData) {
+  if (false && !aboutData) {
     // return <H1>Please wait while we fetch the latest images from our Sharda Gallery...</H1>;
     return (
       <Loading message="Please wait while we fetch data from our server..." />
     );
   }
   return (
-    <Content
-      refreshControl={
-        <RefreshControl
-          refreshing={refreshing}
-          onRefresh={onRefresh}
-          title="Refreshing..."
-        />
-      }>
-      
-      {aboutData.map(({ text, image, imageHeight }, index) => (
-        <View style={styles.rowItem} key={index}>
-          <View style={styles.cellTextBox}>
-            <Text style={styles.cellText}>{text}</Text>
-          </View>
-          {image && !image.includes('undefined') && (
-            <View style={styles.cellImageBox}>
-              <Image
-                source={{ uri: `${image}` }}
-                style={[styles.cellImage, { height: screenWidth * +imageHeight }]}
-              />
-            </View>
-          )}
-        </View>
-      ))}
-      <AdMobBanner
-        adSize="fullBanner"
-        adUnitID="ca-app-pub-5808042066618613/1061424678"
-        testDevices={[AdMobBanner.simulatorId]}
-        onAdFailedToLoad={error => console.error(error)}
-      />
-    </Content>
+    <WebView source={{ uri: 'https://www.instagram.com/shardapeetham/?hl=en' }} />
   );
 };
 

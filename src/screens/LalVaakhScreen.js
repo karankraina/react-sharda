@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 //Import RNFetchBlob for the file download
 import RNFetchBlob from 'rn-fetch-blob';
-import { Icon, Content, Card, CardItem, Text, Button, Toast, Left, Body, Right, H2  } from 'native-base';
+import { Icon, Content, Card, CardItem, Text, Button, Toast, Left, Body, Right, H2 } from 'native-base';
 import {
   AdMobBanner,
   AdMobInterstitial,
@@ -71,7 +71,7 @@ const downloadImage = (url, fileName) => {
       //Related to the Android only
       useDownloadManager: true,
       notification: true,
-      title : fileName,
+      title: fileName,
       path: DownloadDir + fileName,
       description: 'Downloading File',
     },
@@ -177,70 +177,73 @@ export default ({ navigation }) => {
   }
 
   return (
-    <Content
-      refreshControl={
-        <RefreshControl
-          refreshing={refreshing}
-          onRefresh={onRefresh}
-          title="Refreshing..."
-        />
-      }>
-        <AdMobBanner
-        adSize="fullBanner"
-        adUnitID="ca-app-pub-5808042066618613/6888767740"
-        testDevices={[AdMobBanner.simulatorId]}
-        onAdFailedToLoad={error => console.error(error)}
-      />
-      {messages.map(({ title, thumbUrl, docUrl, pdfUrl, docFileName = 'Core Sharda Team.docx', pdfFileName = 'Core Sharda Team.pdf' }, index) => (
-        <Card key={index}>
-        <CardItem>
-          <Left>
-            <Body>
-              <H2>{title}</H2>
-              <Text note>{'Core Sharda Team'}</Text>
-            </Body>
-          </Left>
-        </CardItem>
-        <CardItem cardBody>
-          <Image
-            source={{ uri: `${APP_ENDPOINT}${thumbUrl}` }}
-            style={{ height: 200, width: null, flex: 1 }}
+    <View style={{ display: 'flex', flex: 1 }}>
+      <Content
+        refreshControl={
+          <RefreshControl
+            refreshing={refreshing}
+            onRefresh={onRefresh}
+            title="Refreshing..."
           />
-        </CardItem>
-        <CardItem>
-          <Left>
-            <Button transparent>
-              <Icon active name="download" />
-              <TouchableOpacity
-                onPress={() => {
-                  checkPermission(`${APP_ENDPOINT}${docUrl}`, docFileName);
-                }}>
-                <Text>Download .DOCX</Text>
-              </TouchableOpacity>
-            </Button>
-          </Left>
+        }>
 
-          {/* <Body style={{ marginRight: -20 }}>
+        {messages.map(({ title, thumbUrl, docUrl, pdfUrl, docFileName = 'Core Sharda Team.docx', pdfFileName = 'Core Sharda Team.pdf' }, index) => (
+          <Card key={index}>
+            <CardItem>
+              <Left>
+                <Body>
+                  <H2>{title}</H2>
+                  <Text note>{'Core Sharda Team'}</Text>
+                </Body>
+              </Left>
+            </CardItem>
+            <CardItem cardBody>
+              <Image
+                source={{ uri: `${APP_ENDPOINT}${thumbUrl}` }}
+                style={{ height: 200, width: null, flex: 1 }}
+              />
+            </CardItem>
+            <CardItem>
+              <Left>
+                <Button transparent>
+                  <Icon active name="download" />
+                  <TouchableOpacity
+                    onPress={() => {
+                      checkPermission(`${APP_ENDPOINT}${docUrl}`, docFileName);
+                    }}>
+                    <Text>Download .DOCX</Text>
+                  </TouchableOpacity>
+                </Button>
+              </Left>
+
+              {/* <Body style={{ marginRight: -20 }}>
             <Button transparent>
               <Icon active name="md-person" />
               <Text>Core Sharda Team</Text>
             </Button>
           </Body> */}
-          <Right>
-            <Button transparent>
-              <Icon active name="download" />
-              <TouchableOpacity
-                onPress={() => {
-                  checkPermission(`${APP_ENDPOINT}${pdfUrl}`, pdfFileName);
-                }}>
-                <Text>Download .PDF</Text>
-              </TouchableOpacity>
-            </Button>
-          </Right>
-        </CardItem>
-      </Card>
-      ))}
-    </Content>
+              <Right>
+                <Button transparent>
+                  <Icon active name="download" />
+                  <TouchableOpacity
+                    onPress={() => {
+                      checkPermission(`${APP_ENDPOINT}${pdfUrl}`, pdfFileName);
+                    }}>
+                    <Text>Download .PDF</Text>
+                  </TouchableOpacity>
+                </Button>
+              </Right>
+            </CardItem>
+          </Card>
+        ))}
+      </Content>
+      <AdMobBanner
+        adSize="fullBanner"
+        adUnitID="ca-app-pub-5808042066618613/6888767740"
+        testDevices={[AdMobBanner.simulatorId]}
+        onAdFailedToLoad={error => console.error(error)}
+      />
+    </View>
   );
 };
 

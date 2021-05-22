@@ -120,6 +120,7 @@ const LessonList = ({ navigation }) => {
     );
   }
   return (
+    <View style={{display: 'flex', flex: 1}}>
     <Content
       refreshControl={
         <RefreshControl
@@ -155,14 +156,16 @@ const LessonList = ({ navigation }) => {
               <Text style={styles.cellText}></Text>
             </View>
           </View>
-      <AdMobBanner
+      
+    </Content>
+    <AdMobBanner
         adSize="fullBanner"
         adUnitID="ca-app-pub-5808042066618613/5270286510"
         testDevices={[AdMobBanner.simulatorId]}
         onAdFailedToLoad={error => console.error(error)}
       />
-    </Content>
-  );
+ </View>
+ );
 };
 
 const styles = StyleSheet.create({

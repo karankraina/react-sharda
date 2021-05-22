@@ -7,12 +7,12 @@ import Carousel from 'react-native-snap-carousel';
 
 import { scrollInterpolator, animatedStyles } from '../services/animations';
 
-import { PRIMARY_DARK_COLOR, PRIMARY_TEXT_COLOR, SECONDARY_MEDIUM_COLOR } from '../../config/colors';
+import { PRIMARY_DARK_COLOR, PRIMARY_TEXT_COLOR, SECONDARY_MEDIUM_COLOR, PRIMARY_MEDIUM_COLOR } from '../../config/colors';
 import { randomShardaChar } from '../services/utils';
 
 const SLIDER_WIDTH = Dimensions.get('window').width;
 const ITEM_WIDTH = Math.round(SLIDER_WIDTH * 0.7);
-const ITEM_HEIGHT = Math.round(ITEM_WIDTH * 4 / 3.1);
+const ITEM_HEIGHT = Math.round(ITEM_WIDTH * 4 / 3);
 
 const DATA = [
     {
@@ -154,7 +154,7 @@ const styles = StyleSheet.create({
         height: ITEM_HEIGHT,
         alignItems: 'center',
         justifyContent: 'space-around',
-        backgroundColor: PRIMARY_DARK_COLOR,
+        backgroundColor: PRIMARY_MEDIUM_COLOR,
         borderRadius: 30,
         padding: 5
     },

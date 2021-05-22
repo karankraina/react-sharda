@@ -163,7 +163,7 @@ export default ({ navigation }) => {
           title="Refreshing..."
         />
       }>
-      {images.map(({ image: uri, title, description, contributor, subtitle, fileName = 'image.jpeg' }, index) => (
+      {[...images, ...images].map(({ image: uri, title, description, contributor, subtitle, fileName = 'image.jpeg' }, index) => (
         <Card key={index}>
           <CardItem>
             <Left>
@@ -205,18 +205,7 @@ export default ({ navigation }) => {
           </CardItem>
           <CardItem cardBody>
             <Text>
-              {description} SOme very long 
-            text that spans multiple lines very long 
-            text that spans multiple lines very long 
-            text that spans multiple lines very long 
-            text that spans multiple lines very long 
-            text that spans multiple lines very long 
-            text that spans multiple lines very long 
-            text that spans multiple lines very long 
-            text that spans multiple lines very long 
-            text that spans multiple lines very long 
-            text that spans multiple lines very long 
-            text that spans multiple lines 
+              
             </Text>
           </CardItem>
         </Card>

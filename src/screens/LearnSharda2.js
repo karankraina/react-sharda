@@ -120,47 +120,50 @@ const LessonList = ({ navigation }) => {
     );
   }
   return (
-    <Content
-      refreshControl={
-        <RefreshControl
-          refreshing={refreshing}
-          onRefresh={onRefresh}
-          title="Refreshing..."
-        />
-      }>
-      {lessonList.map(({ lessonId, lessonTitle }, index) => (
-        <TouchableOpacity
-          style={styles.listBox}
-          key={index}
-          onPress={() => {
-            navigation.navigate('Lesson', {
-              lessonId,
-            });
-          }}>
-          <View style={styles.listItem}>
-            <MaterialCommunityIcons
-              name="library-books"
-              color={PRIMARY_MEDIUM_COLOR}
-              size={50}
-            />
-            <View style={styles.cellTextBox}>
-              <Text style={styles.cellText}>{lessonTitle}</Text>
+    <View style={{ display: 'flex', flex: 1 }}>
+      <Content
+        refreshControl={
+          <RefreshControl
+            refreshing={refreshing}
+            onRefresh={onRefresh}
+            title="Refreshing..."
+          />
+        }>
+        {lessonList.map(({ lessonId, lessonTitle }, index) => (
+          <TouchableOpacity
+            style={styles.listBox}
+            key={index}
+            onPress={() => {
+              navigation.navigate('Lesson', {
+                lessonId,
+              });
+            }}>
+            <View style={styles.listItem}>
+              <MaterialCommunityIcons
+                name="library-books"
+                color={PRIMARY_MEDIUM_COLOR}
+                size={50}
+              />
+              <View style={styles.cellTextBox}>
+                <Text style={styles.cellText}>{lessonTitle}</Text>
+              </View>
             </View>
+          </TouchableOpacity>
+        ))}
+        <View style={styles.listItem}>
+          <View style={styles.cellTextBox}>
+            <Text style={styles.cellText}></Text>
           </View>
-        </TouchableOpacity>
-      ))}
-      <View style={styles.listItem}>
-            <View style={styles.cellTextBox}>
-              <Text style={styles.cellText}></Text>
-            </View>
-          </View>
+        </View>
+        
+      </Content>
       <AdMobBanner
-        adSize="fullBanner"
-        adUnitID="ca-app-pub-5808042066618613/5270286510"
-        testDevices={[AdMobBanner.simulatorId]}
-        onAdFailedToLoad={error => console.error(error)}
-      />
-    </Content>
+          adSize="fullBanner"
+          adUnitID="ca-app-pub-5808042066618613/5270286510"
+          testDevices={[AdMobBanner.simulatorId]}
+          onAdFailedToLoad={error => console.error(error)}
+        />
+    </View>
   );
 };
 

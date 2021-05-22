@@ -1,6 +1,6 @@
 import React from 'react';
-import { StyleSheet, Text, TouchableOpacity } from 'react-native';
-import { Container, View, Thumbnail, H1 } from 'native-base';
+import { StyleSheet, Text, TouchableOpacity, Button } from 'react-native';
+import { Container, View } from 'native-base';
 import { Col, Row, Grid } from 'react-native-easy-grid';
 import { createStackNavigator } from '@react-navigation/stack';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -122,21 +122,24 @@ export default () => {
 
 const Homescreen = ({ navigation }) => {
   return (
+    <View style={{ display: 'flex', flex: 1 }}>
     <Container style={styles.container}>
       {/* <Headline style={{ alignSelf: 'center' }}>Shardapeetham</Headline> */}
-      <Card elevation={5}>
-        {/* <Card.Cover source={{ uri: 'https://upload.wikimedia.org/wikipedia/commons/b/b2/Kashmir_Sharada_MS.jpg' }} /> */}
-        <Card.Cover source={require('../../assets/images/banner_tiny.png')} />
+        <Card elevation={1}>
+          {/* <Card.Cover source={{ uri: 'https://i0.wp.com/hindupad.com/wp-content/uploads/2018/01/maa-saraswati-128-no-watermark.jpg?fit=914%2C778&ssl=1' }} /> */}
+          <Card.Cover source={require('../../assets/images/Banner.png')} />
       </Card>
 
       <Carousel navigation={navigation} />
+
+      </Container>
       <AdMobBanner
         adSize="fullBanner"
         adUnitID="ca-app-pub-5808042066618613/9746031224"
         testDevices={[AdMobBanner.simulatorId]}
         onAdFailedToLoad={error => console.error(error)}
       />
-    </Container >
+    </View>
   );
   return (
     <FabComponent>
@@ -227,8 +230,8 @@ const Homescreen = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   container: {
-    // margin: 5,
-    backgroundColor: SECONDARY_LIGHT_COLOR,
+    marginTop: 15,
+    backgroundColor: SECONDARY_MEDIUM_COLOR,
   },
   image: {
     height: 'auto',
