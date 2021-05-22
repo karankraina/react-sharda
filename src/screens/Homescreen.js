@@ -4,6 +4,12 @@ import { Container, View, Thumbnail, H1 } from 'native-base';
 import { Col, Row, Grid } from 'react-native-easy-grid';
 import { createStackNavigator } from '@react-navigation/stack';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import {
+  AdMobBanner,
+  AdMobInterstitial,
+  PublisherBanner,
+  AdMobRewarded,
+} from 'react-native-admob'
 
 import Carousel from '../components/Carousel';
 
@@ -150,6 +156,12 @@ const Homescreen = ({ navigation }) => {
         </Row>
       </Grid>
       <Carousel navigation={navigation} />
+      <AdMobBanner
+        adSize="fullBanner"
+        adUnitID="ca-app-pub-5808042066618613/9746031224"
+        testDevices={[AdMobBanner.simulatorId]}
+        onAdFailedToLoad={error => console.error(error)}
+      />
     </Container>
   );
   return (
