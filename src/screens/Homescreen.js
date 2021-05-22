@@ -19,6 +19,9 @@ import LearnSharda from './LearnSharda2';
 import LalVaakhScreen from './LalVaakhScreen';
 import GalleryScreen from './Gallery';
 import TranslatorScreen from './Translator';
+import PostListScreen from './Posts';
+import PostScreen from './PostScreen';
+import AboutScreen from './AboutScreen';
 import {
   PRIMARY_DARK_COLOR,
   PRIMARY_TEXT_COLOR,
@@ -48,6 +51,36 @@ export default () => {
         component={LearnSharda}
         options={{
           title: 'Learn Sharda',
+          headerStyle: { backgroundColor: PRIMARY_DARK_COLOR },
+          headerTintColor: PRIMARY_TEXT_COLOR,
+          headerTitleStyle: { fontWeight: 'bold' },
+        }}
+      />
+      <Stack.Screen
+        name="Posts"
+        component={PostListScreen}
+        options={{
+          title: 'Posts',
+          headerStyle: { backgroundColor: PRIMARY_DARK_COLOR },
+          headerTintColor: PRIMARY_TEXT_COLOR,
+          headerTitleStyle: { fontWeight: 'bold' },
+        }}
+      />
+      <Stack.Screen
+        name="PostScreen"
+        component={PostScreen}
+        options={{
+          title: 'Posts',
+          headerStyle: { backgroundColor: PRIMARY_DARK_COLOR },
+          headerTintColor: PRIMARY_TEXT_COLOR,
+          headerTitleStyle: { fontWeight: 'bold' },
+        }}
+      />
+      <Stack.Screen
+        name="About"
+        component={AboutScreen}
+        options={{
+          title: 'About Us',
           headerStyle: { backgroundColor: PRIMARY_DARK_COLOR },
           headerTintColor: PRIMARY_TEXT_COLOR,
           headerTitleStyle: { fontWeight: 'bold' },
@@ -90,11 +123,12 @@ export default () => {
 const Homescreen = ({ navigation }) => {
   return (
     <Container style={styles.container}>
-      <Headline style={{alignSelf: 'center'}}>Shardapeetham</Headline>
-      <Card>
-        <Card.Cover source={{ uri: 'https://www.jammukashmirnow.com/Encyc/2020/8/27/2_05_12_22_sharda-peeth_1_H@@IGHT_600_W@@IDTH_802.jpg' }} />
+      {/* <Headline style={{ alignSelf: 'center' }}>Shardapeetham</Headline> */}
+      <Card elevation={5}>
+        {/* <Card.Cover source={{ uri: 'https://upload.wikimedia.org/wikipedia/commons/b/b2/Kashmir_Sharada_MS.jpg' }} /> */}
+        <Card.Cover source={require('../../assets/images/banner_tiny.png')} />
       </Card>
-     
+
       <Carousel navigation={navigation} />
       <AdMobBanner
         adSize="fullBanner"

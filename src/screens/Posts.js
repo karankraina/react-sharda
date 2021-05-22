@@ -54,7 +54,7 @@ export default () => {
 };
 
 const fetchLessons = async (expiryTimeout = 60) => {
-  return httpRequest('lessons?listOnly=true&new=true', expiryTimeout)
+  return httpRequest('posts', expiryTimeout)
   return fetch(`${API_ENDPOINT}lessons?listOnly=true`).then(response =>
     response.json(),
   );
@@ -94,7 +94,7 @@ const LessonList = ({ navigation }) => {
   !lessonList &&
     fetchLessons()
       .then(data => {
-        console.log(data);
+        console.log({data: data[0].title});
         setLessons(data);
         Toast.show({
           text: 'Swipe down to refresh!',
@@ -128,13 +128,14 @@ const LessonList = ({ navigation }) => {
           title="Refreshing..."
         />
       }>
-      {lessonList.map(({ lessonId, lessonTitle }, index) => (
+      {lessonList.map(({ title, id, markupContent }, index) => (
         <TouchableOpacity
           style={styles.listBox}
           key={index}
           onPress={() => {
-            navigation.navigate('Lesson', {
-              lessonId,
+            navigation.navigate('PostScreen', {
+              id,
+              markupContent
             });
           }}>
           <View style={styles.listItem}>
@@ -144,7 +145,7 @@ const LessonList = ({ navigation }) => {
               size={50}
             />
             <View style={styles.cellTextBox}>
-              <Text style={styles.cellText}>{lessonTitle}</Text>
+              <Text style={styles.cellText}>{title}</Text>
             </View>
           </View>
         </TouchableOpacity>

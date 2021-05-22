@@ -11,6 +11,12 @@ import {
 //Import RNFetchBlob for the file download
 import RNFetchBlob from 'rn-fetch-blob';
 import { Icon, Content, Card, CardItem, Text, Button, Toast, Left, Body, Right, H2  } from 'native-base';
+import {
+  AdMobBanner,
+  AdMobInterstitial,
+  PublisherBanner,
+  AdMobRewarded,
+} from 'react-native-admob';
 
 import { API_ENDPOINT, APP_ENDPOINT } from '../../config/api';
 import Loading from '../components/Loading';
@@ -179,6 +185,12 @@ export default ({ navigation }) => {
           title="Refreshing..."
         />
       }>
+        <AdMobBanner
+        adSize="fullBanner"
+        adUnitID="ca-app-pub-5808042066618613/6888767740"
+        testDevices={[AdMobBanner.simulatorId]}
+        onAdFailedToLoad={error => console.error(error)}
+      />
       {messages.map(({ title, thumbUrl, docUrl, pdfUrl, docFileName = 'Core Sharda Team.docx', pdfFileName = 'Core Sharda Team.pdf' }, index) => (
         <Card key={index}>
         <CardItem>

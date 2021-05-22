@@ -40,6 +40,18 @@ const DATA = [
         description: 'Learn Sharda Online Learn Sharda Online Learn Sharda Online Learn Sharda Online Learn Sharda Online Learn Sharda Online '
     },
     {
+        text: 'About Us',
+        screenName: 'About',
+        props: 'test',
+        description: 'Learn Sharda Online Learn Sharda Online Learn Sharda Online Learn Sharda Online Learn Sharda Online Learn Sharda Online '
+    },
+    {
+        text: 'Posts',
+        screenName: 'Posts',
+        props: 'test',
+        description: 'Learn Sharda Online Learn Sharda Online Learn Sharda Online Learn Sharda Online Learn Sharda Online Learn Sharda Online '
+    },
+    {
         text: 'Share',
         description: 'Learn Sharda Online Learn Sharda Online Learn Sharda Online Learn Sharda Online Learn Sharda Online Learn Sharda Online '
     }
