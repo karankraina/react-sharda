@@ -117,12 +117,6 @@ export default ({ navigation }) => {
       .then(data => {
         setImages(data);
         setRefreshing(false);
-        Toast.show({
-          text: 'Messages Retrieved',
-          buttonText: 'Okay',
-          type: 'success',
-          duration: 1000,
-        });
       })
       .catch(error => {
         Toast.show({
@@ -140,12 +134,6 @@ export default ({ navigation }) => {
     fetchImages().then(data => {
       console.log(data);
       setImages(data);
-      Toast.show({
-        text: 'Messages Retrieved',
-        buttonText: 'Okay',
-        type: 'success',
-        duration: 1000,
-      });
     });
   if (!images) {
     // return <H1>Please wait while we fetch the latest images from our Sharda Gallery...</H1>;

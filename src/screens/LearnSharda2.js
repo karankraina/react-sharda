@@ -53,11 +53,8 @@ export default () => {
   );
 };
 
-const fetchLessons = async (expiryTimeout = 60) => {
-  return httpRequest('lessons?listOnly=true&new=true', expiryTimeout)
-  return fetch(`${API_ENDPOINT}lessons?listOnly=true`).then(response =>
-    response.json(),
-  );
+const fetchLessons = async () => {
+  return httpRequest('lessons?listOnly=true')
 };
 
 const LessonList = ({ navigation }) => {
@@ -71,12 +68,6 @@ const LessonList = ({ navigation }) => {
       .then(data => {
         setLessons(data);
         setRefreshing(false);
-        Toast.show({
-          text: 'Messages Retrieved',
-          buttonText: 'Okay',
-          type: 'success',
-          duration: 3000,
-        });
       })
       .catch(error => {
         console.log(error);
@@ -96,12 +87,6 @@ const LessonList = ({ navigation }) => {
       .then(data => {
         console.log(data);
         setLessons(data);
-        Toast.show({
-          text: 'Swipe down to refresh!',
-          buttonText: 'Okay',
-          type: 'success',
-          duration: 3000,
-        });
       })
       .catch(error => {
         console.log(error);
@@ -155,14 +140,14 @@ const LessonList = ({ navigation }) => {
             <Text style={styles.cellText}></Text>
           </View>
         </View>
-        
+
       </Content>
       <AdMobBanner
-          adSize="fullBanner"
-          adUnitID="ca-app-pub-5808042066618613/5270286510"
-          testDevices={[AdMobBanner.simulatorId]}
-          onAdFailedToLoad={error => console.error(error)}
-        />
+        adSize="fullBanner"
+        adUnitID="ca-app-pub-5808042066618613/5270286510"
+        testDevices={[AdMobBanner.simulatorId]}
+        onAdFailedToLoad={error => console.error(error)}
+      />
     </View>
   );
 };

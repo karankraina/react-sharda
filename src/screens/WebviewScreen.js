@@ -36,12 +36,6 @@ export default ({ navigation }) => {
 
         setaboutData(data);
         setRefreshing(false);
-        Toast.show({
-          text: 'Messages Retrieved',
-          buttonText: 'Okay',
-          type: 'success',
-          duration: 1000,
-        });
       })
       .catch(error => {
         Toast.show({
@@ -61,12 +55,6 @@ export default ({ navigation }) => {
       .then(data => {
         console.log('DATA IN COMPONENT FINAL==============', data.length);
         setaboutData(data);
-        Toast.show({
-          text: 'Messages Retrieved',
-          buttonText: 'Okay',
-          type: 'success',
-          duration: 1000,
-        });
       })
       .catch(error => {
         console.log(error);

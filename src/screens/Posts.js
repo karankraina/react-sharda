@@ -71,12 +71,6 @@ const LessonList = ({ navigation }) => {
       .then(data => {
         setLessons(data);
         setRefreshing(false);
-        Toast.show({
-          text: 'Messages Retrieved',
-          buttonText: 'Okay',
-          type: 'success',
-          duration: 3000,
-        });
       })
       .catch(error => {
         console.log(error);
@@ -96,12 +90,6 @@ const LessonList = ({ navigation }) => {
       .then(data => {
         console.log({data: data[0].title});
         setLessons(data);
-        Toast.show({
-          text: 'Swipe down to refresh!',
-          buttonText: 'Okay',
-          type: 'success',
-          duration: 3000,
-        });
       })
       .catch(error => {
         console.log(error);

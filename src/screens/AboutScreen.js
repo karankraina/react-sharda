@@ -36,12 +36,6 @@ export default ({ navigation, route }) => {
       .then(data => {
         setLessonData(data);
         setRefreshing(false);
-        Toast.show({
-          text: 'Messages Retrieved',
-          buttonText: 'Okay',
-          type: 'success',
-          duration: 1000,
-        });
       })
       .catch(error => {
         console.log(error);
@@ -61,12 +55,6 @@ export default ({ navigation, route }) => {
     fetchLessonData(lessonId)
       .then(data => {
         setLessonData(data);
-        Toast.show({
-          text: 'Messages Retrieved',
-          buttonText: 'Okay',
-          type: 'success',
-          duration: 1000,
-        });
       })
       .catch(error => {
         console.log(error);
