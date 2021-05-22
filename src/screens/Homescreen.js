@@ -1,9 +1,11 @@
 import React from 'react';
-import {StyleSheet, Text, TouchableOpacity} from 'react-native';
-import {Container, View, Thumbnail, H1} from 'native-base';
-import {Col, Row, Grid} from 'react-native-easy-grid';
-import {createStackNavigator} from '@react-navigation/stack';
+import { StyleSheet, Text, TouchableOpacity } from 'react-native';
+import { Container, View, Thumbnail, H1 } from 'native-base';
+import { Col, Row, Grid } from 'react-native-easy-grid';
+import { createStackNavigator } from '@react-navigation/stack';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+
+import Carousel from '../components/Carousel';
 
 import FabComponent from '../components/Fab';
 import LearnSharda from './LearnSharda2';
@@ -16,6 +18,7 @@ import {
   SECONDARY_MEDIUM_COLOR,
   SECONDARY_TEXT_COLOR,
   PRIMARY_MEDIUM_COLOR,
+  SECONDARY_LIGHT_COLOR
 } from '../../config/colors';
 
 const Stack = createStackNavigator();
@@ -27,10 +30,10 @@ export default () => {
         name="Home"
         component={Homescreen}
         options={{
-          title: 'Shardapeetham 𑆯𑆳𑆫𑆢𑆳𑆥𑆵𑆜𑆁' ,
-          headerStyle: {backgroundColor: PRIMARY_DARK_COLOR},
+          title: 'Shardapeetham 𑆯𑆳𑆫𑆢𑆳𑆥𑆵𑆜𑆁',
+          headerStyle: { backgroundColor: PRIMARY_DARK_COLOR },
           headerTintColor: PRIMARY_TEXT_COLOR,
-          headerTitleStyle: {fontWeight: 'bold'},
+          headerTitleStyle: { fontWeight: 'bold' },
         }}
       />
       <Stack.Screen
@@ -38,9 +41,9 @@ export default () => {
         component={LearnSharda}
         options={{
           title: 'Learn Sharda',
-          headerStyle: {backgroundColor: PRIMARY_DARK_COLOR},
+          headerStyle: { backgroundColor: PRIMARY_DARK_COLOR },
           headerTintColor: PRIMARY_TEXT_COLOR,
-          headerTitleStyle: {fontWeight: 'bold'},
+          headerTitleStyle: { fontWeight: 'bold' },
         }}
       />
       <Stack.Screen
@@ -48,9 +51,9 @@ export default () => {
         component={LalVaakhScreen}
         options={{
           title: 'Team\'s Work',
-          headerStyle: {backgroundColor: PRIMARY_DARK_COLOR},
+          headerStyle: { backgroundColor: PRIMARY_DARK_COLOR },
           headerTintColor: PRIMARY_TEXT_COLOR,
-          headerTitleStyle: {fontWeight: 'bold'},
+          headerTitleStyle: { fontWeight: 'bold' },
         }}
       />
       <Stack.Screen
@@ -58,9 +61,9 @@ export default () => {
         component={GalleryScreen}
         options={{
           title: 'Gallery',
-          headerStyle: {backgroundColor: PRIMARY_DARK_COLOR},
+          headerStyle: { backgroundColor: PRIMARY_DARK_COLOR },
           headerTintColor: PRIMARY_TEXT_COLOR,
-          headerTitleStyle: {fontWeight: 'bold'},
+          headerTitleStyle: { fontWeight: 'bold' },
         }}
       />
       <Stack.Screen
@@ -68,28 +71,101 @@ export default () => {
         component={TranslatorScreen}
         options={{
           title: 'Translator',
-          headerStyle: {backgroundColor: PRIMARY_DARK_COLOR},
+          headerStyle: { backgroundColor: PRIMARY_DARK_COLOR },
           headerTintColor: PRIMARY_TEXT_COLOR,
-          headerTitleStyle: {fontWeight: 'bold'},
+          headerTitleStyle: { fontWeight: 'bold' },
         }}
       />
     </Stack.Navigator>
   );
 };
 
-const Homescreen = ({navigation}) => {
+const Homescreen = ({ navigation }) => {
+  return (
+    <Container style={styles.container}>
+      <Grid>
+        <Row>
+          <Col style={styles.col}>
+            <TouchableOpacity
+              onPress={() => {
+                navigation.navigate('LearnSharda');
+              }}>
+              <View style={styles.cell}>
+                <MaterialCommunityIcons
+                  name="library-books"
+                  color={PRIMARY_MEDIUM_COLOR}
+                  size={75}
+                />
+                <Text style={styles.cellText}>Learn Sharda</Text>
+              </View>
+            </TouchableOpacity>
+          </Col>
+          <Col style={styles.col}>
+            <TouchableOpacity
+              onPress={() => {
+                navigation.navigate('LalVaakh');
+              }}>
+              <View style={styles.cell}>
+                <MaterialCommunityIcons
+                  name="comment-text"
+                  color={PRIMARY_MEDIUM_COLOR}
+                  size={75}
+                />
+                <Text style={styles.cellText}>Team's Work</Text>
+              </View>
+            </TouchableOpacity>
+          </Col>
+        </Row>
+        <Row>
+          <Col style={styles.col}>
+            <TouchableOpacity
+              onPress={() => {
+                navigation.navigate('Gallery');
+              }}>
+              <View style={styles.cell}>
+                <MaterialCommunityIcons
+                  name="image-multiple"
+                  color={PRIMARY_MEDIUM_COLOR}
+                  size={75}
+                />
+                <Text style={styles.cellText}>Gallery</Text>
+              </View>
+            </TouchableOpacity>
+          </Col>
+          <Col style={styles.col}>
+            <TouchableOpacity
+              onPress={() => {
+                navigation.navigate('Translator');
+              }}>
+              <View style={styles.cell}>
+                <MaterialCommunityIcons
+                  name="tooltip-edit"
+                  color={PRIMARY_MEDIUM_COLOR}
+                  size={75}
+                />
+                <Text style={styles.cellText}>Translator</Text>
+              </View>
+            </TouchableOpacity>
+          </Col>
+        </Row>
+      </Grid>
+      <Carousel navigation={navigation} />
+    </Container>
+  );
   return (
     <FabComponent>
       <Container style={styles.container}>
         <Grid>
-          <Row>
+
+          {/* <Row>
             <Col style={styles.firstCol}>
               <Text style={styles.headText}>𑇄</Text>
               <Text style={styles.subHeadText}>
               𑆯𑆳𑆫𑆢𑆳 𑆱𑆵𑆒𑆼𑆁 𑆯𑆳𑆫𑆢𑆳 𑆱𑆵𑆒𑆳𑆍𑆀
               </Text>
             </Col>
-          </Row>
+           
+          </Row> */}
           <Row>
             <Col style={styles.col}>
               <TouchableOpacity
@@ -157,6 +233,7 @@ const Homescreen = ({navigation}) => {
           </Row>
           {/* <Row /> */}
         </Grid>
+        <Carousel navigation={navigation} />
       </Container>
     </FabComponent>
   );
@@ -165,14 +242,14 @@ const Homescreen = ({navigation}) => {
 const styles = StyleSheet.create({
   container: {
     margin: 5,
-    backgroundColor: SECONDARY_MEDIUM_COLOR,
+    backgroundColor: SECONDARY_LIGHT_COLOR,
   },
   image: {
     height: 'auto',
     width: '100%',
   },
   col: {
-    backgroundColor: SECONDARY_MEDIUM_COLOR,
+    backgroundColor: SECONDARY_LIGHT_COLOR,
     height: 200,
     margin: 5,
     justifyContent: 'center',
@@ -180,7 +257,7 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   firstCol: {
-    backgroundColor: SECONDARY_MEDIUM_COLOR,
+    backgroundColor: SECONDARY_LIGHT_COLOR,
     height: 200,
     justifyContent: 'center',
     alignItems: 'center',
