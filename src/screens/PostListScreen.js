@@ -121,7 +121,7 @@ const PostList = ({ navigation }) => {
     </Content>
     <AdMobBanner
         adSize="fullBanner"
-        adUnitID="ca-app-pub-5808042066618613/5270286510"
+        adUnitID="ca-app-pub-5808042066618613/1426464172"
         testDevices={[AdMobBanner.simulatorId]}
         onAdFailedToLoad={error => console.error(error)}
       />

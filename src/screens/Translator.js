@@ -231,7 +231,7 @@ export default () => {
     <Content padder>
       <AdMobBanner
         adSize="fullBanner"
-        adUnitID="ca-app-pub-5808042066618613/1061424678"
+        adUnitID="ca-app-pub-5808042066618613/2164830779"
         testDevices={[AdMobBanner.simulatorId]}
         onAdFailedToLoad={error => console.error(error)}
       />
