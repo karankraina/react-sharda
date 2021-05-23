@@ -73,6 +73,7 @@ export default ({ navigation, route }) => {
     );
   }
   return (
+    <View style={{ display: 'flex', flex: 1 }}>
     <Content
       refreshControl={
         <RefreshControl
@@ -81,16 +82,18 @@ export default ({ navigation, route }) => {
           title="Refreshing..."
         />
       }>
-        <AdMobBanner
+       
+      <View style={styles.wrapper}>
+        <HTML source={{ html: lessonData }} />
+      </View>
+    </Content>
+    <AdMobBanner
         adSize="fullBanner"
         adUnitID="ca-app-pub-5808042066618613/5270286510"
         testDevices={[AdMobBanner.simulatorId]}
         onAdFailedToLoad={error => console.error(error)}
       />
-      <View style={styles.wrapper}>
-        <HTML source={{ html: lessonData }} />
-      </View>
-    </Content>
+    </View>
   );
 };
 
