@@ -24,7 +24,7 @@ export const httpRequest = async (urlAsKey, expireInMinutes = 60) => {
         }
 
         //update cache + set expire at date
-        if (data === null) {
+        if (true || data === null) {
             console.log('NO DATA IN CACHE....TAKING NEW DATA', `${API_HOST}${urlAsKey}`);
             //fetch data
             let apiRes = await fetch(`${API_HOST}${urlAsKey}`).then((response) => response.json());

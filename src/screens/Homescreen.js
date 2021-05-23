@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, RefreshControl, Button } from 'react-native';
-import { Container, View, Content } from 'native-base';
+import { Container, View, Content, Toast } from 'native-base';
 import { Col, Row, Grid } from 'react-native-easy-grid';
 import { createStackNavigator } from '@react-navigation/stack';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -151,8 +151,8 @@ export default () => {
 
 const Homescreen = ({ navigation }) => {
   const [refreshing, setRefreshing] = React.useState(false);
-  const [homeData, setHomeData] = React.useState({});
-  const [isLoading, setLoading] = React.useState(false);
+  const [homeData, setHomeData] = React.useState();
+  const [isLoading, setLoading] = React.useState(true);
 
   const onRefresh = React.useCallback(() => {
     setRefreshing(true);
@@ -172,7 +172,7 @@ const Homescreen = ({ navigation }) => {
         setRefreshing(false);
       });
   }, []);
-
+  setTimeout(() => setLoading(false), 3000);
   !homeData &&
     fetchHomepageData()
       .then(data => {
