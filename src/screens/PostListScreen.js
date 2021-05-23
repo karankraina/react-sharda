@@ -10,7 +10,7 @@ import {
   AdMobRewarded,
 } from 'react-native-admob';
 
-
+import PostScreen from './PostScreen';
 import {
   PRIMARY_DARK_COLOR,
   PRIMARY_TEXT_COLOR,
@@ -26,11 +26,15 @@ import { LESSON_LIST } from '../../config/offline-data';
 import Loading from '../components/Loading';
 import { httpRequest } from '../services';
 
+
+
 const fetchLessons = async () => {
-  return httpRequest('lessons?listOnly=true')
+  return [{ title: 'Some title', id: 1, markupContent: '<h1>SOme COntent</h1>' }];
+  return httpRequest('posts');
+  
 };
 
-export default ({ navigation }) => {
+const PostList = ({ navigation }) => {
   console.log(API_ENDPOINT);
   const [lessonList, setLessons] = React.useState(false);
   const [refreshing, setRefreshing] = React.useState(false);
@@ -58,7 +62,7 @@ export default ({ navigation }) => {
   !lessonList &&
     fetchLessons()
       .then(data => {
-        console.log(data);
+        console.log({data: data[0].title});
         setLessons(data);
       })
       .catch(error => {
@@ -74,56 +78,58 @@ export default ({ navigation }) => {
       });
   if (!lessonList) {
     return (
-      <Loading message="Please wait while we retrieve the lessons from our server..." />
+      <Loading message="Please wait while we retrieve the posts from our server..." />
     );
   }
   return (
-    <View style={{ display: 'flex', flex: 1 }}>
-      <Content
-        refreshControl={
-          <RefreshControl
-            refreshing={refreshing}
-            onRefresh={onRefresh}
-            title="Refreshing..."
-          />
-        }>
-        {lessonList.map(({ lessonId, lessonTitle }, index) => (
-          <TouchableOpacity
-            style={styles.listBox}
-            key={index}
-            onPress={() => {
-              navigation.navigate('Lesson', {
-                lessonId,
-              });
-            }}>
-            <View style={styles.listItem}>
-              <MaterialCommunityIcons
-                name="library-books"
-                color={PRIMARY_MEDIUM_COLOR}
-                size={50}
-              />
-              <View style={styles.cellTextBox}>
-                <Text style={styles.cellText}>{lessonTitle}</Text>
-              </View>
+    <View style={{display: 'flex', flex: 1}}>
+    <Content
+      refreshControl={
+        <RefreshControl
+          refreshing={refreshing}
+          onRefresh={onRefresh}
+          title="Refreshing..."
+        />
+      }>
+      {lessonList.map(({ title, id, markupContent }, index) => (
+        <TouchableOpacity
+          style={styles.listBox}
+          key={index}
+          onPress={() => {
+            navigation.navigate('Post', {
+              id,
+              markupContent
+            });
+          }}>
+          <View style={styles.listItem}>
+            <MaterialCommunityIcons
+              name="library-books"
+              color={PRIMARY_MEDIUM_COLOR}
+              size={50}
+            />
+            <View style={styles.cellTextBox}>
+              <Text style={styles.cellText}>{title}</Text>
             </View>
-          </TouchableOpacity>
-        ))}
-        <View style={styles.listItem}>
-          <View style={styles.cellTextBox}>
-            <Text style={styles.cellText}></Text>
           </View>
-        </View>
-
-      </Content>
-      <AdMobBanner
+        </TouchableOpacity>
+      ))}
+      <View style={styles.listItem}>
+            <View style={styles.cellTextBox}>
+              <Text style={styles.cellText}></Text>
+            </View>
+          </View>
+      
+    </Content>
+    <AdMobBanner
         adSize="fullBanner"
         adUnitID="ca-app-pub-5808042066618613/5270286510"
         testDevices={[AdMobBanner.simulatorId]}
         onAdFailedToLoad={error => console.error(error)}
       />
-    </View>
-  );
+ </View>
+ );
 };
+export default PostList;
 
 const styles = StyleSheet.create({
   image: {

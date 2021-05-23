@@ -6,6 +6,7 @@ import { H1, Content, Card, CardItem, Icon, Text, Button, Toast, Left, Body, Rig
 
 import { API_ENDPOINT } from '../../config/api';
 import Loading from '../components/Loading';
+import { httpRequest } from '../services';
 
 const checkPermission = async (url, fileName) => {
 
@@ -101,9 +102,7 @@ function wait(timeout) {
   });
 }
 const fetchImages = async () => {
-  return fetch(`${API_ENDPOINT}gallery`).then(response =>
-    response.json(),
-  );
+  return httpRequest(`gallery`)
 };
 
 export default ({ navigation }) => {
@@ -117,12 +116,6 @@ export default ({ navigation }) => {
       .then(data => {
         setImages(data);
         setRefreshing(false);
-        Toast.show({
-          text: 'Messages Retrieved',
-          buttonText: 'Okay',
-          type: 'success',
-          duration: 1000,
-        });
       })
       .catch(error => {
         Toast.show({
@@ -140,12 +133,6 @@ export default ({ navigation }) => {
     fetchImages().then(data => {
       console.log(data);
       setImages(data);
-      Toast.show({
-        text: 'Messages Retrieved',
-        buttonText: 'Okay',
-        type: 'success',
-        duration: 1000,
-      });
     });
   if (!images) {
     // return <H1>Please wait while we fetch the latest images from our Sharda Gallery...</H1>;
@@ -163,7 +150,7 @@ export default ({ navigation }) => {
           title="Refreshing..."
         />
       }>
-      {images.map(({ image: uri, title, description, contributor, subtitle, fileName = 'image.jpeg' }, index) => (
+      {[...images, ...images].map(({ image: uri, title, description, contributor, subtitle, fileName = 'image.jpeg' }, index) => (
         <Card key={index}>
           <CardItem>
             <Left>
@@ -205,18 +192,7 @@ export default ({ navigation }) => {
           </CardItem>
           <CardItem cardBody>
             <Text>
-              {description} SOme very long 
-            text that spans multiple lines very long 
-            text that spans multiple lines very long 
-            text that spans multiple lines very long 
-            text that spans multiple lines very long 
-            text that spans multiple lines very long 
-            text that spans multiple lines very long 
-            text that spans multiple lines very long 
-            text that spans multiple lines very long 
-            text that spans multiple lines very long 
-            text that spans multiple lines very long 
-            text that spans multiple lines 
+              
             </Text>
           </CardItem>
         </Card>

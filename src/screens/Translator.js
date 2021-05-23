@@ -1,6 +1,6 @@
 import React from 'react';
-import { Content, Button, Text, Textarea, Form, H1, Toast } from 'native-base';
-import { TouchableOpacity, PermissionsAndroid, Platform } from 'react-native';
+import { Content, Text, Textarea, Form, H1, Toast } from 'native-base';
+import { TouchableOpacity, PermissionsAndroid, Platform, Linking } from 'react-native';
 //Import RNFetchBlob for the file download
 import RNFetchBlob from 'rn-fetch-blob';
 
@@ -271,9 +271,9 @@ export default () => {
       </TouchableOpacity>
       <TouchableOpacity
         onPress={() => {
-          openUrl('https://www.aprantsoftware.com/sharada/');
+          openUrl('https://www.shardalipi.com/');
         }}>
-        <Text style={{ color: 'blue', fontWeight: 'bold' }}>* Sharada font developed by AprantSoftware : [AprantSoftware.com] *</Text>
+        <Text style={{ color: 'blue', fontWeight: 'bold' }}>* Sharada font developed by Core Sharda Team *</Text>
       </TouchableOpacity>
 
     </Content>

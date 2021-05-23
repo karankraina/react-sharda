@@ -1,6 +1,6 @@
 import React from 'react';
-import { StyleSheet, Text, TouchableOpacity } from 'react-native';
-import { Container, View, Thumbnail, H1 } from 'native-base';
+import { StyleSheet, Text, TouchableOpacity, Button } from 'react-native';
+import { Container, View } from 'native-base';
 import { Col, Row, Grid } from 'react-native-easy-grid';
 import { createStackNavigator } from '@react-navigation/stack';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -9,7 +9,8 @@ import {
   AdMobInterstitial,
   PublisherBanner,
   AdMobRewarded,
-} from 'react-native-admob'
+} from 'react-native-admob';
+import { Avatar, Headline, Card, Title, Paragraph } from 'react-native-paper';
 
 import Carousel from '../components/Carousel';
 
@@ -18,6 +19,10 @@ import LearnSharda from './LearnSharda2';
 import LalVaakhScreen from './LalVaakhScreen';
 import GalleryScreen from './Gallery';
 import TranslatorScreen from './Translator';
+import PostListScreen from './PostListScreen';
+import PostScreen from './PostScreen';
+import AboutScreen from './AboutScreen';
+import LessonScreen from './LessonScreen';
 import {
   PRIMARY_DARK_COLOR,
   PRIMARY_TEXT_COLOR,
@@ -47,6 +52,46 @@ export default () => {
         component={LearnSharda}
         options={{
           title: 'Learn Sharda',
+          headerStyle: { backgroundColor: PRIMARY_DARK_COLOR },
+          headerTintColor: PRIMARY_TEXT_COLOR,
+          headerTitleStyle: { fontWeight: 'bold' },
+        }}
+      />
+      <Stack.Screen
+        name="Lesson"
+        component={LessonScreen}
+        options={{
+          title: '𑆑𑆾𑆫 𑆯𑆳𑆫𑆢𑆳 𑆛𑆵𑆩',
+          headerStyle: { backgroundColor: PRIMARY_DARK_COLOR },
+          headerTintColor: PRIMARY_TEXT_COLOR,
+          headerTitleStyle: { fontWeight: 'bold' },
+        }}
+      />
+      <Stack.Screen
+        name="PostList"
+        component={PostListScreen}
+        options={{
+          title: 'Posts',
+          headerStyle: { backgroundColor: PRIMARY_DARK_COLOR },
+          headerTintColor: PRIMARY_TEXT_COLOR,
+          headerTitleStyle: { fontWeight: 'bold' },
+        }}
+      />
+      <Stack.Screen
+        name="Post"
+        component={PostScreen}
+        options={{
+          title: 'Posts',
+          headerStyle: { backgroundColor: PRIMARY_DARK_COLOR },
+          headerTintColor: PRIMARY_TEXT_COLOR,
+          headerTitleStyle: { fontWeight: 'bold' },
+        }}
+      />
+      <Stack.Screen
+        name="About"
+        component={AboutScreen}
+        options={{
+          title: 'About Us',
           headerStyle: { backgroundColor: PRIMARY_DARK_COLOR },
           headerTintColor: PRIMARY_TEXT_COLOR,
           headerTitleStyle: { fontWeight: 'bold' },
@@ -88,81 +133,24 @@ export default () => {
 
 const Homescreen = ({ navigation }) => {
   return (
+    <View style={{ display: 'flex', flex: 1 }}>
     <Container style={styles.container}>
-      <Grid>
-        <Row>
-          <Col style={styles.col}>
-            <TouchableOpacity
-              onPress={() => {
-                navigation.navigate('LearnSharda');
-              }}>
-              <View style={styles.cell}>
-                <MaterialCommunityIcons
-                  name="library-books"
-                  color={PRIMARY_MEDIUM_COLOR}
-                  size={75}
-                />
-                <Text style={styles.cellText}>Learn Sharda</Text>
-              </View>
-            </TouchableOpacity>
-          </Col>
-          <Col style={styles.col}>
-            <TouchableOpacity
-              onPress={() => {
-                navigation.navigate('LalVaakh');
-              }}>
-              <View style={styles.cell}>
-                <MaterialCommunityIcons
-                  name="comment-text"
-                  color={PRIMARY_MEDIUM_COLOR}
-                  size={75}
-                />
-                <Text style={styles.cellText}>Team's Work</Text>
-              </View>
-            </TouchableOpacity>
-          </Col>
-        </Row>
-        <Row>
-          <Col style={styles.col}>
-            <TouchableOpacity
-              onPress={() => {
-                navigation.navigate('Gallery');
-              }}>
-              <View style={styles.cell}>
-                <MaterialCommunityIcons
-                  name="image-multiple"
-                  color={PRIMARY_MEDIUM_COLOR}
-                  size={75}
-                />
-                <Text style={styles.cellText}>Gallery</Text>
-              </View>
-            </TouchableOpacity>
-          </Col>
-          <Col style={styles.col}>
-            <TouchableOpacity
-              onPress={() => {
-                navigation.navigate('Translator');
-              }}>
-              <View style={styles.cell}>
-                <MaterialCommunityIcons
-                  name="tooltip-edit"
-                  color={PRIMARY_MEDIUM_COLOR}
-                  size={75}
-                />
-                <Text style={styles.cellText}>Translator</Text>
-              </View>
-            </TouchableOpacity>
-          </Col>
-        </Row>
-      </Grid>
+      {/* <Headline style={{ alignSelf: 'center' }}>Shardapeetham</Headline> */}
+        <Card elevation={1}>
+          {/* <Card.Cover source={{ uri: 'https://i0.wp.com/hindupad.com/wp-content/uploads/2018/01/maa-saraswati-128-no-watermark.jpg?fit=914%2C778&ssl=1' }} /> */}
+          <Card.Cover source={require('../../assets/images/Banner.png')} />
+      </Card>
+
       <Carousel navigation={navigation} />
+
+      </Container>
       <AdMobBanner
         adSize="fullBanner"
         adUnitID="ca-app-pub-5808042066618613/9746031224"
         testDevices={[AdMobBanner.simulatorId]}
         onAdFailedToLoad={error => console.error(error)}
       />
-    </Container>
+    </View>
   );
   return (
     <FabComponent>
@@ -253,8 +241,8 @@ const Homescreen = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   container: {
-    margin: 5,
-    backgroundColor: SECONDARY_LIGHT_COLOR,
+    marginTop: 15,
+    backgroundColor: SECONDARY_MEDIUM_COLOR,
   },
   image: {
     height: 'auto',

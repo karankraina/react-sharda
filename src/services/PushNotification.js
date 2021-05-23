@@ -1,6 +1,50 @@
 import PushNotification from "react-native-push-notification";
-import { Platform } from 'react-native'
+import { Platform } from 'react-native';
+
+import { navigate } from '../RootNavigation';
 // var PushNotification = require("react-native-push-notification");
+
+const handleNotification = (notification) => {
+    if (notification.foreground && !notification.userInteraction) {
+        // App is in open state
+        alert('You got notification')
+    } else {
+        let message;
+        if (notification.foreground && notification.userInteraction) {
+            message= notification.message || '';
+        } else if (!notification.foreground && notification.userInteraction) {
+            message= notification.data["gcm.n.analytics_data"]["google.c.a.c_l"] || '';
+        }
+        
+        const screenInfoArray = message.split(': ');
+        const screenInfo = screenInfoArray.length > 1 ? screenInfoArray[0] : '';
+        let screenName = null;
+        let propNumber = null;
+        if (screenInfo) {
+            ([screenName, propNumber] = screenInfo.split(' #'));
+
+        }
+        if (screenName && propNumber) {
+            console.log(`Navigating to ${screenName} with props ${propNumber}`)
+            switch (screenName) {
+                case 'Lesson':
+                    navigate(screenName, { lessonId: propNumber });
+                    break;
+                case 'Post':
+                    navigate(screenName, { postId: propNumber });
+                    break;
+                default:
+                    navigate(screenName, { propNumber });
+                    break;
+            }
+
+        }
+        else {
+            navigate('Home');
+        }
+    }
+
+}
 
 export const setUpPushNotification = () => {
     console.log('os: ', Platform.OS);
@@ -11,12 +55,13 @@ export const setUpPushNotification = () => {
         // (optional) Called when Token is generated (iOS and Android)
         onRegister: function (token) {
             console.log("TOKEN:", token);
+            // navigate('Posts')
         },
 
         // (required) Called when a remote is received or opened, or local notification is opened
         onNotification: function (notification) {
             console.log("NOTIFICATION:", notification);
-
+            handleNotification(notification);
             // process the notification
 
             // (required) Called when a remote is received or opened, or local notification is opened

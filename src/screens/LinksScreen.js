@@ -124,12 +124,6 @@ export default ({ navigation }) => {
       .then(data => {
         setMessages(data);
         setRefreshing(false);
-        Toast.show({
-          text: 'Messages Retrieved',
-          buttonText: 'Okay',
-          type: 'success',
-          duration: 1000,
-        });
       })
       .catch(error => {
         console.log(error);
@@ -150,12 +144,6 @@ export default ({ navigation }) => {
       .then(data => {
         console.log(data);
         setMessages(data);
-        Toast.show({
-          text: 'Messages Retrieved',
-          buttonText: 'Okay',
-          type: 'success',
-          duration: 1000,
-        });
       })
       .catch(error => {
         console.log(error);

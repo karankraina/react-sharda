@@ -17,7 +17,8 @@ import Loading from '../components/Loading';
 import { httpRequest } from '../services';
 
 const fetchLessonData = async lessonId => {
-  return httpRequest(`lessons?lessonId=${lessonId}`)
+  throw new Error('error')
+  return httpRequest(`post?postId=${lessonId}`)
   // return fetch(`${API_ENDPOINT}lessons?lessonId=${lessonId}`).then(response => response.json())
     .then(({ lessonData }) => lessonData.replace(/&nbsp;/gm, ' ').replace(/\\"/gm, '"'))
     .catch(error => console.log(error))
@@ -25,19 +26,20 @@ const fetchLessonData = async lessonId => {
 
 export default ({ navigation, route }) => {
   console.log(API_ENDPOINT);
-  const { lessonId } = route.params;
+  const { markupContent, postId } = route.params;
   const [lessonData, setLessonData] = React.useState(null);
   const [refreshing, setRefreshing] = React.useState(false);
 
   const onRefresh = React.useCallback(() => {
     setRefreshing(true);
-    fetchLessonData(lessonId)
+    fetchLessonData(1)
       .then(data => {
         setLessonData(data);
         setRefreshing(false);
       })
       .catch(error => {
         console.log(error);
+        setLessonData(markupContent)
         Toast.show({
           text: 'Some Error occured!',
           buttonText: 'Close',
@@ -48,17 +50,17 @@ export default ({ navigation, route }) => {
       });
 
     // wait(2000).then(() => setRefreshing(false));
-  }, [lessonId]);
+  }, [1]);
 
   !lessonData &&
-    fetchLessonData(lessonId)
+    fetchLessonData(1)
       .then(data => {
         setLessonData(data);
       })
       .catch(error => {
         console.log(error);
         // const {lessonOfflineData} = fetchLessonOffline(lessonId);
-        setLessonData('lessonOfflineData');
+        setLessonData(markupContent);
         Toast.show({
           text: 'Some Error occured!',
           buttonText: 'Close',
@@ -82,7 +84,7 @@ export default ({ navigation, route }) => {
           title="Refreshing..."
         />
       }>
-       
+        
       <View style={styles.wrapper}>
         <HTML source={{ html: lessonData }} />
       </View>

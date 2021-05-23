@@ -1,6 +1,6 @@
-export const PRIMARY_LIGHT_COLOR = '#ef5350';
-export const PRIMARY_MEDIUM_COLOR = '#303f9f';
-export const PRIMARY_DARK_COLOR = '#1a237e';
+export const PRIMARY_LIGHT_COLOR = '#BD3D1A';
+export const PRIMARY_MEDIUM_COLOR = '#281AEE';
+export const PRIMARY_DARK_COLOR = '#100978';
 
 export const SECONDARY_LIGHT_COLOR = '#FFF';
 export const SECONDARY_MEDIUM_COLOR = '#eeeeee';

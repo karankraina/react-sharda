@@ -1,44 +1,46 @@
 import React from 'react';
-import { StyleSheet, Image, RefreshControl, Dimensions } from 'react-native';
-import { Text, View, Content, Toast, Header, Title, Body } from 'native-base';
+import { StyleSheet, RefreshControl, Dimensions } from 'react-native';
+import { View, Content, Toast } from 'native-base';
+import HTML from 'react-native-render-html';
+import {
+  AdMobBanner,
+  AdMobInterstitial,
+  PublisherBanner,
+  AdMobRewarded,
+} from 'react-native-admob';
+
 
 var { width: screenWidth } = Dimensions.get('window');
 
 import { API_ENDPOINT } from '../../config/api';
-import { PRIMARY_DARK_COLOR } from '../../config/colors';
+import { fetchLessonOffline } from '../../config/offline-data';
 import Loading from '../components/Loading';
 import { httpRequest } from '../services';
 
-
-const fetchAboutData = async () => {
-  return httpRequest('aboutus') // .then(data => console.log('data from method: ', data));
-  return fetch(`${API_ENDPOINT}aboutus`).then(response =>
-    response.json(),
-  );
+const fetchLessonData = async () => {
+  return httpRequest(`aboutus`)
+    // return fetch(`${API_ENDPOINT}aboutus`).then(response => response.json())
+    // .then(({ lessonData }) => lessonData.replace(/&nbsp;/gm, ' ').replace(/\\"/gm, '"'))
+    .catch(error => console.log(error))
 };
 
-export default ({ navigation }) => {
+export default ({ navigation, route }) => {
   console.log(API_ENDPOINT);
-  const [aboutData, setaboutData] = React.useState(false);
+  const { lessonId } = route.params;
+  const [lessonData, setLessonData] = React.useState(null);
   const [refreshing, setRefreshing] = React.useState(false);
 
   const onRefresh = React.useCallback(() => {
     setRefreshing(true);
-    fetchAboutData()
+    fetchLessonData(lessonId)
       .then(data => {
-        
-        setaboutData(data);
+        setLessonData(data);
         setRefreshing(false);
-        Toast.show({
-          text: 'Messages Retrieved',
-          buttonText: 'Okay',
-          type: 'success',
-          duration: 1000,
-        });
       })
       .catch(error => {
+        console.log(error);
         Toast.show({
-          text: error.message || 'Some Error occured!',
+          text: 'Some Error occured!',
           buttonText: 'Close',
           type: 'danger',
           duration: 1000,
@@ -47,93 +49,60 @@ export default ({ navigation }) => {
       });
 
     // wait(2000).then(() => setRefreshing(false));
-  }, []);
+  }, [lessonId]);
 
-  !aboutData &&
-    fetchAboutData()
+  !lessonData &&
+    fetchLessonData(lessonId)
       .then(data => {
-        console.log('DATA IN COMPONENT FINAL==============', data.length);
-        setaboutData(data);
-        Toast.show({
-          text: 'Messages Retrieved',
-          buttonText: 'Okay',
-          type: 'success',
-          duration: 1000,
-        });
+        setLessonData(data);
       })
       .catch(error => {
         console.log(error);
-        setaboutData([]);
-        setRefreshing(false);
+        // const {lessonOfflineData} = fetchLessonOffline(lessonId);
+        setLessonData('lessonOfflineData');
         Toast.show({
-          text: error.message || 'Some Error occured!',
+          text: 'Some Error occured!',
           buttonText: 'Close',
           type: 'danger',
           duration: 1000,
         });
       });
-  if (!aboutData) {
+  if (!lessonData) {
     // return <H1>Please wait while we fetch the latest images from our Sharda Gallery...</H1>;
     return (
-      <Loading message="Please wait while we fetch data from our server..." />
+      <Loading message="Please wait while we retrieve the lesson content from our server..." />
     );
   }
   return (
-    <Content
-      refreshControl={
-        <RefreshControl
-          refreshing={refreshing}
-          onRefresh={onRefresh}
-          title="Refreshing..."
-        />
-      }>
-      <Header backgroundColor={PRIMARY_DARK_COLOR}>
-        <Body>
-          <Title>About Us</Title>
-        </Body>
-      </Header>
-      {aboutData.map(({ text, image, imageHeight }, index) => (
-        <View style={styles.rowItem} key={index}>
-          <View style={styles.cellTextBox}>
-            <Text style={styles.cellText}>{text}</Text>
-          </View>
-          {image && !image.includes('undefined') && (
-            <View style={styles.cellImageBox}>
-              <Image
-                source={{ uri: `${image}` }}
-                style={[styles.cellImage, { height: screenWidth * +imageHeight }]}
-              />
-            </View>
-          )}
+    <View style={{display: 'flex', flex: 1}}>
+      <Content
+        refreshControl={
+          <RefreshControl
+            refreshing={refreshing}
+            onRefresh={onRefresh}
+            title="Refreshing..."
+          />
+        }>
+        <View style={styles.wrapper}>
+          <HTML source={{ html: lessonData }} />
         </View>
-      ))}
-    </Content>
+
+
+      </Content>
+      <AdMobBanner
+        adSize="fullBanner"
+        adUnitID="ca-app-pub-5808042066618613/5270286510"
+        testDevices={[AdMobBanner.simulatorId]}
+        onAdFailedToLoad={error => console.error(error)}
+      />
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
-  rowItem: {
+  wrapper: {
     flexDirection: 'column',
-    margin: 5,
-  },
-  cellTextBox: {
-    marginRight: 10,
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'flex-start',
-  },
-  cellText: {
-    fontSize: 16,
-    color: '#000051',
-    marginRight: 5,
-    flex: 1,
-  },
-  cellImageBox: {
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  cellImage: {
-    width: screenWidth * 0.95,
-    marginTop: 10,
+    margin: 10,
+    marginRight: 15,
   },
 });
