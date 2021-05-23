@@ -159,7 +159,7 @@ export default ({ navigation }) => {
   if (!messages) {
     // return <H1>Please wait while we fetch the latest images from our Sharda Gallery...</H1>;
     return (
-      <Loading message="Please wait while we retrieve the latest messages/announcements from the Core Sharda Team Members..." />
+      <Loading message="Please wait while we retrieve the latest content from our servers..." />
     );
   }
 
@@ -174,13 +174,13 @@ export default ({ navigation }) => {
           />
         }>
 
-        {messages.map(({ title, thumbUrl, docUrl, pdfUrl, docFileName = 'Core Sharda Team.docx', pdfFileName = 'Core Sharda Team.pdf' }, index) => (
+        {messages.map(({ title, thumbUrl, docUrl, pdfUrl, docFileName = 'Shardapeetham.docx', pdfFileName = 'Shardapeetham.pdf' }, index) => (
           <Card key={index}>
             <CardItem>
               <Left>
                 <Body>
                   <H2>{title}</H2>
-                  <Text note>{'Core Sharda Team'}</Text>
+                  <Text note>{'Shardapeetham'}</Text>
                 </Body>
               </Left>
             </CardItem>
@@ -206,7 +206,7 @@ export default ({ navigation }) => {
               {/* <Body style={{ marginRight: -20 }}>
             <Button transparent>
               <Icon active name="md-person" />
-              <Text>Core Sharda Team</Text>
+              <Text>Shardapeetham</Text>
             </Button>
           </Body> */}
               <Right>
