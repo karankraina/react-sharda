@@ -150,7 +150,7 @@ export default ({ navigation }) => {
           title="Refreshing..."
         />
       }>
-      {[...images, ...images].map(({ image: uri, title, description, contributor, subtitle, fileName = 'image.jpeg' }, index) => (
+      {images.map(({ image: uri, title, description, contributor, subtitle, fileName = 'image.jpeg' }, index) => (
         <Card key={index}>
           <CardItem>
             <Left>

@@ -26,7 +26,7 @@ const fetchLessonData = async lessonId => {
 
 export default ({ navigation, route }) => {
   console.log(API_ENDPOINT);
-  const { markupContent, postId } = route.params;
+  const { content, postId } = route.params;
   const [lessonData, setLessonData] = React.useState(null);
   const [refreshing, setRefreshing] = React.useState(false);
 
@@ -39,7 +39,7 @@ export default ({ navigation, route }) => {
       })
       .catch(error => {
         console.log(error);
-        setLessonData(markupContent)
+        setLessonData(content)
         Toast.show({
           text: 'Some Error occured!',
           buttonText: 'Close',
@@ -60,7 +60,7 @@ export default ({ navigation, route }) => {
       .catch(error => {
         console.log(error);
         // const {lessonOfflineData} = fetchLessonOffline(lessonId);
-        setLessonData(markupContent);
+        setLessonData(content);
         Toast.show({
           text: 'Some Error occured!',
           buttonText: 'Close',

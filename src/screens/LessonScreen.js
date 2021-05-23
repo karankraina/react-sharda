@@ -19,7 +19,7 @@ import { httpRequest } from '../services';
 const fetchLessonData = async lessonId => {
   return httpRequest(`lessons?lessonId=${lessonId}`)
   // return fetch(`${API_ENDPOINT}lessons?lessonId=${lessonId}`).then(response => response.json())
-    .then(({ lessonData }) => lessonData.replace(/&nbsp;/gm, ' ').replace(/\\"/gm, '"'))
+    .then(({ lessonContent }) => lessonContent) //.replace(/&nbsp;/gm, ' ').replace(/\\"/gm, '"'))
     .catch(error => console.log(error))
 };
 
@@ -28,6 +28,7 @@ export default ({ navigation, route }) => {
   const { lessonId } = route.params;
   const [lessonData, setLessonData] = React.useState(null);
   const [refreshing, setRefreshing] = React.useState(false);
+  console.log(lessonData);
 
   const onRefresh = React.useCallback(() => {
     setRefreshing(true);

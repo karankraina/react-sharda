@@ -29,7 +29,6 @@ import { httpRequest } from '../services';
 
 
 const fetchLessons = async () => {
-  return [{ title: 'Some title', id: 1, markupContent: '<h1>SOme COntent</h1>' }];
   return httpRequest('posts');
   
 };
@@ -91,14 +90,14 @@ const PostList = ({ navigation }) => {
           title="Refreshing..."
         />
       }>
-      {lessonList.map(({ title, id, markupContent }, index) => (
+      {lessonList.map(({ title, id, content }, index) => (
         <TouchableOpacity
           style={styles.listBox}
           key={index}
           onPress={() => {
             navigation.navigate('Post', {
               id,
-              markupContent
+              content
             });
           }}>
           <View style={styles.listItem}>

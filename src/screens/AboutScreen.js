@@ -5,36 +5,28 @@ import HTML from 'react-native-render-html';
 import {
   AdMobBanner,
   AdMobInterstitial,
-  PublisherBanner,
-  AdMobRewarded,
 } from 'react-native-admob';
 
-
-var { width: screenWidth } = Dimensions.get('window');
-
 import { API_ENDPOINT } from '../../config/api';
-import { fetchLessonOffline } from '../../config/offline-data';
 import Loading from '../components/Loading';
 import { httpRequest } from '../services';
 
-const fetchLessonData = async () => {
+const fetchAboutMarkupData = async () => {
   return httpRequest(`aboutus`)
-    // return fetch(`${API_ENDPOINT}aboutus`).then(response => response.json())
-    // .then(({ lessonData }) => lessonData.replace(/&nbsp;/gm, ' ').replace(/\\"/gm, '"'))
-    .catch(error => console.log(error))
+    .then(({ data }) => data.replace(/&nbsp;/gm, ' ').replace(/\\"/gm, '"'))
 };
 
 export default ({ navigation, route }) => {
   console.log(API_ENDPOINT);
-  const { lessonId } = route.params;
-  const [lessonData, setLessonData] = React.useState(null);
+  const {  } = route.params;
+  const [aboutMarkup, setAboutMarkup] = React.useState(null);
   const [refreshing, setRefreshing] = React.useState(false);
 
   const onRefresh = React.useCallback(() => {
     setRefreshing(true);
-    fetchLessonData(lessonId)
+    fetchAboutMarkupData()
       .then(data => {
-        setLessonData(data);
+        setAboutMarkup(data);
         setRefreshing(false);
       })
       .catch(error => {
@@ -45,21 +37,22 @@ export default ({ navigation, route }) => {
           type: 'danger',
           duration: 1000,
         });
+        setAboutMarkup('<h2>Oops! Some Error Occured! Check your internet connection and try again.</h2>');
         setRefreshing(false);
       });
 
     // wait(2000).then(() => setRefreshing(false));
-  }, [lessonId]);
+  }, []);
 
-  !lessonData &&
-    fetchLessonData(lessonId)
+  !aboutMarkup &&
+    fetchAboutMarkupData()
       .then(data => {
-        setLessonData(data);
+        setAboutMarkup(data);
       })
       .catch(error => {
         console.log(error);
         // const {lessonOfflineData} = fetchLessonOffline(lessonId);
-        setLessonData('lessonOfflineData');
+        setAboutMarkup('<h2>Oops! Some Error Occured! Check your internet connection and try again.</h2>');
         Toast.show({
           text: 'Some Error occured!',
           buttonText: 'Close',
@@ -67,10 +60,9 @@ export default ({ navigation, route }) => {
           duration: 1000,
         });
       });
-  if (!lessonData) {
-    // return <H1>Please wait while we fetch the latest images from our Sharda Gallery...</H1>;
+  if (!aboutMarkup) {
     return (
-      <Loading message="Please wait while we retrieve the lesson content from our server..." />
+      <Loading message="Please wait while we load fresh content from our server..." />
     );
   }
   return (
@@ -84,7 +76,7 @@ export default ({ navigation, route }) => {
           />
         }>
         <View style={styles.wrapper}>
-          <HTML source={{ html: lessonData }} />
+          <HTML source={{ html: aboutMarkup }} />
         </View>
 
 
