@@ -78,7 +78,7 @@ export default () => {
         }}
       />
       <Stack.Screen
-        name="PostScreen"
+        name="Post"
         component={PostScreen}
         options={{
           title: 'Posts',

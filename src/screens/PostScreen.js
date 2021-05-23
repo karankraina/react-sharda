@@ -26,7 +26,7 @@ const fetchLessonData = async lessonId => {
 
 export default ({ navigation, route }) => {
   console.log(API_ENDPOINT);
-  const { markupContent } = route.params;
+  const { markupContent, postId } = route.params;
   const [lessonData, setLessonData] = React.useState(null);
   const [refreshing, setRefreshing] = React.useState(false);
 

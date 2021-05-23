@@ -96,7 +96,7 @@ const PostList = ({ navigation }) => {
           style={styles.listBox}
           key={index}
           onPress={() => {
-            navigation.navigate('PostScreen', {
+            navigation.navigate('Post', {
               id,
               markupContent
             });
