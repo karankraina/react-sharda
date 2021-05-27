@@ -154,6 +154,15 @@ const Homescreen = ({ navigation }) => {
   const [homeData, setHomeData] = React.useState();
   const [isLoading, setLoading] = React.useState(true);
 
+  // Implement an Interstitial Ad
+  React.useEffect(() => {
+    console.log('');
+
+    return function cleanComponent() {
+      console.log('');
+    }
+  });
+
   const onRefresh = React.useCallback(() => {
     setRefreshing(true);
     fetchHomepageData()

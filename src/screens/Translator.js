@@ -212,6 +212,21 @@ export default () => {
   const [hindiText, setHindiText] = React.useState('');
   const [shardaText, setShardaText] = React.useState('');
   const [loading, setLoading] = React.useState(false);
+
+   // Implement an Interstitial Ad
+   React.useEffect(() => {
+    AdMobInterstitial.setAdUnitID('ca-app-pub-5808042066618613/2009590557');
+    AdMobInterstitial.setTestDevices([AdMobInterstitial.simulatorId]);
+    AdMobInterstitial.requestAd().then(() => {
+      AdMobInterstitial.showAd().catch(error => console.warn(error));;
+    }).catch(error => console.warn(error));
+    console.log('I am called on Mount');
+
+    return function cleanComponent() {
+      console.log('I am called on Umnount');
+    }
+  });
+  
   const handleHindiTextChange = text => {
     setHindiText(text);
     setShardaText(devnagriToSharda(text));

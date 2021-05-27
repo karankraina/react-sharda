@@ -18,17 +18,29 @@ import { httpRequest } from '../services';
 
 const fetchLessonData = async lessonId => {
   return httpRequest(`lessons?lessonId=${lessonId}`)
-  // return fetch(`${API_ENDPOINT}lessons?lessonId=${lessonId}`).then(response => response.json())
+    // return fetch(`${API_ENDPOINT}lessons?lessonId=${lessonId}`).then(response => response.json())
     .then(({ lessonContent }) => lessonContent) //.replace(/&nbsp;/gm, ' ').replace(/\\"/gm, '"'))
     .catch(error => console.log(error))
 };
 
 export default ({ navigation, route }) => {
-  console.log(API_ENDPOINT);
   const { lessonId } = route.params;
   const [lessonData, setLessonData] = React.useState(null);
   const [refreshing, setRefreshing] = React.useState(false);
-  console.log(lessonData);
+
+  // Implement an Interstitial Ad
+  React.useEffect(() => {
+    AdMobInterstitial.setAdUnitID('ca-app-pub-5808042066618613/1300688703');
+    AdMobInterstitial.setTestDevices([AdMobInterstitial.simulatorId]);
+    AdMobInterstitial.requestAd().then(() => {
+      AdMobInterstitial.showAd().catch(error => console.warn(error));;
+    }).catch(error => console.warn(error));
+    console.log('I am called on Mount');
+
+    return function cleanComponent() {
+      console.log('I am called on Umnount');
+    }
+  });
 
   const onRefresh = React.useCallback(() => {
     setRefreshing(true);
@@ -75,20 +87,20 @@ export default ({ navigation, route }) => {
   }
   return (
     <View style={{ display: 'flex', flex: 1 }}>
-    <Content
-      refreshControl={
-        <RefreshControl
-          refreshing={refreshing}
-          onRefresh={onRefresh}
-          title="Refreshing..."
-        />
-      }>
-       
-      <View style={styles.wrapper}>
-        <HTML source={{ html: lessonData }} />
-      </View>
-    </Content>
-    <AdMobBanner
+      <Content
+        refreshControl={
+          <RefreshControl
+            refreshing={refreshing}
+            onRefresh={onRefresh}
+            title="Refreshing..."
+          />
+        }>
+
+        <View style={styles.wrapper}>
+          <HTML source={{ html: lessonData }} />
+        </View>
+      </Content>
+      <AdMobBanner
         adSize="fullBanner"
         adUnitID="ca-app-pub-5808042066618613/5270286510"
         testDevices={[AdMobBanner.simulatorId]}

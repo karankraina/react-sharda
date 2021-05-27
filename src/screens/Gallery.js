@@ -3,6 +3,12 @@ import { Image, RefreshControl, Linking, TouchableOpacity, Platform, Permissions
 //Import RNFetchBlob for the file download
 import RNFetchBlob from 'rn-fetch-blob';
 import { H1, Content, Card, CardItem, Icon, Text, Button, Toast, Left, Body, Right } from 'native-base';
+import {
+  AdMobBanner,
+  AdMobInterstitial,
+  PublisherBanner,
+  AdMobRewarded,
+} from 'react-native-admob';
 
 import { API_ENDPOINT } from '../../config/api';
 import Loading from '../components/Loading';
@@ -109,6 +115,20 @@ export default ({ navigation }) => {
   console.log(API_ENDPOINT);
   const [images, setImages] = React.useState(false);
   const [refreshing, setRefreshing] = React.useState(false);
+
+   // Implement an Interstitial Ad
+   React.useEffect(() => {
+    AdMobInterstitial.setAdUnitID('ca-app-pub-5808042066618613/2392733933');
+    AdMobInterstitial.setTestDevices([AdMobInterstitial.simulatorId]);
+    AdMobInterstitial.requestAd().then(() => {
+      AdMobInterstitial.showAd().catch(error => console.warn(error));;
+    }).catch(error => console.warn(error));
+    console.log('I am called on Mount');
+
+    return function cleanComponent() {
+      console.log('I am called on Umnount');
+    }
+  });
 
   const onRefresh = React.useCallback(() => {
     setRefreshing(true);

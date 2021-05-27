@@ -16,30 +16,47 @@ import { fetchLessonOffline } from '../../config/offline-data';
 import Loading from '../components/Loading';
 import { httpRequest } from '../services';
 
-const fetchLessonData = async lessonId => {
-  throw new Error('error')
-  return httpRequest(`post?postId=${lessonId}`)
+const fetchPostData = async (postId, content = null) => {
+
+  if (content) {
+    return content;
+  }
+  return httpRequest(`posts?postId=${postId}`)
   // return fetch(`${API_ENDPOINT}lessons?lessonId=${lessonId}`).then(response => response.json())
-    .then(({ lessonData }) => lessonData.replace(/&nbsp;/gm, ' ').replace(/\\"/gm, '"'))
+    .then(({ content }) => content.replace(/&nbsp;/gm, ' ').replace(/\\"/gm, '"'))
     .catch(error => console.log(error))
 };
 
 export default ({ navigation, route }) => {
   console.log(API_ENDPOINT);
   const { content, postId } = route.params;
-  const [lessonData, setLessonData] = React.useState(null);
+  const [postData, setPostData] = React.useState(null);
   const [refreshing, setRefreshing] = React.useState(false);
+
+   // Implement an Interstitial Ad
+   React.useEffect(() => {
+    AdMobInterstitial.setAdUnitID('ca-app-pub-5808042066618613/9859326265');
+    AdMobInterstitial.setTestDevices([AdMobInterstitial.simulatorId]);
+    AdMobInterstitial.requestAd().then(() => {
+      AdMobInterstitial.showAd().catch(error => console.warn(error));;
+    }).catch(error => console.warn(error));
+    console.log('I am called on Mount');
+
+    return function cleanComponent() {
+      console.log('I am called on Umnount');
+    }
+  });
 
   const onRefresh = React.useCallback(() => {
     setRefreshing(true);
-    fetchLessonData(1)
+    fetchPostData(postId)
       .then(data => {
-        setLessonData(data);
+        setPostData(data);
         setRefreshing(false);
       })
       .catch(error => {
         console.log(error);
-        setLessonData(content)
+        setPostData(content)
         Toast.show({
           text: 'Some Error occured!',
           buttonText: 'Close',
@@ -52,15 +69,15 @@ export default ({ navigation, route }) => {
     // wait(2000).then(() => setRefreshing(false));
   }, [1]);
 
-  !lessonData &&
-    fetchLessonData(1)
+  !postData &&
+    fetchPostData(postId, content)
       .then(data => {
-        setLessonData(data);
+        setPostData(data);
       })
       .catch(error => {
         console.log(error);
         // const {lessonOfflineData} = fetchLessonOffline(lessonId);
-        setLessonData(content);
+        setPostData(content);
         Toast.show({
           text: 'Some Error occured!',
           buttonText: 'Close',
@@ -68,7 +85,7 @@ export default ({ navigation, route }) => {
           duration: 1000,
         });
       });
-  if (!lessonData) {
+  if (!postData) {
     // return <H1>Please wait while we fetch the latest images from our Sharda Gallery...</H1>;
     return (
       <Loading message="Please wait while we retrieve the lesson content from our server..." />
@@ -86,7 +103,7 @@ export default ({ navigation, route }) => {
       }>
         
       <View style={styles.wrapper}>
-        <HTML source={{ html: lessonData }} />
+        <HTML source={{ html: postData }} />
       </View>
     </Content>
     <AdMobBanner

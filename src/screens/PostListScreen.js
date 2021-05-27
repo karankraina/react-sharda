@@ -96,7 +96,7 @@ const PostList = ({ navigation }) => {
           key={index}
           onPress={() => {
             navigation.navigate('Post', {
-              id,
+              postId: id,
               content
             });
           }}>
