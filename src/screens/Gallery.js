@@ -49,7 +49,7 @@ const checkPermission = async (url, fileName) => {
 const downloadImage = (url, fileName) => {
   //Main function to download the image
   let date = new Date(); //To add the time suffix in filename
-
+console.log('COMING HERE TO DOWNLOAD');
   //Getting the extention of the file
   // let ext = getExtention(url);
   // ext = '.' + ext[0];
@@ -65,7 +65,7 @@ const downloadImage = (url, fileName) => {
       useDownloadManager: true,
       notification: true,
       title: fileName,
-      path: DownloadDir + fileName,
+      path: DownloadDir + '/' + fileName,
       description: 'Downloading Image',
     },
   };
@@ -79,7 +79,7 @@ const downloadImage = (url, fileName) => {
         type: 'success',
         duration: 3000,
       });
-    });
+    }).catch(error => console.error(error));
 };
 
 const getExtention = filename => {
