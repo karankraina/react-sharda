@@ -28,20 +28,7 @@ export default ({ navigation, route }) => {
   const [lessonData, setLessonData] = React.useState(null);
   const [refreshing, setRefreshing] = React.useState(false);
 
-  // Implement an Interstitial Ad
-  React.useEffect(() => {
-    AdMobInterstitial.setAdUnitID('ca-app-pub-5808042066618613/1300688703');
-    AdMobInterstitial.setTestDevices([AdMobInterstitial.simulatorId]);
-    AdMobInterstitial.requestAd().then(() => {
-      AdMobInterstitial.showAd().catch(error => console.warn(error));;
-    }).catch(error => console.warn(error));
-    console.log('I am called on Mount');
-
-    return function cleanComponent() {
-      console.log('I am called on Umnount');
-    }
-  });
-
+  
   const onRefresh = React.useCallback(() => {
     setRefreshing(true);
     fetchLessonData(lessonId)

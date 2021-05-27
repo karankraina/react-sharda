@@ -1,5 +1,5 @@
 import React from 'react';
-import { Content, Text, Textarea, Form, H1, Toast } from 'native-base';
+import { Content, Text, Textarea, Form, H1, Toast, Button } from 'native-base';
 import { TouchableOpacity, PermissionsAndroid, Platform, Linking } from 'react-native';
 //Import RNFetchBlob for the file download
 import RNFetchBlob from 'rn-fetch-blob';
@@ -213,27 +213,41 @@ export default () => {
   const [shardaText, setShardaText] = React.useState('');
   const [loading, setLoading] = React.useState(false);
 
-   // Implement an Interstitial Ad
-   React.useEffect(() => {
+  // Implement an Interstitial Ad
+  //  React.useEffect(() => {
+  //   AdMobInterstitial.setAdUnitID('ca-app-pub-5808042066618613/2009590557');
+  //   AdMobInterstitial.setTestDevices([AdMobInterstitial.simulatorId]);
+  //   AdMobInterstitial.requestAd().then(() => {
+  //     AdMobInterstitial.showAd().catch(error => console.warn(error));;
+  //   }).catch(error => console.warn(error));
+  //   console.log('I am called on Mount');
+
+  //   return function cleanComponent() {
+  //     console.log('I am called on Umnount');
+  //   }
+  // });
+  const recordHindiText = text => {
+    setHindiText(text);
+  }
+  const recordShardaText = text => {
+    setShardaText(text);
+  }
+
+  const handleHindiTextChange = text => {
     AdMobInterstitial.setAdUnitID('ca-app-pub-5808042066618613/2009590557');
     AdMobInterstitial.setTestDevices([AdMobInterstitial.simulatorId]);
     AdMobInterstitial.requestAd().then(() => {
       AdMobInterstitial.showAd().catch(error => console.warn(error));;
     }).catch(error => console.warn(error));
-    console.log('I am called on Mount');
-
-    return function cleanComponent() {
-      console.log('I am called on Umnount');
-    }
-  });
-  
-  const handleHindiTextChange = text => {
-    setHindiText(text);
     setShardaText(devnagriToSharda(text));
   };
   const handleShardaTextChange = text => {
-    setShardaText(text);
     setHindiText(shardaToDevnagri(text));
+    AdMobInterstitial.setAdUnitID('ca-app-pub-5808042066618613/2009590557');
+    AdMobInterstitial.setTestDevices([AdMobInterstitial.simulatorId]);
+    AdMobInterstitial.requestAd().then(() => {
+      AdMobInterstitial.showAd().catch(error => console.warn(error));;
+    }).catch(error => console.warn(error));
   };
   if (loading) {
     // return <H1>Please wait while we fetch the latest images from our Sharda Gallery...</H1>;
@@ -254,7 +268,7 @@ export default () => {
       <Form>
         <Textarea
           rowSpan={8}
-          onChangeText={text => handleHindiTextChange(text)}
+          onChangeText={text => recordHindiText(text)}
           value={hindiText}
           bordered
           placeholder="Devnagri Text"
@@ -265,14 +279,19 @@ export default () => {
         <Textarea
           style={{ fontFamily: 'Sharada' }}
           rowSpan={8}
-          onChangeText={text => handleShardaTextChange(text)}
+          onChangeText={text => recordShardaText(text)}
           value={shardaText}
           bordered
           placeholder="Sharda Text"
         />
-        {/* <Button block disabled={true} success onPress={() => { checkPermission(`${API_ENDPOINT}generatepdf`, setLoading, 'hindiText', shardaText); }} style={{ marginTop: 40 }}>
-          <Text>Generate PDF</Text>
-        </Button> */}
+        <Button block success onPress={() => handleHindiTextChange(hindiText)}>
+          <Text>Devnagri to Sharda</Text>
+        </Button>
+        <Text></Text>
+        <Button block success onPress={() => handleShardaTextChange(shardaText)}>
+          <Text>Sharda to Devnagri</Text>
+        </Button>
+
       </Form>
       <H1></H1>
       <H1></H1>

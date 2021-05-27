@@ -69,7 +69,7 @@ export default () => {
         name="Lesson"
         component={LessonScreen}
         options={{
-          title: '𑆑𑆾𑆫 𑆯𑆳𑆫𑆢𑆳 𑆛𑆵𑆩',
+          title: 'Shardapeetham',
           headerStyle: { backgroundColor: PRIMARY_DARK_COLOR },
           headerTintColor: PRIMARY_TEXT_COLOR,
           headerTitleStyle: { fontWeight: 'bold' },
