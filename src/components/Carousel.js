@@ -14,56 +14,14 @@ const SLIDER_WIDTH = Dimensions.get('window').width;
 const ITEM_WIDTH = Math.round(SLIDER_WIDTH * 0.7);
 const ITEM_HEIGHT = Math.round(ITEM_WIDTH * 4 / 3);
 
-const DATA = [
-    {
-        text: 'Learn Sharda',
-        screenName: 'LearnSharda',
-        props: 'test',
-        description: 'Learn Sharda Online Learn Sharda Online Learn Sharda Online Learn Sharda Online Learn Sharda Online Learn Sharda Online '
-    },
-    {
-        text: 'Documents',
-        screenName: 'LalVaakh',
-        props: 'test',
-        description: 'Learn Sharda Online Learn Sharda Online Learn Sharda Online Learn Sharda Online Learn Sharda Online Learn Sharda Online '
-    },
-    {
-        text: 'Transliterator',
-        screenName: 'Translator',
-        props: 'test',
-        description: 'Learn Sharda Online Learn Sharda Online Learn Sharda Online Learn Sharda Online Learn Sharda Online Learn Sharda Online '
-    },
-    {
-        text: 'Gallery',
-        screenName: 'Gallery',
-        props: 'test',
-        description: 'Learn Sharda Online Learn Sharda Online Learn Sharda Online Learn Sharda Online Learn Sharda Online Learn Sharda Online '
-    },
-    {
-        text: 'About Us',
-        screenName: 'About',
-        props: 'test',
-        description: 'Learn Sharda Online Learn Sharda Online Learn Sharda Online Learn Sharda Online Learn Sharda Online Learn Sharda Online '
-    },
-    {
-        text: 'Post',
-        screenName: 'PostList',
-        props: 'test',
-        description: 'Learn Sharda Online Learn Sharda Online Learn Sharda Online Learn Sharda Online Learn Sharda Online Learn Sharda Online '
-    },
-    {
-        text: 'Share',
-        description: 'Learn Sharda Online Learn Sharda Online Learn Sharda Online Learn Sharda Online Learn Sharda Online Learn Sharda Online '
-    }
-
-];
+const DATA = [];
 
 
 export default class App extends Component {
 
     state = {
         index: 0,
-        data: [...(this.props.data || []), ...DATA]
+        data: [...(this.props.cardData || []), ...DATA]
     }
 
     constructor(props) {

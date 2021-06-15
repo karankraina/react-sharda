@@ -157,7 +157,7 @@ export default ({ navigation }) => {
   if (!messages) {
     // return <H1>Please wait while we fetch the latest images from our Sharda Gallery...</H1>;
     return (
-      <Loading message="Please wait while we retrieve the latest messages/announcements from the Core Sharda Team Members..." />
+      <Loading message="Please wait while we retrieve the latest content from our servers..." />
     );
   }
 

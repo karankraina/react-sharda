@@ -117,7 +117,7 @@ export default ({ navigation }) => {
       </Content>
       <AdMobBanner
         adSize="fullBanner"
-        adUnitID="ca-app-pub-5808042066618613/5270286510"
+        adUnitID="ca-app-pub-5808042066618613/6678790858"
         testDevices={[AdMobBanner.simulatorId]}
         onAdFailedToLoad={error => console.error(error)}
       />

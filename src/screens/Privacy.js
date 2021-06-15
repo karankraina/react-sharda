@@ -11,36 +11,21 @@ import { API_ENDPOINT } from '../../config/api';
 import Loading from '../components/Loading';
 import { httpRequest } from '../services';
 
-const fetchAboutMarkupData = async () => {
-  return httpRequest(`aboutus`)
+const fetchPrivacyMarkupData = async () => {
+  return httpRequest(`privacy`, 60 * 24)
     .then(({ data }) => data.replace(/&nbsp;/gm, ' ').replace(/\\"/gm, '"'))
 };
 
 export default ({ navigation, route }) => {
   console.log(API_ENDPOINT);
-  const {  } = route.params;
-  const [aboutMarkup, setAboutMarkup] = React.useState(null);
+  const [privacyMarkup, setPrivacyMarkup] = React.useState(null);
   const [refreshing, setRefreshing] = React.useState(false);
-
-  // Implement an Interstitial Ad
-  React.useEffect(() => {
-    AdMobInterstitial.setAdUnitID('ca-app-pub-5808042066618613/6331978949');
-    AdMobInterstitial.setTestDevices([AdMobInterstitial.simulatorId]);
-    AdMobInterstitial.requestAd().then(() => {
-      AdMobInterstitial.showAd().catch(error => console.warn(error));
-    }).catch(error => console.warn(error));
-    console.log('I am called on Mount');
-
-    return function cleanComponent() {
-      console.log('I am called on Umnount');
-    }
-  });
 
   const onRefresh = React.useCallback(() => {
     setRefreshing(true);
-    fetchAboutMarkupData()
+    fetchPrivacyMarkupData()
       .then(data => {
-        setAboutMarkup(data);
+        setPrivacyMarkup(data);
         setRefreshing(false);
       })
       .catch(error => {
@@ -51,22 +36,22 @@ export default ({ navigation, route }) => {
           type: 'danger',
           duration: 1000,
         });
-        setAboutMarkup('<h2>Oops! Some Error Occured! Check your internet connection and try again.</h2>');
+        setPrivacyMarkup('<h2>Oops! Some Error Occured! Check your internet connection and try again.</h2>');
         setRefreshing(false);
       });
 
     // wait(2000).then(() => setRefreshing(false));
   }, []);
 
-  !aboutMarkup &&
-    fetchAboutMarkupData()
+  !privacyMarkup &&
+    fetchPrivacyMarkupData()
       .then(data => {
-        setAboutMarkup(data);
+        setPrivacyMarkup(data);
       })
       .catch(error => {
         console.log(error);
         // const {lessonOfflineData} = fetchLessonOffline(lessonId);
-        setAboutMarkup('<h2>Oops! Some Error Occured! Check your internet connection and try again.</h2>');
+        setPrivacyMarkup('<h2>Oops! Some Error Occured! Check your internet connection and try again.</h2>');
         Toast.show({
           text: 'Some Error occured!',
           buttonText: 'Close',
@@ -74,7 +59,7 @@ export default ({ navigation, route }) => {
           duration: 1000,
         });
       });
-  if (!aboutMarkup) {
+  if (!privacyMarkup) {
     return (
       <Loading message="Please wait while we load fresh content from our server..." />
     );
@@ -90,14 +75,14 @@ export default ({ navigation, route }) => {
           />
         }>
         <View style={styles.wrapper}>
-          <HTML source={{ html: aboutMarkup }} />
+          <HTML source={{ html: privacyMarkup }} />
         </View>
 
 
       </Content>
       <AdMobBanner
         adSize="fullBanner"
-        adUnitID="ca-app-pub-5808042066618613/1061424678"
+        adUnitID="ca-app-pub-5808042066618613/5270286510"
         testDevices={[AdMobBanner.simulatorId]}
         onAdFailedToLoad={error => console.error(error)}
       />

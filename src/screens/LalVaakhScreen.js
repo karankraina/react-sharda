@@ -120,6 +120,20 @@ export default ({ navigation }) => {
   const [messages, setMessages] = React.useState(false);
   const [refreshing, setRefreshing] = React.useState(false);
 
+   // Implement an Interstitial Ad
+   React.useEffect(() => {
+    AdMobInterstitial.setAdUnitID('ca-app-pub-5808042066618613/2919062131');
+    AdMobInterstitial.setTestDevices([AdMobInterstitial.simulatorId]);
+    AdMobInterstitial.requestAd().then(() => {
+      AdMobInterstitial.showAd().catch(error => console.warn(error));;
+    }).catch(error => console.warn(error));
+    console.log('I am called on Mount');
+
+    return function cleanComponent() {
+      console.log('I am called on Umnount');
+    }
+  });
+
   const onRefresh = React.useCallback(() => {
     setRefreshing(true);
     fetchLinks()
@@ -159,7 +173,7 @@ export default ({ navigation }) => {
   if (!messages) {
     // return <H1>Please wait while we fetch the latest images from our Sharda Gallery...</H1>;
     return (
-      <Loading message="Please wait while we retrieve the latest messages/announcements from the Core Sharda Team Members..." />
+      <Loading message="Please wait while we retrieve the latest content from our servers..." />
     );
   }
 
@@ -174,13 +188,13 @@ export default ({ navigation }) => {
           />
         }>
 
-        {messages.map(({ title, thumbUrl, docUrl, pdfUrl, docFileName = 'Core Sharda Team.docx', pdfFileName = 'Core Sharda Team.pdf' }, index) => (
+        {messages.map(({ title, thumbUrl, docUrl, pdfUrl, docFileName = 'Shardapeetham.docx', pdfFileName = 'Shardapeetham.pdf' }, index) => (
           <Card key={index}>
             <CardItem>
               <Left>
                 <Body>
                   <H2>{title}</H2>
-                  <Text note>{'Core Sharda Team'}</Text>
+                  <Text note>{'Shardapeetham'}</Text>
                 </Body>
               </Left>
             </CardItem>
@@ -206,7 +220,7 @@ export default ({ navigation }) => {
               {/* <Body style={{ marginRight: -20 }}>
             <Button transparent>
               <Icon active name="md-person" />
-              <Text>Core Sharda Team</Text>
+              <Text>Shardapeetham</Text>
             </Button>
           </Body> */}
               <Right>

@@ -1,6 +1,6 @@
 import React from 'react';
-import { StyleSheet, Text, TouchableOpacity, Button } from 'react-native';
-import { Container, View } from 'native-base';
+import { StyleSheet, Text, RefreshControl, Button } from 'react-native';
+import { Container, View, Content, Toast } from 'native-base';
 import { Col, Row, Grid } from 'react-native-easy-grid';
 import { createStackNavigator } from '@react-navigation/stack';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -14,7 +14,7 @@ import { Avatar, Headline, Card, Title, Paragraph } from 'react-native-paper';
 
 import Carousel from '../components/Carousel';
 
-import FabComponent from '../components/Fab';
+import Loading from '../components/Loading';
 import LearnSharda from './LearnSharda2';
 import LalVaakhScreen from './LalVaakhScreen';
 import GalleryScreen from './Gallery';
@@ -23,6 +23,8 @@ import PostListScreen from './PostListScreen';
 import PostScreen from './PostScreen';
 import AboutScreen from './AboutScreen';
 import LessonScreen from './LessonScreen';
+import PrivacyScreen from './Privacy';
+import SplashScreen from './Splash';
 import {
   PRIMARY_DARK_COLOR,
   PRIMARY_TEXT_COLOR,
@@ -32,7 +34,13 @@ import {
   SECONDARY_LIGHT_COLOR
 } from '../../config/colors';
 
+import { httpRequest } from '../services';
+
 const Stack = createStackNavigator();
+
+const fetchHomepageData = async () => {
+  return httpRequest(`homepage`).then(({ data }) => data)
+};
 
 export default () => {
   return (
@@ -61,7 +69,7 @@ export default () => {
         name="Lesson"
         component={LessonScreen}
         options={{
-          title: '𑆑𑆾𑆫 𑆯𑆳𑆫𑆢𑆳 𑆛𑆵𑆩',
+          title: 'Shardapeetham',
           headerStyle: { backgroundColor: PRIMARY_DARK_COLOR },
           headerTintColor: PRIMARY_TEXT_COLOR,
           headerTitleStyle: { fontWeight: 'bold' },
@@ -92,6 +100,16 @@ export default () => {
         component={AboutScreen}
         options={{
           title: 'About Us',
+          headerStyle: { backgroundColor: PRIMARY_DARK_COLOR },
+          headerTintColor: PRIMARY_TEXT_COLOR,
+          headerTitleStyle: { fontWeight: 'bold' },
+        }}
+      />
+      <Stack.Screen
+        name="Privacy"
+        component={PrivacyScreen}
+        options={{
+          title: 'Privacy Policy',
           headerStyle: { backgroundColor: PRIMARY_DARK_COLOR },
           headerTintColor: PRIMARY_TEXT_COLOR,
           headerTitleStyle: { fontWeight: 'bold' },
@@ -132,18 +150,84 @@ export default () => {
 };
 
 const Homescreen = ({ navigation }) => {
+  const [refreshing, setRefreshing] = React.useState(false);
+  const [homeData, setHomeData] = React.useState();
+  const [isLoading, setLoading] = React.useState(true);
+
+  // Implement an Interstitial Ad
+  React.useEffect(() => {
+    console.log('');
+
+    return function cleanComponent() {
+      console.log('');
+    }
+  });
+
+  const onRefresh = React.useCallback(() => {
+    setRefreshing(true);
+    fetchHomepageData()
+      .then(data => {
+        setHomeData(data);
+        setRefreshing(false);
+      })
+      .catch(error => {
+        console.log(error);
+        Toast.show({
+          text: 'Some Error occured!',
+          buttonText: 'Close',
+          type: 'danger',
+          duration: 1000,
+        });
+        setRefreshing(false);
+      });
+  }, []);
+  setTimeout(() => setLoading(false), 3000);
+  !homeData &&
+    fetchHomepageData()
+      .then(data => {
+        setHomeData(data);
+      })
+      .catch(error => {
+        // const {lessonOfflineData} = fetchLessonOffline(lessonId);
+        setHomeData({});
+        Toast.show({
+          text: 'Some Error occured!',
+          buttonText: 'Close',
+          type: 'danger',
+          duration: 1000,
+        });
+      });
+
+  if (isLoading) {
+    return (
+      <SplashScreen />
+    )
+  }
+  if (refreshing) {
+    return <Loading />
+  }
   return (
     <View style={{ display: 'flex', flex: 1 }}>
-    <Container style={styles.container}>
-      {/* <Headline style={{ alignSelf: 'center' }}>Shardapeetham</Headline> */}
-        <Card elevation={1}>
-          {/* <Card.Cover source={{ uri: 'https://i0.wp.com/hindupad.com/wp-content/uploads/2018/01/maa-saraswati-128-no-watermark.jpg?fit=914%2C778&ssl=1' }} /> */}
-          <Card.Cover source={require('../../assets/images/Banner.png')} />
-      </Card>
+      <Content
+        refreshControl={
+          <RefreshControl
+            refreshing={refreshing}
+            onRefresh={onRefresh}
+            title="Refreshing..."
+          />
+        }>
+        <Container style={styles.container}>
+          {/* <Headline style={{ alignSelf: 'center' }}>Shardapeetham</Headline> */}
+          <Card elevation={1}>
+            {/* <Card.Cover source={{ uri: 'https://i0.wp.com/hindupad.com/wp-content/uploads/2018/01/maa-saraswati-128-no-watermark.jpg?fit=914%2C778&ssl=1' }} /> */}
+            <Card.Cover source={homeData.bannerImage ? { uri: homeData.bannerImage } : require('../../assets/images/Banner.png')} />
+          </Card>
 
-      <Carousel navigation={navigation} />
+          <Carousel navigation={navigation} cardData={homeData.tilesContent} />
 
-      </Container>
+        </Container>
+
+      </Content>
       <AdMobBanner
         adSize="fullBanner"
         adUnitID="ca-app-pub-5808042066618613/9746031224"
@@ -151,91 +235,6 @@ const Homescreen = ({ navigation }) => {
         onAdFailedToLoad={error => console.error(error)}
       />
     </View>
-  );
-  return (
-    <FabComponent>
-      <Container style={styles.container}>
-        <Grid>
-
-          {/* <Row>
-            <Col style={styles.firstCol}>
-              <Text style={styles.headText}>𑇄</Text>
-              <Text style={styles.subHeadText}>
-              𑆯𑆳𑆫𑆢𑆳 𑆱𑆵𑆒𑆼𑆁 𑆯𑆳𑆫𑆢𑆳 𑆱𑆵𑆒𑆳𑆍𑆀
-              </Text>
-            </Col>
-           
-          </Row> */}
-          <Row>
-            <Col style={styles.col}>
-              <TouchableOpacity
-                onPress={() => {
-                  navigation.navigate('LearnSharda');
-                }}>
-                <View style={styles.cell}>
-                  <MaterialCommunityIcons
-                    name="library-books"
-                    color={PRIMARY_MEDIUM_COLOR}
-                    size={75}
-                  />
-                  <Text style={styles.cellText}>Learn Sharda</Text>
-                </View>
-              </TouchableOpacity>
-            </Col>
-            <Col style={styles.col}>
-              <TouchableOpacity
-                onPress={() => {
-                  navigation.navigate('LalVaakh');
-                }}>
-                <View style={styles.cell}>
-                  <MaterialCommunityIcons
-                    name="comment-text"
-                    color={PRIMARY_MEDIUM_COLOR}
-                    size={75}
-                  />
-                  <Text style={styles.cellText}>Team's Work</Text>
-                </View>
-              </TouchableOpacity>
-            </Col>
-          </Row>
-          {/* <Row /> */}
-          <Row>
-            <Col style={styles.col}>
-              <TouchableOpacity
-                onPress={() => {
-                  navigation.navigate('Gallery');
-                }}>
-                <View style={styles.cell}>
-                  <MaterialCommunityIcons
-                    name="image-multiple"
-                    color={PRIMARY_MEDIUM_COLOR}
-                    size={75}
-                  />
-                  <Text style={styles.cellText}>Gallery</Text>
-                </View>
-              </TouchableOpacity>
-            </Col>
-            <Col style={styles.col}>
-              <TouchableOpacity
-                onPress={() => {
-                  navigation.navigate('Translator');
-                }}>
-                <View style={styles.cell}>
-                  <MaterialCommunityIcons
-                    name="tooltip-edit"
-                    color={PRIMARY_MEDIUM_COLOR}
-                    size={75}
-                  />
-                  <Text style={styles.cellText}>Translator</Text>
-                </View>
-              </TouchableOpacity>
-            </Col>
-          </Row>
-          {/* <Row /> */}
-        </Grid>
-        <Carousel navigation={navigation} />
-      </Container>
-    </FabComponent>
   );
 };
 
