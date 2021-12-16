@@ -2,6 +2,9 @@
 <h1 align="center">Welcome to node-fetch-timeout 👋</h1>
 [![CircleCI](https://circleci.com/gh/karankraina/node-fetch-timeout/tree/master.svg?style=svg)](https://circleci.com/gh/karankraina/node-fetch-timeout/tree/master)
 <p>
+  <a href="https://circleci.com/gh/karankraina/node-fetch-timeout/tree/master" target="_blank">
+    <img alt="Version" src="https://circleci.com/gh/karankraina/node-fetch-timeout/tree/master.svg?style=svg">
+  </a>
   <a href="https://www.npmjs.com/package/node-fetch-timeout" target="_blank">
     <img alt="Version" src="https://img.shields.io/npm/v/node-fetch-timeout.svg">
   </a>
