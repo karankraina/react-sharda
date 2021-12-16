@@ -1,3 +1,4 @@
+[![CircleCI](https://circleci.com/gh/karankraina/node-fetch-timeout/tree/master.svg?style=svg)](https://circleci.com/gh/karankraina/node-fetch-timeout/tree/master)
 <h1 align="center">Welcome to node-fetch-timeout 👋</h1>
 [![CircleCI](https://circleci.com/gh/karankraina/node-fetch-timeout/tree/master.svg?style=svg)](https://circleci.com/gh/karankraina/node-fetch-timeout/tree/master)
 <p>
